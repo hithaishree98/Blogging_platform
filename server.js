@@ -8,6 +8,7 @@ dotenv.config();
 
 // Construct the MongoDB URI from environment variables
 const mongoURI = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}/${process.env.DATABASE}?retryWrites=true&w=majority`;
+console.log("MongoDB URI:", mongoURI);
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, {
