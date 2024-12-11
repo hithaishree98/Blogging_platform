@@ -569,3 +569,89 @@ footer .social-links img {
 .login-section p a:hover {
   text-decoration: underline;
 }
+
+/* Signup Section */
+.signup-section {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.signup-section h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-form .btn-primary {
+  background-color: #ff7f50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-form .btn-primary:hover {
+  background-color: #ff6347;
+}
+
+.alt-signup {
+  margin: 20px 0;
+  font-size: 1rem;
+  color: #777;
+}
+
+.oauth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.oauth-buttons a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.oauth-buttons .btn-google {
+  background-color: #db4437;
+  color: white;
+}
+
+.oauth-buttons .btn-google:hover {
+  background-color: #c33d30;
+}
+
+.oauth-buttons .btn-facebook {
+  background-color: #4267B2;
+  color: white;
+}
+
+.oauth-buttons .btn-facebook:hover {
+  background-color: #365899;
+}
+
+.signup-section p a {
+  color: #ff7f50;
+  text-decoration: none;
+}
+
+.signup-section p a:hover {
+  text-decoration: underline;
+}
