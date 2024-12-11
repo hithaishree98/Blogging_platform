@@ -6,47 +6,42 @@ const app = express();
 // Load environment variables
 dotenv.config();
 
-// Construct the MongoDB URI from environment variables
+// Check environment variables
+if (!process.env.USERNAME || !process.env.PASSWORD || !process.env.HOST || !process.env.DATABASE) {
+  console.error("Missing environment variables! Check your .env file.");
+  process.exit(1);
+}
+
+// Construct the MongoDB URI
 const mongoURI = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}/${process.env.DATABASE}?retryWrites=true&w=majority`;
 console.log("MongoDB URI:", mongoURI);
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000  // Set a longer timeout
-})
-  .then(() => {
+(async () => {
+  try {
+    console.log("Connecting to MongoDB...");
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000,
+    });
     console.log("MongoDB connected successfully!");
-  })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-    // Also log the specific error message
-    console.log("Error details: ", err.message);
-  });
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  }
+})();
 
 // Middleware
 app.use(express.json());
+app.use(express.static('public'));
 
-// A simple route to check if the server is working
+// Basic route
 app.get('/', (req, res) => {
-  res.send('Hello, your server is running!');
+  res.send('Server is running...');
 });
 
-// Test route to check MongoDB connection
-app.get('/test-db', (req, res) => {
-  mongoose.connection.db.collection('blogs').findOne({}, (err, result) => {
-    if (err) {
-      console.error('Error connecting to MongoDB:', err);  // Ensure errors are logged
-      res.status(500).send('MongoDB connection error');
-    } else {
-      console.log('Successfully connected to MongoDB:', result);
-      res.status(200).send('Successfully connected to MongoDB');
-    }
-  });
-});
-
-// Start the server
+// Start server
 const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
+  console.log(`App is listening on port ${listener.address().port}`);
 });
