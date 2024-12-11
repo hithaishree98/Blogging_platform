@@ -1,10 +1,9 @@
-Here’s the revised development plan using **HTML** and **CSS** for the frontend, while retaining a robust backend setup to meet the project requirements.
-
----
+# **Taste Trails**
 
 ### **Project Directory Structure**
 
 **Project Root:**
+
 ```
 taste-trails/
 ├── public/                # Static files (CSS, JS, Images)
@@ -14,16 +13,17 @@ taste-trails/
 │   ├── js/
 │   │   ├── app.js         # Frontend interactivity
 │   ├── images/            # Static images (logos, blog images)
+│       └── logo.png
 ├── routes/                # Backend routes
-│   ├── index.js           # General routes (home, explore)
+│   ├── index.js           # General routes (home, explore, etc.)
 │   ├── users.js           # User-related routes
 │   ├── blogs.js           # Blog-related routes
 │   ├── admin.js           # Admin-specific routes
-├── views/                 # HTML files for frontend
+├── views/                 # Static HTML files for rendering
 │   ├── partials/          # Reusable components
 │   │   ├── header.html    # Header with navigation
 │   │   ├── footer.html    # Footer
-│   ├── home.html          # Homepage
+│   ├── index.html         # Homepage
 │   ├── explore.html       # Blog exploration page
 │   ├── blog.html          # Single blog post view
 │   ├── create.html        # Create or edit blog
@@ -42,7 +42,7 @@ taste-trails/
 ├── config/                # Configuration files
 │   ├── database.js        # MongoDB connection
 │   ├── passport.js        # Passport.js strategies
-├── app.js                 # Main application file
+├── server.js              # Main server file (entry point)
 ├── package.json           # Project dependencies
 ├── .env                   # Environment variables (API keys, secrets)
 ├── README.md              # Project documentation
@@ -50,146 +50,181 @@ taste-trails/
 
 ---
 
-### **Pages and Links**
+### **1. Pages and Links**
 
-#### **1. Homepage (`home.html`)**
-**URL:** `/`
-- **Features:**
-  - Welcome banner with a call-to-action.
-  - Preview of featured or trending blogs.
-  - Navigation bar linking to other sections.
-  - Footer with social links and a contact form.
-- **Code Files:**
-  - `public/css/style.css` (styling).
-  - `views/home.html`.
+#### **Pages**
 
----
+1. **Homepage (`index.html`)**
 
-#### **2. Explore Page (`explore.html`)**
-**URL:** `/explore`
-- **Features:**
-  - Search bar to find blogs by keywords.
-  - Filters (location, cuisine, budget).
-  - Blog cards with titles, thumbnails, and short descriptions.
-- **Code Files:**
-  - `public/css/style.css`, `responsive.css`.
-  - `views/explore.html`.
+   - **URL:** `/`
+   - **Purpose:** Landing page with an introduction to the website.
+   - **Features:**
+     - Welcome banner with a brief description.
+     - Featured or trending blogs section.
+     - Navigation links to Explore, Login, and Signup.
+   - **HTML Template:** `views/index.html`
+   - **CSS File:** `public/css/style.css`
 
----
+2. **Explore Page (`explore.html`)**
 
-#### **3. Blog Details Page (`blog.html`)**
-**URL:** `/blogs/:id`
-- **Features:**
-  - Full blog content with images and metadata (author, date).
-  - Comments section for user interaction.
-  - Related posts section for recommendations.
-- **Code Files:**
-  - `views/blog.html`.
+   - **URL:** `/explore`
+   - **Purpose:** Allow users to browse and filter blog posts.
+   - **Features:**
+     - Search bar and filters (location, cuisine, budget).
+     - Blog cards with title, image, and summary.
+   - **HTML Template:** `views/explore.html`
+   - **CSS File:** `public/css/style.css`
 
----
+3. **Blog Details Page (`blog.html`)**
 
-#### **4. Create/Edit Blog Page (`create.html`)**
-**URL:** `/blogs/create` or `/blogs/edit/:id`
-- **Features:**
-  - Rich text input for blog content.
-  - File input for image uploads.
-  - Tags and metadata input fields.
-- **Code Files:**
-  - `views/create.html`.
+   - **URL:** `/blogs/:id`
+   - **Purpose:** Display full blog content and user comments.
+   - **HTML Template:** `views/blog.html`
 
----
+4. **Create/Edit Blog Page (`create.html`)**
 
-#### **5. User Profile Page (`profile.html`)**
-**URL:** `/profile`
-- **Features:**
-  - Display user details (name, email, profile picture).
-  - List of favorite blogs.
-  - Edit profile functionality.
-- **Code Files:**
-  - `views/profile.html`.
+   - **URL:** `/blogs/create` or `/blogs/edit/:id`
+   - **Purpose:** Form for creating or editing blog posts.
+   - **HTML Template:** `views/create.html`
+
+5. **User Profile Page (`profile.html`)**
+
+   - **URL:** `/profile`
+   - **Purpose:** Manage user profile and saved blogs.
+   - **HTML Template:** `views/profile.html`
+
+6. **Admin Dashboard (`admin.html`)**
+
+   - **URL:** `/admin`
+   - **Purpose:** Manage blogs and user accounts.
+   - **HTML Template:** `views/admin.html`
+
+7. **Login and Signup Pages (`login.html` and `signup.html`)**
+   - **URL:** `/login` and `/signup`
+   - **Purpose:** User authentication.
+   - **HTML Templates:** `views/login.html` and `views/signup.html`
 
 ---
 
-#### **6. Admin Dashboard (`admin.html`)**
-**URL:** `/admin`
-- **Features:**
-  - View, edit, and delete all blogs.
-  - Manage user accounts (deactivate or promote).
-- **Code Files:**
-  - `views/admin.html`.
+### **2. Backend Implementation**
+
+#### **Server File (`server.js`)**
+
+- Main entry point for the application.
+- Set up Express, session handling, and static file serving.
+- Route requests to respective route files.
+- Example code:
+
+```javascript
+const express = require("express");
+const path = require("path");
+const session = require("express-session");
+const passport = require("passport");
+require("dotenv").config();
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Static Files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.use("/", require("./routes/index"));
+app.use("/users", require("./routes/users"));
+app.use("/blogs", require("./routes/blogs"));
+app.use("/admin", require("./routes/admin"));
+
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "views/404.html"));
+});
+
+// Start Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
 
 ---
 
-#### **7. Login and Signup Pages (`login.html`, `signup.html`)**
-**URL:** `/login`, `/signup`
-- **Features:**
-  - Forms with validation for login and signup.
-  - OAuth integration (Google or Facebook login).
-- **Code Files:**
-  - `views/login.html`, `signup.html`.
+### **3. Frontend Development**
+
+#### **HTML and CSS**
+
+- Use **HTML5** for semantic structure.
+- Write responsive styles in `style.css` and `responsive.css`.
+- Reuse components like headers and footers.
+
+#### **Forms**
+
+- Include:
+  - Validation for signup/login.
+  - Input for blog creation with image upload fields.
+
+#### **Static Files**
+
+- Place static assets (CSS, JS, images) in the `public` directory.
+- Serve them using `express.static()` in `server.js`.
 
 ---
 
-### **Backend Implementation**
+### **4. Database (MongoDB)**
 
-#### **MVC Structure**
-- **Routes:** Serve HTML files with dynamic data injection.
-- **Controllers:** Handle business logic (e.g., authentication, CRUD operations).
-- **Models:** MongoDB collections for users, blogs, and comments.
+#### **Models**
 
-#### **Features**
-- **Authentication:** Secure login with bcrypt and Passport.js.
-- **Admin Access:** Separate routes for admin-specific actions.
-- **Session Management:** Use `express-session` or JWT for user sessions.
-- **Error Handling:** Validate inputs and handle errors gracefully.
-
-#### **API Endpoints**
-| **Method** | **Endpoint**        | **Description**                 |
-|------------|---------------------|---------------------------------|
-| `GET`      | `/api/blogs`        | Fetch all blogs.                |
-| `POST`     | `/api/blogs`        | Create a new blog.              |
-| `PUT`      | `/api/blogs/:id`    | Edit an existing blog.          |
-| `DELETE`   | `/api/blogs/:id`    | Delete a blog.                  |
-| `POST`     | `/api/comments`     | Add a comment.                  |
-| `DELETE`   | `/api/comments/:id` | Remove a comment.               |
+1. **User Model:**
+   - Includes fields like `name`, `email`, `password`, and `isAdmin`.
+2. **Blog Model:**
+   - Includes `title`, `content`, `author`, `tags`, and `comments`.
+3. **Comment Model:**
+   - Includes `blogId`, `userId`, and `content`.
 
 ---
 
-### **Frontend Development**
+### **5. Routes and Controllers**
 
-#### **HTML Pages**
-- Each page will be a standalone `.html` file in the `views/` directory.
-- Use semantic HTML5 elements (e.g., `<header>`, `<nav>`, `<section>`).
+#### **Routes**
 
-#### **CSS Styling**
-- **Global Styles:**
-  - Set a consistent theme (font, colors) in `style.css`.
-- **Responsive Design:**
-  - Use media queries in `responsive.css` for mobile and desktop breakpoints.
+| **Route**    | **Controller**       | **Description**             |
+| ------------ | -------------------- | --------------------------- |
+| `/`          | `index.js`           | Render homepage.            |
+| `/explore`   | `blogController.js`  | List all blogs.             |
+| `/blogs/:id` | `blogController.js`  | Display a single blog.      |
+| `/users`     | `userController.js`  | Handle user authentication. |
+| `/admin`     | `adminController.js` | Admin-specific features.    |
 
-#### **Dynamic Interactions (Optional):**
-- Use JavaScript (`public/js/app.js`) for:
-  - Filter functionality on the Explore page.
-  - Form validation.
-  - Toggle for favorite blogs.
+#### **Route Example (`routes/index.js`)**
 
----
+```javascript
+const express = require("express");
+const router = express.Router();
+const path = require("path");
 
-### **Deployment**
+// Homepage
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/index.html"));
+});
 
-- **Platform:** Glitch for hosting the application.
-- **Database:** MongoDB Atlas for persistent storage.
-- **Testing:** Test user workflows and RESTful API using Postman.
-
----
-
-### **Report and Presentation**
-
-- **Markdown Report:**
-  - Include project overview, objectives, technical architecture, challenges, and future work.
-- **Presentation:**
-  - Demo features live, discuss technologies, and highlight challenges.
+module.exports = router;
+```
 
 ---
 
-Would you like code snippets for HTML, CSS, or backend controllers?
+### **6. Deployment**
+
+- Deploy the project on **Glitch**.
+- Use **MongoDB Atlas** for persistent data storage.
+- Test functionality with Postman for APIs and manual testing for UI.
