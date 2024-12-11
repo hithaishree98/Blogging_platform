@@ -13,3 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
     alert('Your comment has been submitted!');
   });
 });
+
+const express = require('express');
+const app = express();
+const adminRoutes = require('./routes/admin');
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/admin', adminRoutes);
