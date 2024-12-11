@@ -484,3 +484,88 @@ footer .social-links img {
   text-decoration: underline;
 }
 
+/* Login Section */
+.login-section {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.login-section h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form .btn-primary {
+  background-color: #ff7f50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form .btn-primary:hover {
+  background-color: #ff6347;
+}
+
+.alt-login {
+  margin: 20px 0;
+  font-size: 1rem;
+  color: #777;
+}
+
+.oauth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.oauth-buttons a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.oauth-buttons .btn-google {
+  background-color: #db4437;
+  color: white;
+}
+
+.oauth-buttons .btn-google:hover {
+  background-color: #c33d30;
+}
+
+.oauth-buttons .btn-facebook {
+  background-color: #4267B2;
+  color: white;
+}
+
+.oauth-buttons .btn-facebook:hover {
+  background-color: #365899;
+}
+
+.login-section p a {
+  color: #ff7f50;
+  text-decoration: none;
+}
+
+.login-section p a:hover {
+  text-decoration: underline;
+}
