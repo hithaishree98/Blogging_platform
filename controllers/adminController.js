@@ -28,3 +28,19 @@ exports.getBlogs = async (req, res) => {
         res.status(500).json({ message: "Error fetching blogs", error });
     }
 };
+
+exports.manageUsers = async (req, res) => {
+    try {
+        const { userId, action } = req.body;  // Example: userId and action from request body
+
+        // Implement logic based on the action (e.g., "block", "delete", "promote")
+        if (action === 'delete') {
+            await User.findByIdAndDelete(userId); // Delete the user by ID
+            res.json({ message: 'User deleted successfully' });
+        } else {
+            res.status(400).json({ message: 'Action not recognized' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error managing users', error });
+    }
+};
