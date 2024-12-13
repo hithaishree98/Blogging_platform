@@ -2,18 +2,20 @@ const Blog = require("../models/Blog");
 const User = require("../models/User");
 
 // In controllers/adminController.js
+// controllers/adminController.js
+
 exports.dashboard = async (req, res) => {
   try {
-    const blogCount = await Blog.countDocuments();
-    const userCount = await User.countDocuments();
-    // Log the counts for debugging
+    const blogCount = await Blog.countDocuments(); // Count all blog documents
+    const userCount = await User.countDocuments(); // Count all user documents
     console.log(`Blog Count: ${blogCount}, User Count: ${userCount}`);
-    res.render('admin.ejs', { blogCount, userCount }); // Pass data to the admin.ejs template
+    res.render('admin.ejs', { blogCount, userCount });
   } catch (err) {
-    console.error('Error fetching blog or user counts:', err); // Log the error for debugging
+    console.error("Error fetching blog or user counts:", err);
     res.status(500).send("Server Error");
   }
 };
+
 
 
 // Manage Blogs
