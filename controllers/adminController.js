@@ -1,28 +1,20 @@
 const Blog = require("../models/Blog");
 const User = require("../models/User");
 
-// exports.dashboard = async (req, res) => {
-//   try {
-//     //const blogCount = await Blog.countDocuments();
-//     //const userCount = await User.countDocuments();
-//     //res.render("admin", { blogCount, userCount }); // Rendering admin view with data
-//     res.render('admin.ejs');
-//   } catch (err) {
-//     res.status(500).send("Server Error");
-//   }
-// };
-
+// In controllers/adminController.js
 exports.dashboard = async (req, res) => {
   try {
-    console.log("Rendering admin dashboard");
     const blogCount = await Blog.countDocuments();
     const userCount = await User.countDocuments();
-    //res.render('admin', { blogCount, userCount });
-    res.render('admin.ejs');
+    // Log the counts for debugging
+    console.log(`Blog Count: ${blogCount}, User Count: ${userCount}`);
+    res.render('admin.ejs', { blogCount, userCount }); // Pass data to the admin.ejs template
   } catch (err) {
+    console.error('Error fetching blog or user counts:', err); // Log the error for debugging
     res.status(500).send("Server Error");
   }
 };
+
 
 // Manage Blogs
 exports.viewBlogs = async (req, res) => {

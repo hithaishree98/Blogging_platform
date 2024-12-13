@@ -2,17 +2,15 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectToDatabase = require('./config/database'); // Import database connection logic
 const path = require('path');
-// const authRoutes = require("./routes/auth");
-const adminRoutes = require("./routes/admin");
-// const userRoutes = require("./routes/users");
-const app = express();
+const adminController = require('./controllers/adminController'); // Import admin controller
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
+
+const app = express();
 
 // Load environment variables
 dotenv.config();
 
-console.log("adminRoutes:", adminRoutes);
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views')); // Set the views directory
 
@@ -29,9 +27,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/index.html')); // Render the homepage
 });
 
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/')); // Render the homepage
-});
+// Use the dashboard controller for the /admin route
+app.get('/admin', adminController.dashboard);  // Use the dashboard function from adminController
 
 // 404 Route
 app.use((req, res) => {
@@ -43,16 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
 
-// Routes
-//app.use("/auth", authRoutes);
-//app.use("/admin", adminRoutes);
-//app.use("/user", userRoutes);
-app.use("/admin", adminRoutes);
-
 // Start server
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log(`App is listening on port ${listener.address().port}`);
 });
-
-
-
