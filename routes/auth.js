@@ -4,57 +4,56 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
 
-// JWT Secret Key
-const JWT_SECRET = "your_jwt_secret_key"; // Replace with a secure key
-
-// Signup Route
+// Signup
 router.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
-    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already registered." });
     }
 
-    // Create a new user
-    const user = new User({ name, email, password });
+    const user = new User({ name, email, password, role });
     await user.save();
-
-    res.status(201).json({ message: "User registered successfully!" });
+    res.status(201).redirect("/login");
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).send("Server Error");
   }
 });
 
-// Login Route
+// Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if the user exists
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
-    }
+    if (!user) return res.status(404).send("User not found.");
 
-    // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials." });
-    }
+    if (!isPasswordValid) return res.status(401).send("Invalid credentials.");
 
-    // Generate a token
-    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ message: "Login successful!", token });
+    res.cookie("token", token, { httpOnly: true });
+
+    if (user.role === "admin") {
+      res.redirect("/admin/dashboard");
+    } else {
+      res.redirect("/user/dashboard");
+    }
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).send("Server Error");
   }
+});
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/login");
 });
 
 module.exports = router;
