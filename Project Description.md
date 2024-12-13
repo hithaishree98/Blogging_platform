@@ -97,6 +97,8 @@ taste-trails/
 
    - **URL:** `/admin`
    - **Purpose:** Manage blogs and user accounts.
+                  Analytics - User trends(how many signed up)
+                            - 
    - **HTML Template:** `views/admin.html`
 
 7. **Login and Signup Pages (`login.html` and `signup.html`)**
