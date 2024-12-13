@@ -1,52 +1,32 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const users = []; // Replace with a database in production
 
-// Handle Signup
 exports.signup = async (req, res) => {
-  const { username, email, password, role } = req.body;
+    const { username, password } = req.body;
 
-  // Step 1: Ensure the username and email are not empty
-  if (!username || username.trim() === '' || !email || email.trim() === '') {
-    return res.status(400).send('Username and email are required');
-  }
-
-  try {
-    // Step 2: Check if the username or email already exists
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-    if (existingUser) {
-      return res.status(400).send('Username or email already exists');
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required.' });
     }
 
-    // Step 3: Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Step 4: Create a new user
-    const user = new User({ username, email, password: hashedPassword, role });
-    await user.save();
+    // Store the user (replace with a DB in production)
+    users.push({ username, password: hashedPassword });
 
-    res.redirect('/auth/login'); // Redirect to login after successful signup
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error during signup');
-  }
+    res.status(201).json({ message: 'User registered successfully.' });
 };
 
-// Handle Login
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  
-  try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).send('Invalid credentials');
+    const { username, password } = req.body;
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).send('Invalid credentials');
+    const user = users.find((user) => user.username === username);
 
-    // Redirect based on role
-    if (user.role === 'admin') return res.redirect('/admin');
-    res.redirect('/admin');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error during login');
-  }
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(400).json({ message: 'Invalid username or password.' });
+    }
+
+    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ message: 'Login successful.', token });
 };
