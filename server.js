@@ -14,6 +14,8 @@ dotenv.config();
 
 console.log("adminRoutes:", adminRoutes);
 app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views')); // Set the views directory
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +27,10 @@ connectToDatabase();
 // Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/index.html')); // Render the homepage
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/')); // Render the homepage
 });
 
 // 404 Route
