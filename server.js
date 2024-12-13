@@ -5,9 +5,10 @@ const path = require('path');
 const adminController = require('./controllers/adminController'); // Import admin controller
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
-const authRoutes = require('./routes/auth'); variables
-dotenv.config();
+const authRoutes = require('./routes/auth');
 
+dotenv.config();
+const app = express();
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views')); // Set the views directory
 
@@ -27,11 +28,12 @@ app.get('/', (req, res) => {
 // Use the dashboard controller for the /admin route
 app.get('/admin', adminController.dashboard);  // Use the dashboard function from adminController
 
+// Routes for authentication
+app.use('/auth', authRoutes);
+
 // 404 Route
 app.use((req, res) => {
-  res.
-//Routes
-app.use('/auth', authRoutes); status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
+  res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
 });
 
 // Middleware setup
@@ -40,8 +42,6 @@ app.use(bodyParser.json()); // Parse JSON bodies
 app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
 
 // Start server
-const listener = app.listen
-
-(process.env.PORT || 3000, () => {
+const listener = app.listen(process.env.PORT || 3000, () => {
   console.log(`App is listening on port ${listener.address().port}`);
 });

@@ -1,22 +1,28 @@
 const express = require('express');
+const path = require('path'); // Required for file path resolution
 const router = express.Router();
 
-// Define authentication routes
+// Serve the login page
 router.get('/login', (req, res) => {
-  res.send('Login Page');
+  res.sendFile(path.join(__dirname, '../views/login.html'));
 });
 
+// Process login form
 router.post('/login', (req, res) => {
-  // Handle login logic
+  const { email, password } = req.body;
+  // Handle login logic here
   res.send('Login Logic');
 });
 
+// Serve the signup page
 router.get('/signup', (req, res) => {
-  res.send('Signup Page');
+  res.sendFile(path.join(__dirname, '../views/signup.html'));
 });
 
+// Process signup form
 router.post('/signup', (req, res) => {
-  // Handle signup logic
+  const { name, email, password, role } = req.body;
+  // Handle signup logic here
   res.send('Signup Logic');
 });
 
