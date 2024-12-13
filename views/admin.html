@@ -4,45 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <!-- Include header here -->
-  </header>
+  <h1>Admin Dashboard</h1>
+  <p>Welcome, Admin!</p>
+  
+  <h2>Manage Users</h2>
+  
+  <!-- Create User Form -->
+  <form id="create-user-form">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="text" id="role" placeholder="Role" required>
+    <button type="submit">Create User</button>
+  </form>
+  
+  <!-- Display Users -->
+  <h3>Users List</h3>
+  <ul id="user-list"></ul>
 
-  <main>
-    <h1>Admin Dashboard</h1>
-    <p>Total Users: {{totalUsers}}</p>
-    <p>Total Blogs: {{totalBlogs}}</p>
+  <script>
+    // Fetch and display users
+    async function fetchUsers() {
+      const response = await fetch('/admin/users');
+      const users = await response.json();
+      const userList = document.getElementById('user-list');
+      userList.innerHTML = '';
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `Name: ${user.name}, Email: ${user.email}, Role: ${user.role}`;
+        userList.appendChild(li);
+      });
+    }
 
-    <h2>Manage Blogs</h2>
-    <ul>
-      {{#each blogs}}
-        <li>
-          {{this.title}} - <a href="/blogs/{{this._id}}">View</a> 
-          <form action="/admin/blogs/{{this._id}}" method="POST" style="display:inline;">
-            <button type="submit">Delete</button>
-          </form>
-        </li>
-      {{/each}}
-    </ul>
+    fetchUsers();
 
-    <h2>Manage Users</h2>
-    <ul>
-      {{#each users}}
-        <li>
-          {{this.name}} - {{this.email}}
-          <form action="/admin/users/{{this._id}}" method="POST" style="display:inline;">
-            <button type="submit">Delete</button>
-          </form>
-        </li>
-      {{/each}}
-    </ul>
-  </main>
+    // Handle user creation form submission
+    document.getElementById('create-user-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const role = document.getElementById('role').value;
 
-  <footer>
-    <!-- Include footer here -->
-  </footer>
+      const response = await fetch('/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, role }),
+      });
+
+      if (response.ok) {
+        alert('User created!');
+        fetchUsers();
+      } else {
+        alert('Failed to create user');
+      }
+    });
+  </script>
 </body>
 </html>

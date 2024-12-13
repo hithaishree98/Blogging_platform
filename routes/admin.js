@@ -36,18 +36,42 @@
 // }
 
 const express = require('express');
+const User = require('../models/User'); // Assuming you have a User model
 const router = express.Router();
-const adminController = require('../controllers/adminController');
 
-// Admin Dashboard Route
-router.get('/', adminController.getAdminDashboard);
+// Admin dashboard route
+router.get('/dashboard', (req, res) => {
+  res.send('Welcome to the Admin Dashboard');
+});
 
-// Manage Blogs
-router.get('/blogs', adminController.getBlogs);
-router.delete('/blogs/:id', adminController.deleteBlog);
+// Create a new user
+router.post('/users', async (req, res) => {
+  const { name, email, role } = req.body;
+  const newUser = new User({ name, email, role });
+  await newUser.save();
+  res.status(201).send('User created successfully');
+});
 
-// Manage Users
-router.get('/users', adminController.getUsers);
-router.delete('/users/:id', adminController.deleteUser);
+// Get all users
+router.get('/users', async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
+// Update a user
+router.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, role } = req.body;
+  await User.findByIdAndUpdate(id, { name, email, role });
+  res.send('User updated');
+});
+
+// Delete a user
+router.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  await User.findByIdAndDelete(id);
+  res.send('User deleted');
+});
 
 module.exports = router;
+
