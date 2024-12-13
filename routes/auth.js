@@ -43,11 +43,11 @@ router.get('/signup', (req, res) => {
 
 // Process signup form
 router.post('/signup', async (req, res) => {
-  const { username, email, password, role } = req.body;
+  const { name, username, email, password, role } = req.body;
 
   // Step 1: Ensure the username and email are not empty
-  if (!username || !email) {
-    return res.status(400).send('Username and email are required');
+  if (!name || !username || !email || !password) {
+    return res.status(400).send('All fields are required');
   }
 
   try {
@@ -61,7 +61,7 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Step 4: Create a new user
-    const newUser = new User({ username, email, password: hashedPassword, role });
+    const newUser = new User({ name, username, email, password: hashedPassword, role });
     await newUser.save();
 
     res.status(201).send('User registered successfully');
