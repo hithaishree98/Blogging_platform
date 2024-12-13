@@ -43,8 +43,8 @@ exports.login = async (req, res) => {
     if (!isMatch) return res.status(400).send('Invalid credentials');
 
     // Redirect based on role
-    if (user.role === 'admin') return res.redirect('/admin/dashboard');
-    res.redirect('/user/dashboard');
+    if (user.role === 'admin') return res.redirect('/admin');
+    res.redirect('/admin');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error during login');
