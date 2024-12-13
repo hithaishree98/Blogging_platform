@@ -1,0 +1,156 @@
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #5A4FCF;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    display: block;
+}
+
+.menu li a.active {
+    background-color: #6D5FD3;
+}
+
+.menu li a:hover {
+    background-color: #8075DD;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #F8F9FB;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Overview Section */
+.overview {
+    margin-bottom: 20px;
+}
+
+.overview h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.stat-number {
+    font-size: 32px;
+    color: #5A4FCF;
+    font-weight: bold;
+}
+
+/* Quick Links Section */
+.quick-links h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.link-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.link-card {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.link-card:hover {
+    transform: translateY(-5px);
+}
+
+.link-card h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.link-card p {
+    font-size: 14px;
+    color: #555;
+}

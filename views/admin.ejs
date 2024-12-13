@@ -1,28 +1,67 @@
-<!-- In views/admin.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>Welcome, Admin</h1>
-    <nav>
-      <ul>
-        <li><a href="/admin/blogs">Manage Blogs</a></li>
-        <li><a href="/admin/users">Manage Users</a></li>
-        <li><a href="/admin/analytics">Analytics</a></li>
-      </ul>
-    </nav>
-  </header>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 class="logo">Adventrip</h2>
+            <ul class="menu">
+                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/admin/blogs">Manage Blogs</a></li>
+                <li><a href="/admin/users">Manage Users</a></li>
+                <li><a href="/admin/analytics">Analytics</a></li>
+                <li><a href="/admin/settings">Settings</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </aside>
 
-  <section>
-    <h2>Dashboard Overview</h2>
-    <p>Total Blogs: <%= blogCount %></p> <!-- Display total blogs -->
-    <p>Total Users: <%= userCount %></p> <!-- Display total users -->
-  </section>
+        <main class="main-content">
+            <header class="header">
+                <h1>Welcome, Admin</h1>
+                <div class="profile">
+                    <span>Admin</span>
+                    <img src="/images/admin-profile.jpg" alt="Profile" class="profile-pic">
+                </div>
+            </header>
+
+            <section class="overview">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Blogs</h3>
+                        <p class="stat-number"><%= blogCount %></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p class="stat-number"><%= userCount %></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-links">
+                <h2>Quick Links</h2>
+                <div class="link-grid">
+                    <a href="/admin/blogs" class="link-card">
+                        <h4>Manage Blogs</h4>
+                        <p>Create, edit, or delete blogs</p>
+                    </a>
+                    <a href="/admin/users" class="link-card">
+                        <h4>Manage Users</h4>
+                        <p>View and manage user accounts</p>
+                    </a>
+                    <a href="/admin/analytics" class="link-card">
+                        <h4>View Analytics</h4>
+                        <p>Monitor system performance</p>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

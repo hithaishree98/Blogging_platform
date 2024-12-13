@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-// Load environment variables
+// L/routes/authent variables
 dotenv.config();
 
 app.set("view engine", "ejs");
@@ -41,6 +41,9 @@ app.use(bodyParser.json()); // Parse JSON bodies
 app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
 
 // Start server
-const listener = app.listen(process.env.PORT || 3000, () => {
+const listener = app.listen
+//Routes
+app.use('/auth', authRoutes);
+(process.env.PORT || 3000, () => {
   console.log(`App is listening on port ${listener.address().port}`);
 });
