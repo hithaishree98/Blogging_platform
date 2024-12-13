@@ -39,17 +39,15 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
 
-// Route to get analytics (total users and total blogs)
-router.get('/analytics', adminController.getAnalytics);
+// Admin Dashboard Route
+router.get('/', adminController.getAdminDashboard);
 
-// Route to fetch users
-router.get('/users', adminController.getUsers);
-
-// Route to fetch blogs
+// Manage Blogs
 router.get('/blogs', adminController.getBlogs);
+router.delete('/blogs/:id', adminController.deleteBlog);
 
-// If you need to manage users, you will need to add a separate method in your controller for that.
-router.post('/users/manage', adminController.manageUsers);  // Ensure manageUsers method exists in the controller
+// Manage Users
+router.get('/users', adminController.getUsers);
+router.delete('/users/:id', adminController.deleteUser);
 
 module.exports = router;
-

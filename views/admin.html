@@ -1,58 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Header (Reusable Component) -->
-    <div id="header"></div>
-    <main class="admin-dashboard">
-        <h1>Admin Dashboard</h1>
-        <section class="tabs">
-            <button data-tab="analytics">Analytics</button>
-            <button data-tab="users">Manage Users</button>
-            <button data-tab="blogs">Manage Blogs</button>
-        </section>
-        <section id="analytics-tab" class="tab-content">
-            <h2>Site Analytics</h2>
-            <p>Total Users: <span id="total-users">0</span></p>
-            <p>Total Blogs: <span id="total-blogs">0</span></p>
-        </section>
-        <section id="users-tab" class="tab-content hidden">
-            <h2>Manage Users</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="user-list"></tbody>
-            </table>
-        </section>
-        <section id="blogs-tab" class="tab-content hidden">
-            <h2>Manage Blogs</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="blog-list"></tbody>
-            </table>
-        </section>
-    </main>
-    <!-- Footer (Reusable Component) -->
-    <div id="footer"></div>
-    <script src="/js/admin.js"></script>
+  <header>
+    <!-- Include header here -->
+  </header>
+
+  <main>
+    <h1>Admin Dashboard</h1>
+    <p>Total Users: {{totalUsers}}</p>
+    <p>Total Blogs: {{totalBlogs}}</p>
+
+    <h2>Manage Blogs</h2>
+    <ul>
+      {{#each blogs}}
+        <li>
+          {{this.title}} - <a href="/blogs/{{this._id}}">View</a> 
+          <form action="/admin/blogs/{{this._id}}" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+
+    <h2>Manage Users</h2>
+    <ul>
+      {{#each users}}
+        <li>
+          {{this.name}} - {{this.email}}
+          <form action="/admin/users/{{this._id}}" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  </main>
+
+  <footer>
+    <!-- Include footer here -->
+  </footer>
 </body>
 </html>

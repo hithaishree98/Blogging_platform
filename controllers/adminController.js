@@ -1,46 +1,61 @@
-const User = require("../models/User");
-const Blog = require("../models/Blog");
+const Blog = require('../models/Blog');
+const User = require('../models/User');
 
-exports.getAnalytics = async (req, res) => {
+module.exports = {
+  // Admin Dashboard
+  getAdminDashboard: async (req, res) => {
     try {
-        const totalUsers = await User.countDocuments();
-        const totalBlogs = await Blog.countDocuments();
-        res.json({ totalUsers, totalBlogs });
+      // You can add analytics logic here, like user trends
+      const totalUsers = await User.countDocuments();
+      const totalBlogs = await Blog.countDocuments();
+      res.render('admin', { totalUsers, totalBlogs });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching analytics", error });
+      console.error('Error fetching dashboard data:', error);
+      res.status(500).send('Server Error');
     }
-};
+  },
 
-exports.getUsers = async (req, res) => {
+  // Get All Blogs
+  getBlogs: async (req, res) => {
     try {
-        const users = await User.find().select("name email role");
-        res.json(users);
+      const blogs = await Blog.find();
+      res.render('admin', { blogs });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching users", error });
+      console.error('Error fetching blogs:', error);
+      res.status(500).send('Server Error');
     }
-};
+  },
 
-exports.getBlogs = async (req, res) => {
+  // Delete a Blog
+  deleteBlog: async (req, res) => {
     try {
-        const blogs = await Blog.find().populate("author", "name");
-        res.json(blogs);
+      await Blog.findByIdAndDelete(req.params.id);
+      res.redirect('/admin/blogs'); // Redirect to the blog list after deletion
     } catch (error) {
-        res.status(500).json({ message: "Error fetching blogs", error });
+      console.error('Error deleting blog:', error);
+      res.status(500).send('Server Error');
     }
-};
+  },
 
-exports.manageUsers = async (req, res) => {
+  // Get All Users
+  getUsers: async (req, res) => {
     try {
-        const { userId, action } = req.body;  // Example: userId and action from request body
-
-        // Implement logic based on the action (e.g., "block", "delete", "promote")
-        if (action === 'delete') {
-            await User.findByIdAndDelete(userId); // Delete the user by ID
-            res.json({ message: 'User deleted successfully' });
-        } else {
-            res.status(400).json({ message: 'Action not recognized' });
-        }
+      const users = await User.find();
+      res.render('admin', { users });
     } catch (error) {
-        res.status(500).json({ message: 'Error managing users', error });
+      console.error('Error fetching users:', error);
+      res.status(500).send('Server Error');
     }
+  },
+
+  // Delete a User
+  deleteUser: async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.redirect('/admin/users'); // Redirect to the user list after deletion
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      res.status(500).send('Server Error');
+    }
+  }
 };
