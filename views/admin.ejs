@@ -64,7 +64,7 @@
             <section class="graph-section">
                 <h2>Average Blog Rating</h2>
                 <canvas id="ratingChart" width="400" height="200"></canvas>
-                <script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     const ctx = document.getElementById('ratingChart').getContext('2d');
                     const ratingChart = new Chart(ctx, {
                         type: 'bar',

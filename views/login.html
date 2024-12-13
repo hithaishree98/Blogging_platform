@@ -25,5 +25,26 @@
         </form>
         <p class="redirect">Don't have an account? <a href="/auth/signup">Signup</a></p>
     </div>
+    
+    <script>
+        $(document).ready(() => {
+            $('#login-form').on('submit', function (e) {
+                e.preventDefault(); // Prevent form from reloading
+                const formData = $(this).serialize(); // Serialize form data
+
+                $.post('/auth/login', formData, (response) => {
+                    $('.form-container').html(`
+                        <p>${response}</p>
+                    `);
+                    setTimeout(() => {
+                        window.location.href = '/admin';
+                    }, 2000); // Redirect to /admin after 2 seconds
+                }).fail((error) => {
+                    alert(`Error: ${error.responseJSON.message}`);
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>

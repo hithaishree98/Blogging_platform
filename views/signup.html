@@ -33,5 +33,25 @@
         </form>
         <p class="redirect">Already have an account? <a href="/auth/login">Login</a></p>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $('#signup-form').on('submit', function (e) {
+            e.preventDefault(); // Prevent form from reloading
+            const formData = $(this).serialize(); // Serialize form data
+
+            $.post('/auth/signup', formData, (response) => {
+                $('.form-container').html(`
+                    <p>${response}</p>
+                    <a href="/auth/login">Click here to login</a>
+                `);
+            }).fail((error) => {
+                alert(`Error: ${error.responseJSON.message}`);
+            });
+        });
+    });
+</script>
+
+  
 </body>
 </html>

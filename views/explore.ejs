@@ -1,0 +1,39 @@
+<%- include('layout', {
+  title: 'Explore | TasteTrails',
+  body: `
+    <section class="header">
+      <h1>Explore TasteTrails</h1>
+      <p>Find the best blogs, destinations, and food recommendations here.</p>
+    </section>
+    <section class="search-filter">
+      <input type="text" placeholder="Search for blogs or destinations...">
+      <button>Search</button>
+    </section>
+    <section class="content-grid">
+      <div class="content-item">
+        <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
+        <div class="content-info">
+          <h3>Paris Cafes</h3>
+          <p>Discover the best cafes in Paris with scenic views and pastries.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <div class="content-item">
+        <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
+        <div class="content-info">
+          <h3>Bangkok Street Food</h3>
+          <p>Explore the vibrant street food scene in Bangkok.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <div class="content-item">
+        <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
+        <div class="content-info">
+          <h3>Hidden Tuscany</h3>
+          <p>Uncover the hidden gems of Tuscany.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </section>
+  `
+}) %>

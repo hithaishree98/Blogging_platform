@@ -6,15 +6,14 @@ const adminController = require('./controllers/adminController'); // Import admi
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
-const verifyToken = require('./middleware/auth');
 const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const app = express();
 
-
+// Set the view engine to EJS and configure views directory
 app.set("view engine", "ejs");
-app.set('views', path.join(__dirname, 'views')); // Set the views directory
+app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
 app.use(express.json());
@@ -27,29 +26,28 @@ connectToDatabase();
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/index.html')); // Render the homepage
+  res.render('index'); // Render the homepage using EJS layout
 });
 
-// Route for the Explore page
 app.get('/explore', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/explore.html'));
+  res.render('explore'); // Render the Explore page using EJS layout
 });
 
-// Use the dashboard controller for the /admin route
-app.get('/admin',adminController.dashboard);  // Use the dashboard function from adminController
+// Admin dashboard route
+app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController
 
 // Routes for authentication
 app.use('/auth', authRoutes);
-
-// 404 Route
-app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
-});
 
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
+
+// 404 Route
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
+});
 
 // Start server
 const listener = app.listen(process.env.PORT || 3000, () => {

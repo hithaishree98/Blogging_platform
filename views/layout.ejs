@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #333;
+    }
+    main {
+      padding-top: 80px; /* Offset for the fixed navbar */
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+    <%- body %>
+  </main>
+  <%- include('partials/footer') %>
+</body>
+</html>
