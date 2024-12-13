@@ -6,9 +6,17 @@ const adminController = require('./controllers/adminController'); // Import admi
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
-const verifyToken = require('../middleware/auth');
+const verifyToken = require('./middleware/auth');
+
+
 dotenv.config();
+
+
 const app = express();
+
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views')); // Set the views directory
 
