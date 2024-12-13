@@ -1,13 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { signup, login } = require('../controllers/authController');
 
-// Signup Routes
-router.get('/signup', (req, res) => res.sendFile('signup.html', { root: 'public/views' }));
-router.post('/signup', signup);
+// Define authentication routes
+router.get('/login', (req, res) => {
+  res.send('Login Page');
+});
 
-// Login Routes
-router.get('/login', (req, res) => res.sendFile('login.html', { root: 'public/views' }));
-router.post('/login', login);
+router.post('/login', (req, res) => {
+  // Handle login logic
+  res.send('Login Logic');
+});
+
+router.get('/signup', (req, res) => {
+  res.send('Signup Page');
+});
+
+router.post('/signup', (req, res) => {
+  // Handle signup logic
+  res.send('Signup Logic');
+});
 
 module.exports = router;
