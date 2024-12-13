@@ -1,55 +1,72 @@
+/* General styling */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f0f8ff; /* Light blue background */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
+    box-sizing: border-box;
 }
 
-.form-container {
-    background: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-}
-
-h2 {
+/* Logo styling */
+.logo-container {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
-    font-size: 24px;
 }
 
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+/* Form box styling */
+.form-container {
+    background-color: #ffffff; /* White box for the form */
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form input styling */
 .form-group {
     margin-bottom: 15px;
+    text-align: left;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 14px;
     color: #555;
 }
 
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
 }
 
 .form-group input:focus {
-    border-color: #007bff;
     outline: none;
+    border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Button styling */
 .btn {
     width: 100%;
     padding: 10px;
@@ -57,24 +74,27 @@ h2 {
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 .btn:hover {
     background-color: #0056b3;
 }
 
-.link {
-    text-align: center;
+/* Redirect link styling */
+.redirect {
     margin-top: 15px;
+    font-size: 14px;
+    color: #555;
 }
 
-.link a {
-    text-decoration: none;
+.redirect a {
     color: #007bff;
+    text-decoration: none;
 }
 
-.link a:hover {
+.redirect a:hover {
     text-decoration: underline;
 }
