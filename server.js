@@ -1,40 +1,29 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const session = require('express-session');
-const connectToDatabase = require('./config/database'); 
-const app = express();
+const connectToDatabase = require('./config/database'); // Import database connection logic
 const path = require('path');
 
-
-const adminRoutes = require('./routes/admin');
+const app = express();
 
 // Load environment variables
 dotenv.config();
 
-// Use express-session for session handling
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'default_secret_key', // Fix for req.secret deprecation
-  resave: false,
-  saveUninitialized: true,
-}));
-
-// Connect to MongoDB
-connectToDatabase(); // Call the function to connect to the database
-
-
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-
-// Set the views directory to where your EJS templates are stored
-app.set('views', path.join(__dirname, 'views'));
-
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the "public" folder
 
-// Basic route
+// Connect to MongoDB
+connectToDatabase();
+
+// Routes
 app.get('/', (req, res) => {
-  res.send('Server is running...');
+  res.sendFile(path.join(__dirname, 'views/index.html')); // Render the homepage
+});
+
+// 404 Route
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
 });
 
 // Start server
