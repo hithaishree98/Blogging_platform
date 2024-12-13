@@ -36,7 +36,7 @@ app.get('/explore', (req, res) => {
 });
 
 // Use the dashboard controller for the /admin route
-app.get('/admin', verifyToken,adminController.dashboard);  // Use the dashboard function from adminController
+app.get('/admin',adminController.dashboard);  // Use the dashboard function from adminController
 
 // Routes for authentication
 app.use('/auth', authRoutes);
