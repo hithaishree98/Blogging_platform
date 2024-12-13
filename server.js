@@ -4,6 +4,8 @@ const session = require('express-session');
 const connectToDatabase = require('./config/database'); 
 const app = express();
 const path = require('path');
+
+
 const adminRoutes = require('./routes/admin');
 
 // Load environment variables
