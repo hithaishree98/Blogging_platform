@@ -8,8 +8,11 @@ exports.dashboard = async (req, res) => {
   try {
     const blogCount = await Blog.countDocuments(); // Count all blog documents
     const userCount = await User.countDocuments(); // Count all user documents
-    console.log(`Blog Count: ${blogCount}, User Count: ${userCount}`);
-    res.render('admin.ejs', { blogCount, userCount });
+    const averageRating = await Blog.aggregate([
+            { $group: { _id: null, averageRating: { $avg: "$rating" } } }
+        ]);
+    const avgRating = averageRating[0] ? averageRating[0].averageRating : 0;
+    res.render('admin', { blogCount, userCount, avgRating });
   } catch (err) {
     console.error("Error fetching blog or user counts:", err);
     res.status(500).send("Server Error");

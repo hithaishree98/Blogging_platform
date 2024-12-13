@@ -7,22 +7,19 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
 const verifyToken = require('./middleware/auth');
-
-
+const cookieParser = require('cookie-parser');
 dotenv.config();
-
 
 const app = express();
 
 
-const cookieParser = require('cookie-parser');
-app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views')); // Set the views directory
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the "public" folder
 
 // Connect to MongoDB
@@ -31,6 +28,11 @@ connectToDatabase();
 // Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/index.html')); // Render the homepage
+});
+
+// Route for the Explore page
+app.get('/explore', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/explore.html'));
 });
 
 // Use the dashboard controller for the /admin route

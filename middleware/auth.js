@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.authToken; // Assuming the token is stored in cookies
+  const token = req.cookies.authToken; // Token should be in cookies
 
   if (!token) {
     return res.status(401).send('Access denied. No token provided.');

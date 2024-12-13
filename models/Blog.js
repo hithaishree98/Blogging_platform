@@ -24,8 +24,8 @@ const BlogSchema = new mongoose.Schema({
     default: Date.now
   },
   rating: {
-    type: String,
-    default: "0"
+    type: Number,
+    default: Number
   }
 });
 
