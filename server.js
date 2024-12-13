@@ -2,7 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectToDatabase = require('./config/database'); // Import database connection logic
 const path = require('path');
-
+const authRoutes = require("./routes/auth");
+//const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/user");
 const app = express();
 
 // Load environment variables
@@ -25,6 +27,11 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
 });
+
+// Routes
+app.use("/auth", authRoutes);
+//app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
 
 // Start server
 const listener = app.listen(process.env.PORT || 3000, () => {

@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <style>
-    /* Inline styles for quick updates */
+    /* General Styles */
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      color: #fff;
-      background-color: #333;
+      color: #333;
+      background-color: #fff;
     }
 
     /* Navigation Bar */
@@ -26,6 +26,7 @@
       width: 100%;
       top: 0;
       z-index: 100;
+      box-sizing: border-box;
     }
 
     .navbar .logo-container {
@@ -42,14 +43,14 @@
     .navbar .logo {
       font-size: 24px;
       font-weight: bold;
-      color: #ffcc00;
+      color: #fff;
       text-decoration: none;
     }
 
     .navbar .nav-links {
       list-style: none;
       display: flex;
-      gap: 20px;
+      gap: 15px;
       margin: 0;
       padding: 0;
     }
@@ -62,19 +63,27 @@
       color: #fff;
       text-decoration: none;
       font-size: 16px;
-      padding: 5px 10px;
+      padding: 10px 15px;
+      box-sizing: border-box;
     }
 
     .navbar .btn-signup {
-      padding: 8px 15px;
-      background-color: #ffcc00;
-      color: #000;
+      padding: 10px 20px; /* Adjusted padding for better visibility */
+      background-color: #4CAF50;
+      color: #fff;
       border-radius: 5px;
+      font-weight: bold;
+      white-space: nowrap; /* Prevents wrapping of button text */
+      margin-left: 10px;
+    }
+
+    .navbar .btn-signup:hover {
+      background-color: #45a049;
     }
 
     /* Hero Section */
     .hero {
-      background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983'); /* Updated background image */
+      background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
       background-size: cover;
       background-position: center;
       height: 100vh;
@@ -89,13 +98,19 @@
     .hero h1 {
       font-size: 50px;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.75); /* Black semi-transparent background */
+      padding: 15px 25px;
+      border-radius: 8px;
     }
 
     .hero p {
       font-size: 20px;
       margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.75); /* Black semi-transparent background */
+      padding: 15px 25px;
+      border-radius: 8px;
     }
 
     .hero .hero-buttons a {
@@ -104,26 +119,25 @@
       margin: 5px;
       font-size: 18px;
       border-radius: 5px;
-      color: #fff;
       transition: all 0.3s;
     }
 
     .btn-primary {
-      background-color: #ff5733;
+      background-color: #4d4d4d;
+      color: #fff;
     }
 
     .btn-primary:hover {
-      background-color: #c70039;
+      background-color: #333;
     }
 
     .btn-secondary {
-      background-color: #33ff99;
+      background-color: #e0e0e0;
       color: #000;
     }
 
     .btn-secondary:hover {
-      background-color: #28a745;
-      color: #fff;
+      background-color: #ccc;
     }
 
     /* Footer */
@@ -145,7 +159,7 @@
     }
 
     footer .social-links a {
-      color: #ffcc00;
+      color: #fff;
       text-decoration: none;
       font-size: 18px;
     }
