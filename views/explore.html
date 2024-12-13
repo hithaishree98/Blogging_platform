@@ -11,14 +11,13 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      color: #333;
-      background-color: #fff;
       background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
       background-size: cover;
       background-attachment: fixed;
+      color: #333;
     }
 
-    /* Navigation Bar (Same as Homepage) */
+    /* Navigation Bar */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -29,6 +28,7 @@
       width: 100%;
       top: 0;
       z-index: 100;
+      box-sizing: border-box;
     }
 
     .navbar .logo-container {
@@ -52,6 +52,7 @@
     .navbar .nav-links {
       list-style: none;
       display: flex;
+      align-items: center;
       gap: 15px;
       margin: 0;
       padding: 0;
@@ -70,6 +71,7 @@
       color: #fff;
       border-radius: 5px;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     .navbar .btn-signup:hover {
@@ -79,40 +81,54 @@
     /* Header Section */
     .header {
       text-align: center;
-      margin-top: 100px; /* Account for fixed navbar */
+      padding: 120px 20px 60px;
       color: #fff;
-      padding: 20px;
     }
 
     .header h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 5px;
     }
 
     .header p {
       font-size: 18px;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 8px 15px;
+      display: inline-block;
+      border-radius: 5px;
     }
 
-    /* Search and Filter Section */
+    /* Search Section */
     .search-filter {
-      text-align: center;
-      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
 
     .search-filter input[type="text"] {
-      padding: 10px;
-      width: 300px;
+      padding: 12px;
+      width: 100%;
+      max-width: 500px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      margin-right: 10px;
+      font-size: 16px;
     }
 
     .search-filter button {
-      padding: 10px 20px;
+      padding: 12px 20px;
       background-color: #4CAF50;
       color: #fff;
       border: none;
       border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
     }
 
@@ -123,22 +139,26 @@
     /* Content Grid */
     .content-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
       padding: 20px;
-      margin: 20px;
     }
 
     .content-item {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: #fff;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .content-item:hover {
+      transform: translateY(-5px);
     }
 
     .content-item img {
       width: 100%;
-      height: 150px;
+      height: 200px;
       object-fit: cover;
     }
 
@@ -159,19 +179,17 @@
     }
 
     .content-item a {
-      display: inline-block;
       text-decoration: none;
       color: #4CAF50;
       font-weight: bold;
     }
 
-    /* Footer (Same as Homepage) */
+    /* Footer */
     footer {
       background-color: rgba(0, 0, 0, 0.9);
       text-align: center;
       padding: 15px;
       color: #fff;
-      margin-top: 20px;
     }
 
     footer .social-links {
@@ -210,11 +228,13 @@
 
   <!-- Header Section -->
   <section class="header">
-    <h1>Explore TasteTrails</h1>
+    <div>
+      <h1>Explore TasteTrails</h1>
+    </div>
     <p>Find the best blogs, destinations, and food recommendations here.</p>
   </section>
 
-  <!-- Search and Filter Section -->
+  <!-- Search Section -->
   <section class="search-filter">
     <input type="text" placeholder="Search for blogs or destinations...">
     <button>Search</button>
@@ -223,7 +243,7 @@
   <!-- Content Grid -->
   <section class="content-grid">
     <div class="content-item">
-      <img src="https://via.placeholder.com/250x150" alt="Blog Thumbnail">
+      <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
       <div class="content-info">
         <h3>Paris Cafes</h3>
         <p>Discover the best cafes in Paris with scenic views and pastries.</p>
@@ -231,7 +251,7 @@
       </div>
     </div>
     <div class="content-item">
-      <img src="https://via.placeholder.com/250x150" alt="Blog Thumbnail">
+      <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
       <div class="content-info">
         <h3>Bangkok Street Food</h3>
         <p>Explore the vibrant street food scene in Bangkok.</p>
@@ -239,7 +259,7 @@
       </div>
     </div>
     <div class="content-item">
-      <img src="https://via.placeholder.com/250x150" alt="Blog Thumbnail">
+      <img src="https://via.placeholder.com/300x200" alt="Blog Thumbnail">
       <div class="content-info">
         <h3>Hidden Tuscany</h3>
         <p>Uncover the hidden gems of Tuscany.</p>

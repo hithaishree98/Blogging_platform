@@ -6,7 +6,7 @@ exports.signup = async (req, res) => {
   const { username, email, password, role } = req.body;
 
   // Step 1: Ensure the username and email are not empty
-  if (!username || !email) {
+  if (!username || username.trim() === '' || !email || email.trim() === '') {
     return res.status(400).send('Username and email are required');
   }
 
