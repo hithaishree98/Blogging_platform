@@ -2,9 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectToDatabase = require('./config/database'); // Import database connection logic
 const path = require('path');
-const authRoutes = require("./routes/auth");
+// const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
-const userRoutes = require("./routes/users");
+// const userRoutes = require("./routes/users");
 const app = express();
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
@@ -32,10 +32,15 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
 });
 
+// Middleware setup
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
+
 // Routes
-app.use("/auth", authRoutes);
+//app.use("/auth", authRoutes);
 //app.use("/admin", adminRoutes);
-app.use("/user", userRoutes);
+//app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
 // Start server
@@ -45,8 +50,3 @@ const listener = app.listen(process.env.PORT || 3000, () => {
 
 
 
-
-// Middleware setup
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(bodyParser.json()); // Parse JSON bodies
-app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
