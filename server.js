@@ -6,7 +6,7 @@ const adminController = require('./controllers/adminController'); // Import admi
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
-
+const verifyToken = require('../middleware/auth');
 dotenv.config();
 const app = express();
 app.set("view engine", "ejs");
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 });
 
 // Use the dashboard controller for the /admin route
-app.get('/admin', adminController.dashboard);  // Use the dashboard function from adminController
+app.get('/admin', verifyToken,adminController.dashboard);  // Use the dashboard function from adminController
 
 // Routes for authentication
 app.use('/auth', authRoutes);

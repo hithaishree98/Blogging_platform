@@ -1,5 +1,8 @@
 const express = require('express');
-const path = require('path'); // Required for file path resolution
+const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); // For token-based authentication
+const User = require('../models/User'); // Import the User model
 const router = express.Router();
 
 // Serve the login page
@@ -8,10 +11,29 @@ router.get('/login', (req, res) => {
 });
 
 // Process login form
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  // Handle login logic here
-  res.send('Login Logic');
+
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).send('Invalid email or password');
+    }
+
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send('Invalid email or password');
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('authToken', token, { httpOnly: true }).send('Login successful');
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // Serve the signup page
@@ -20,10 +42,22 @@ router.get('/signup', (req, res) => {
 });
 
 // Process signup form
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
   const { name, email, password, role } = req.body;
-  // Handle signup logic here
-  res.send('Signup Logic');
+
+  try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({ name, email, password: hashedPassword, role });
+    await newUser.save();
+
+    res.status(201).send('User registered successfully');
+  } catch (error) {
+    console.error('Error during signup:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 module.exports = router;
