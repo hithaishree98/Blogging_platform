@@ -61,27 +61,32 @@
                     </a>
                 </div>
             </section>
+            
             <section class="graph-section">
                 <h2>Average Blog Rating</h2>
                 <canvas id="ratingChart" width="400" height="200"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    // Get the context of the canvas element for Chart.js
                     const ctx = document.getElementById('ratingChart').getContext('2d');
+                    
+                    // Create a new chart instance
                     const ratingChart = new Chart(ctx, {
-                        type: 'bar',
+                        type: 'bar', // Set the chart type
                         data: {
-                            labels: ['Average Rating'],
+                            labels: ['Average Rating'], // The label for the chart
                             datasets: [{
                                 label: 'Average Rating of Blogs',
-                                data: [ <%= avgRating %> ],
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
+                                data: [ <%= avgRating %> ], // Dynamically insert avgRating here
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Set the background color
+                                borderColor: 'rgba(54, 162, 235, 1)', // Set the border color
+                                borderWidth: 1 // Set the border width
                             }]
                         },
                         options: {
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: true // Ensure the y-axis starts at 0
                                 }
                             }
                         }

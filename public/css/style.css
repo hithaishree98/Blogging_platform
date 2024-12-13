@@ -1,37 +1,156 @@
+/* General Body Styling */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
 }
 
-.navbar .logo-container img {
-  height: 40px;
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  height: 50px;
+  width: 50px;
   margin-right: 10px;
+  border-radius: 50%;
 }
 
-.navbar .nav-links {
+.logo {
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links {
   list-style: none;
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  margin: 0;
 }
 
-.navbar .btn-signup {
-  background-color: #4CAF50;
+.nav-links a {
   color: white;
-  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 15px;
   border-radius: 5px;
 }
 
+.nav-links a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-signup {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.btn-signup:hover {
+  background-color: #45a049;
+}
+
+/* Hero Section */
+.header {
+  text-align: center;
+  padding: 150px 20px 50px;
+  color: #fff;
+}
+
+.header h1,
+.header p {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  display: inline-block; /* Wrap the background tightly around the text */
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons a {
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  color: white;
+}
+
+.hero-buttons .btn-primary {
+  background-color: #4CAF50;
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: #45a049;
+}
+
+.hero-buttons .btn-secondary {
+  background-color: #333;
+}
+
+.hero-buttons .btn-secondary:hover {
+  background-color: #555;
+}
+
+/* Footer */
 footer {
   background-color: rgba(0, 0, 0, 0.9);
   color: white;
   text-align: center;
   padding: 15px;
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+footer ul a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+footer ul a:hover {
+  text-decoration: underline;
 }
