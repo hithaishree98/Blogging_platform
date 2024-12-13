@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const connectToDatabase = require('./config/database'); 
 const app = express();
+const path = require('path');
+const adminRoutes = require('./routes/admin');
 
 // Load environment variables
 dotenv.config();
@@ -18,6 +20,11 @@ app.use(session({
 connectToDatabase(); // Call the function to connect to the database
 
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+
+// Set the views directory to where your EJS templates are stored
+app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
 app.use(express.json());
