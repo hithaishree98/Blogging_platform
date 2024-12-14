@@ -173,6 +173,7 @@ app.post('/blogs/:id/edit', async (req, res) => {
 
 
 // Route to handle blog deletion (protected by isAdmin middleware)
+// Route to handle blog deletion (protected by isAdmin middleware)
 app.delete('/blogs/:id', isAdmin, async (req, res) => {
   try {
     const blogId = req.params.id; // Extract the blog ID from the URL
@@ -184,12 +185,13 @@ app.delete('/blogs/:id', isAdmin, async (req, res) => {
       return res.status(404).send('Blog not found'); // Return error if the blog doesn't exist
     }
 
-    res.redirect('/explore'); // Redirect to the explore page after successful deletion
+    res.redirect('/admin/blogs'); // Redirect to the admin blog management page after successful deletion
   } catch (err) {
     console.error('Error deleting blog:', err.message);
     res.status(500).send('Error deleting blog');
   }
 });
+
 
 
 app.get('/profile', (req, res) => {
