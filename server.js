@@ -32,6 +32,7 @@ app.use(session({
 
 // Admin check middleware
 const isAdmin = (req, res, next) => {
+  console.log("Session in isAdmin middleware:", req.session);
   if (req.session.user && req.session.user.role === 'admin') {
     return next(); // Proceed to the next middleware or route handler
   } else {
@@ -172,7 +173,6 @@ app.post('/blogs/:id/edit', async (req, res) => {
 
 
 
-// Route to handle blog deletion (protected by isAdmin middleware)
 // Route to handle blog deletion (protected by isAdmin middleware)
 app.delete('/blogs/:id', isAdmin, async (req, res) => {
   try {

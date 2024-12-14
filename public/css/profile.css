@@ -9,6 +9,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f7f7f7;
     color: #333;
+    padding-top: 20px;
 }
 
 .profile-container {
@@ -26,8 +27,10 @@ body {
     align-items: center;      /* Center the contents vertically */
     background-color: #ff7043;
     color: white;
-    padding: 15px 0;
+    padding: 15px 20px;
+    padding-bottom: 20px;
     width: 100%;
+    height: 200%;
 }
 
 .header-content {
@@ -38,7 +41,8 @@ body {
 }
 
 .logo {
-    max-height: 50px;
+    max-height: 80px;
+    max-width: 100px;
 }
 
 .nav-links {
@@ -70,6 +74,7 @@ h1 span {
 }
 
 .profile-details, .saved-blogs, .my-blogs, .edit-profile-section {
+    margin-top: 20px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -217,6 +222,7 @@ form .cancel-btn:hover {
     }
 
     .profile-container {
+        margin-top: 20px;
         padding: 15px;
     }
 
