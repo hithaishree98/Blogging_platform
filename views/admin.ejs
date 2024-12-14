@@ -67,8 +67,6 @@
                 </div>
             </section>
 
-            
-
             <section class="graphs-container">
                 <div class="graph-section">
                     <h2>Average Blog Rating</h2>
@@ -98,48 +96,52 @@
                         });
                     </script>
                 </div>
-                  <section class="graphs-container">
-    <div class="graph-section">
-        <h2>Top 3 Destinations</h2>
-        <canvas id="destinationChart"></canvas>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            // Ensure destination data is being passed properly
-            const destinationLabels = <%= JSON.stringify(topDestinations.map(dest => dest._id)) %>;
-            const destinationCounts = <%= JSON.stringify(topDestinations.map(dest => dest.count)) %>;
-            console.log('Destination Labels:', destinationLabels); // Check in console
-            console.log('Destination Counts:', destinationCounts); // Check in console
-
-            const destinationCtx = document.getElementById('destinationChart').getContext('2d');
-            const destinationChart = new Chart(destinationCtx, {
-                type: 'bar', // Choose bar chart
-                data: {
-                    labels: destinationLabels, // Labels for destinations
-                    datasets: [{
-                        label: 'Top Destinations',
-                        data: destinationCounts, // Values for each destination
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color for bars
-                        borderColor: 'rgba(75, 192, 192, 1)', // Border color for bars
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { beginAtZero: true },
-                        y: { beginAtZero: true }
-                    },
-                    plugins: {
-                        legend: { position: 'top' }
-                    }
-                }
-            });
-        </script>
-    </div>
-</section>
-
-
                 
+                <!-- Section for Top Destinations Pie Chart -->
+                <div class="graph-section">
+                    <h2>Top 3 Destinations</h2>
+                    <canvas id="destinationChart"></canvas>
+                    <script>
+                        // Ensure destination data is being passed properly
+                        const destinationLabels = <%- JSON.stringify(topDestinations.map(dest => dest._id)) %>;
+                        const destinationCounts = <%- JSON.stringify(topDestinations.map(dest => dest.count)) %>;
+
+                        console.log('Destination Labels:', destinationLabels); // Check in console
+                        console.log('Destination Counts:', destinationCounts); // Check in console
+
+                        const destinationCtx = document.getElementById('destinationChart').getContext('2d');
+                        const destinationChart = new Chart(destinationCtx, {
+                            type: 'pie', // Change type to 'pie'
+                            data: {
+                                labels: destinationLabels, // Labels for destinations
+                                datasets: [{
+                                    label: 'Top Destinations',
+                                    data: destinationCounts, // Values for each destination
+                                    backgroundColor: [
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+
             </section>
         </main>
     </div>

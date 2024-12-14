@@ -33,17 +33,18 @@ app.get('/', (req, res) => {
 // Explore Page
 app.get('/explore', async (req, res) => {
   try {
-    const searchQuery = req.query.search || ''; // Get search query
+    const searchQuery = req.query.search || ''; // Get the search query
     const blogs = await Blog.find({
       $or: [
         { title: { $regex: searchQuery, $options: 'i' } },
         { destination: { $regex: searchQuery, $options: 'i' } }
       ]
     });
-    res.render('explore', { blogs }); // Pass blogs to explore.ejs
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error fetching blogs.');
+    console.log('Blogs fetched from database:', blogs); // Debugging log
+    res.render('explore', { blogs }); // Pass blogs to EJS
+  } catch (error) {
+    console.error('Error loading blogs:', error); // Debugging log
+    res.status(500).send('Error loading blogs');
   }
 });
 
