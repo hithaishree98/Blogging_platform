@@ -63,6 +63,12 @@
                 <h2>Edit Profile</h2>
                 <form id="edit-profile-form" action="/profile" method="POST">
                     <div class="form-group">
+                        <label for="edit-profile-photo">Profile Photo</label>
+                        <!-- Display current profile picture -->
+                        <img id="profile-picture-preview" src="<%= user.profilePhoto || '/default-profile.png' %>" alt="Profile Picture">
+                        <input type="file" id="edit-profile-photo" name="profilePhoto">
+                    </div>
+                    <div class="form-group">
                         <label for="edit-username">Username</label>
                         <input type="text" id="edit-username" name="username" value="<%= user.username %>" required>
                     </div>
@@ -73,10 +79,6 @@
                     <div class="form-group">
                         <label for="edit-email">Email</label>
                         <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-profile-photo">Profile Photo</label>
-                        <input type="file" id="edit-profile-photo" name="profilePhoto">
                     </div>
                     <div class="form-group">
                         <label for="edit-password">Password</label>
@@ -101,30 +103,20 @@
             const $cancelEditBtn = $('#cancel-edit-btn');
             const $editProfileForm = $('#edit-profile-form');
 
-            // Hide "Saved Blogs" and "My Blogs" sections when clicking on "Profile" link
+            // Click event for Profile link to show Edit Profile form
             $profileNavLink.on('click', () => {
-                // Hide saved blogs, my blogs, and show profile details or edit profile
-                $savedBlogs.addClass('hidden');
-                $myBlogs.addClass('hidden');
-                $profileDetails.removeClass('hidden');
-                $editProfileSection.addClass('hidden');
+                $profileDetails.addClass('hidden'); // Hide the welcome message
+                $savedBlogs.addClass('hidden'); // Hide saved blogs
+                $myBlogs.addClass('hidden'); // Hide my blogs
+                $editProfileSection.removeClass('hidden'); // Show edit profile form
             });
 
-            // Open the edit profile form and hide other sections
-            $profileNavLink.on('click', () => {
-                // Hide Saved Blogs and My Blogs sections when clicking on Profile
-                $savedBlogs.addClass('hidden');
-                $myBlogs.addClass('hidden');
-                $editProfileSection.removeClass('hidden');  // Show the edit form
-                $profileDetails.addClass('hidden');  // Hide the profile details section
-            });
-
-            // Close the edit profile form and show other sections
+    // Click event for Cancel button to return to Profile view
             $cancelEditBtn.on('click', () => {
-                $editProfileSection.addClass('hidden');  // Hide the edit form
-                $profileDetails.removeClass('hidden');  // Show the profile details section
-                $savedBlogs.removeClass('hidden');  // Show the saved blogs section
-                $myBlogs.removeClass('hidden');  // Show the my blogs section
+                $editProfileSection.addClass('hidden'); // Hide edit profile form
+                $profileDetails.removeClass('hidden'); // Show welcome message
+                $savedBlogs.removeClass('hidden'); // Show saved blogs
+                $myBlogs.removeClass('hidden'); // Show my blogs
             });
 
             // Handle profile update

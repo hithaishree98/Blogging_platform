@@ -569,6 +569,12 @@ footer .social-links a {
   width: 100%;
 }
 
+
+
+.hidden {
+    display: none;
+}
+
 /* Additional Responsiveness */
 @media (max-width: 768px) {
   .edit-form {
