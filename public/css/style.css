@@ -245,14 +245,6 @@ footer .social-links a {
   color: #666;
 }
 
-
-
-
-
-
-
-
-
 /* Explore Page Specific Styles */
 .content-grid {
   display: grid;
@@ -335,5 +327,92 @@ footer .social-links a {
 }
 
 .search-filter button:hover {
+  background-color: #45a049;
+}
+
+/* Blog Details Page */
+.blog-details {
+  padding: 20px;
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-details h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.blog-details .blog-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.blog-details .blog-meta {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.blog-details p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.blog-details .btn-primary {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.blog-details .btn-primary:hover {
+  background-color: #45a049;
+}
+
+/* 404 Page Styles */
+.not-found {
+  text-align: center;
+  padding: 30px 20px; /* Reduce padding */
+  max-width: 600px; /* Narrower width */
+  margin: 100px auto; /* Center vertically and horizontally */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.not-found h1 {
+  font-size: 80px; /* Slightly smaller font */
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.not-found p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.not-found .btn-primary {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.not-found .btn-primary:hover {
   background-color: #45a049;
 }

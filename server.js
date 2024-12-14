@@ -77,7 +77,7 @@ app.use(methodOverride('_method')); // Enable support for PUT/DELETE in forms
 
 // 404 Route
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'views/404.html')); // Render the 404 error page
+  res.status(404).render('404'); // Render the 404 page
 });
 
 // Start server

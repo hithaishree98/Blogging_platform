@@ -1,11 +1,13 @@
 /* Dashboard Layout */
 body {
+  background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
   background-color: #F7E7CE;
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
 
 .dashboard-container {
+    background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
     display: flex;
     height: 100vh;
     font-family: 'Inter', sans-serif;
@@ -73,12 +75,12 @@ body {
     background-color: white;
 }
 
-.header {
+/* .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
+} */
 
 .header h1 {
     font-size: 24px;
@@ -175,6 +177,4 @@ body {
     font-size: 14px;
     color: #555;
 }
-
-
-
+ 
