@@ -17,7 +17,7 @@
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="javascript:void(0);" id="edit-profile-link">Profile</a>
+                <a href="javascript:void(0);" id="profile-nav-link">Profile</a>
                 <a href="/Explore">Explore</a>
                 <a href="/auth/logout">Logout</a>
             </nav>
@@ -29,7 +29,7 @@
                 <!-- The button to toggle Edit Profile form -->
             </section>
 
-            <section class="saved-blogs">
+            <section class="saved-blogs" id="saved-blogs">
                 <h2>Saved Blogs</h2>
                 <ul id="blog-list">
                     <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
@@ -42,7 +42,7 @@
                 </ul>
             </section>
                           
-            <section class="my-blogs">
+            <section class="my-blogs" id="my-blogs">
                 <h2>My Blogs</h2>
                 <ul id="my-blog-list">
                     <% if (user.myBlogs && user.myBlogs.length > 0) { %>
@@ -55,9 +55,14 @@
                 </ul>
             </section>
                        
+            <!-- Hidden Edit Profile Form -->
             <section class="edit-profile-section hidden" id="edit-profile-section">
                 <h2>Edit Profile</h2>
                 <form id="edit-profile-form" action="/profile" method="POST">
+                    <div class="form-group">
+                        <label for="edit-username">Username</label>
+                        <input type="text" id="edit-username" name="username" value="<%= user.username %>" required>
+                    </div>
                     <div class="form-group">
                         <label for="edit-name">Name</label>
                         <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
@@ -65,6 +70,14 @@
                     <div class="form-group">
                         <label for="edit-email">Email</label>
                         <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-profile-photo">Profile Photo</label>
+                        <input type="file" id="edit-profile-photo" name="profilePhoto">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-password">Password</label>
+                        <input type="password" id="edit-password" name="password" placeholder="New Password">
                     </div>
                     <div class="form-buttons">
                         <button type="submit" class="btn">Save Changes</button>
@@ -76,38 +89,53 @@
         </main>
     </div>
 
-    
-
     <script>
         $(document).ready(() => {
-            const $editProfileLink = $('#edit-profile-link');
+            const $profileNavLink = $('#profile-nav-link');
             const $editProfileSection = $('#edit-profile-section');
             const $profileDetails = $('#profile-details');
+            const $savedBlogs = $('#saved-blogs');
+            const $myBlogs = $('#my-blogs');
             const $cancelEditBtn = $('#cancel-edit-btn');
             const $editProfileForm = $('#edit-profile-form');
 
-            // Open the modal
-            $editProfileLink.on('click', () => {
+            // Hide "Saved Blogs" and "My Blogs" sections when clicking on "Profile" link
+            $profileNavLink.on('click', () => {
+                // Hide saved blogs, my blogs, and show profile details or edit profile
+                $savedBlogs.addClass('hidden');
+                $myBlogs.addClass('hidden');
+                $profileDetails.removeClass('hidden');
+                $editProfileSection.addClass('hidden');
+            });
+
+            // Open the edit profile form and hide other sections
+            $profileNavLink.on('click', () => {
+                // Hide Saved Blogs and My Blogs sections when clicking on Profile
+                $savedBlogs.addClass('hidden');
+                $myBlogs.addClass('hidden');
                 $editProfileSection.removeClass('hidden');  // Show the edit form
                 $profileDetails.addClass('hidden');  // Hide the profile details section
             });
 
-            // Close the modal
+            // Close the edit profile form and show other sections
             $cancelEditBtn.on('click', () => {
                 $editProfileSection.addClass('hidden');  // Hide the edit form
                 $profileDetails.removeClass('hidden');  // Show the profile details section
+                $savedBlogs.removeClass('hidden');  // Show the saved blogs section
+                $myBlogs.removeClass('hidden');  // Show the my blogs section
             });
-
 
             // Handle profile update
             $('#edit-profile-form').on('submit', function (e) {
                 e.preventDefault(); // Prevent page reload
-                const formData = $(this).serialize();
+                const formData = new FormData(this); // Use FormData to handle file uploads
 
                 $.ajax({
                     url: '/profile',
                     method: 'PUT',
                     data: formData,
+                    processData: false,  // Let jQuery handle the data format
+                    contentType: false,  // Let jQuery handle the content type
                     success: (response) => {
                         alert(response.message);
                         location.reload(); // Reload the page to show updated data

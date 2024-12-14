@@ -1,15 +1,23 @@
 /* public/css/profile.css */
-body {
-    font-family: Arial, sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
 }
 
 .profile-container {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 40px auto;
     padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header {
@@ -18,36 +26,134 @@ body {
     align-items: center;
     background-color: #ff7043;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
 }
 
 .logo {
     max-height: 50px;
 }
 
+/* Ensure nav links are horizontal */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 .nav-links a {
-    margin-left: 20px;
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
-.profile-details, .saved-blogs {
-    background-color: white;
+.nav-links a:hover {
+    color: #f9c74f;
+}
+
+h1, h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h1 span {
+    font-weight: 600;
+    color: #ff7043;
+}
+
+.profile-details, .saved-blogs, .my-blogs, .edit-profile-section {
+    background-color: #ffffff;
     padding: 20px;
-    margin: 10px 0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-#edit-profile-btn {
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-details h1 {
+    font-size: 1.75rem;
+}
+
+.profile-details p {
+    font-size: 1rem;
+}
+
+/* Button Styling - Ensure all buttons are consistent */
+button, #edit-profile-btn, form button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    width: auto;
+    transition: background-color 0.3s;
 }
 
-#edit-profile-btn:hover {
+button:hover, #edit-profile-btn:hover, form button:hover {
     background-color: #45a049;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="file"] {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form input[type="file"] {
+    padding: 5px;
+}
+
+/* Cancel button styling */
+form .cancel-btn {
+    background-color: #e0e0e0;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+form .cancel-btn:hover {
+    background-color: #c2c2c2;
+}
+
+/* Hidden class for sections */
+.hidden {
+    display: none;
 }
 
 /* Modal styles */
@@ -69,18 +175,50 @@ body {
 
 .modal-content {
     background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+    padding: 30px;
+    border-radius: 8px;
     width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close-btn {
-    font-size: 20px;
+    font-size: 24px;
+    color: #333;
     cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
+    transition: color 0.3s;
 }
-.hidden {
-    display: none;
+
+.close-btn:hover {
+    color: #ff7043;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: row; /* Ensures horizontal alignment on mobile */
+        gap: 15px;
+        align-items: center;
+    }
+
+    .profile-container {
+        padding: 15px;
+    }
+
+    .profile-details h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        font-size: 0.9rem;
+    }
 }

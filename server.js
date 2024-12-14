@@ -65,8 +65,6 @@ app.get('/explore', async (req, res) => {
         { destination: { $regex: searchQuery, $options: 'i' } }
       ]
     });
-    const user = req.user;
-    console.log('User:', user);
     res.render('explore', { blogs }); // Pass blogs to the template
   } catch (error) {
     console.error('Error fetching blogs:', error);
