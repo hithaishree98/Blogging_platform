@@ -22,14 +22,19 @@ body {
 
 .header {
     display: flex;
-    justify-content: center;  /* Centers all content horizontally */
-    align-items: center; /* Centers vertically */
+    justify-content: space-between;  /* Center the contents horizontally */
+    align-items: center;      /* Center the contents vertically */
     background-color: #ff7043;
     color: white;
-    padding: 15px 20px;
-    border-radius: 8px 8px 0 0;
+    padding: 15px 0;
     width: 100%;
-    gap: 20px;  /* Adds space between logo and nav links */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Spread out logo and nav links */
+    width: 90%;  /* Ensures there's a limit to the width of the header content */
+    max-width: 1200px;  /* Optional: maximum width to prevent stretching on large screens */
 }
 
 .logo {
@@ -39,7 +44,6 @@ body {
 .nav-links {
     display: flex;
     gap: 20px;
-    margin-left: auto; /* Pushes the nav links to the right */
     align-items: center;
 }
 
@@ -199,15 +203,15 @@ form .cancel-btn:hover {
 
 /* Responsive styling */
 @media (max-width: 768px) {
-    .header {
+    .header-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;  /* Center vertically for smaller screens */
         padding: 20px;
     }
 
     .nav-links {
         display: flex;
-        flex-direction: row; /* Ensures horizontal alignment on mobile */
+        flex-direction: row;  /* Makes nav links stack vertically */
         gap: 15px;
         align-items: center;
     }

@@ -5,7 +5,12 @@ const User = require("../models/User");
 // controllers/adminController.js
 
 exports.dashboard = async (req, res) => {
+  console.log("Admin session:", req.session); // Debugging admin session
   try {
+    if (!req.session || !req.session.isAdmin) {
+      console.log("Admin not logged in");
+      return res.redirect("/login"); // Redirect to login if not an admin
+    }
     const blogCount = await Blog.countDocuments(); // Count all blog documents
     const userCount = await User.countDocuments(); // Count all user documents
     const averageRating = await Blog.aggregate([
@@ -38,14 +43,14 @@ exports.viewBlogs = async (req, res) => {
   }
 };
 
-exports.deleteBlog = async (req, res) => {
-  try {
-    await Blog.findByIdAndDelete(req.params.id);
-    res.redirect("/admin/blogs"); // Redirect back to the blog management page
-  } catch (err) {
-    res.status(500).send("Server Error");
-  }
-};
+// exports.deleteBlog = async (req, res) => {
+//   try {
+//     await Blog.findByIdAndDelete(req.params.id);
+//     res.redirect("/admin/blogs"); // Redirect back to the blog management page
+//   } catch (err) {
+//     res.status(500).send("Server Error");
+//   }
+// };
 
 exports.editBlog = async (req, res) => {
   try {
