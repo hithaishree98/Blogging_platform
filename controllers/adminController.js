@@ -9,7 +9,7 @@ exports.dashboard = async (req, res) => {
   try {
     if (!req.session || !req.session.isAdmin) {
       console.log("Admin not logged in");
-      return res.redirect("/login"); // Redirect to login if not an admin
+      return res.redirect("/auth/login"); // Redirect to login if not an admin
     }
     const blogCount = await Blog.countDocuments(); // Count all blog documents
     const userCount = await User.countDocuments(); // Count all user documents
