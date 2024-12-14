@@ -1,46 +1,56 @@
-// controllers/profileController.js
 const User = require('../models/User');
-const Blog = require('../models/Blog');
 
-// Get User Profile
+// Controller to handle fetching the user profile
 const getUserProfile = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming req.user is set after authentication middleware
-        const user = await User.findById(userId);
+        if (!req.session.user) {
+            return res.status(401).json({ success: false, message: 'Not authenticated' });
+        }
 
-        if (!user) return res.status(404).json({ message: 'User not found' });
-
-        // Get saved blogs
-        const savedBlogs = await Blog.find({ _id: { $in: user.savedBlogs } });
-
-        // Send response with user details and saved blogs
-        res.json({
-            username: user.username,
-            name: user.name,
-            email: user.email,
-            savedBlogs: savedBlogs.map(blog => ({ id: blog._id, title: blog.title }))
+        // Send the user data (excluding sensitive information)
+        const user = await User.findById(req.session.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+      
+        if (!user.savedBlogs) {
+            user.savedBlogs = [];
+        }
+      
+        res.render('profile', {
+            user: user
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching profile' });
+        res.status(500).json({ success: false, message: 'Error fetching profile data' });
     }
 };
 
-// Update User Profile
+// Controller to handle updating the user profile
 const updateUserProfile = async (req, res) => {
+    const { name, email, username } = req.body;
+
     try {
-        const userId = req.user.id; // Assuming req.user is set after authentication middleware
-        const { name, email } = req.body;
+        if (!req.session.user) {
+            return res.status(401).json({ success: false, message: 'Not authenticated' });
+        }
 
-        const updatedUser = await User.findByIdAndUpdate(userId, { name, email }, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(
+            req.session.user.id,
+            { name, email, username },
+            { new: true }  // Return the updated document
+        );
 
-        if (!updatedUser) return res.status(404).json({ message: 'User not found' });
-
-        res.json({ message: 'Profile updated successfully!' });
+        res.json({
+            success: true,
+            message: 'Profile updated successfully',
+            user: updatedUser
+        });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error updating profile' });
+        res.status(500).json({ success: false, message: 'Error updating profile' });
     }
 };
 
-module.exports = { getUserProfile, updateUserProfile };
+module.exports = {
+    getUserProfile,
+    updateUserProfile
+};

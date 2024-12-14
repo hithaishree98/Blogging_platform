@@ -1,11 +1,8 @@
 <%- include('layout', {
   title: `Edit Blog - ${blog.title}`,
   body: `
-    <section class="header">
-      <h1>Edit Blog</h1>
-    </section>
-
     <section class="edit-form">
+      <h1>Edit Blog</h1>
       <form method="POST" action="/blogs/${blog._id}/edit">
         <div>
           <label for="title">Title:</label>
@@ -23,7 +20,7 @@
           <label for="imageUrl">Image URL:</label>
           <input type="text" id="imageUrl" name="imageUrl" value="${blog.imageUrl}">
         </div>
-        <button type="submit" class="btn-primary">Update Blog</button>
+        <button type="submit" class="btn-secondary">Update Blog</button>
         <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
       </form>
     </section>

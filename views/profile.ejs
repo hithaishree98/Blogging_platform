@@ -36,9 +36,13 @@
             <section class="saved-blogs">
                 <h2>Saved Blogs</h2>
                 <ul id="blog-list">
-                    <% user.savedBlogs.forEach(blog => { %>
-                        <li><%= blog.title %></li>
-                    <% }) %>
+                    <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
+                        <% user.savedBlogs.forEach(blog => { %>
+                            <li><%= blog.title %></li>
+                        <% }) %>
+                    <% } else { %>
+                        <li>No saved blogs</li>
+                    <% } %>
                 </ul>
             </section>
         </main>
