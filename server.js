@@ -174,24 +174,26 @@ app.post('/blogs/:id/edit', async (req, res) => {
 
 // Route to handle blog deletion (only accessible by admin)
 app.delete('/blogs/:id', async (req, res) => {
-  try {
-    const blogId = req.params.id;
-    console.log('Attempting to delete blog with ID:', blogId);  // Log the ID being deleted
+  const blogId = req.params.id;
+  console.log('Delete request received for blog ID:', blogId);
 
-    const blog = await Blog.findById(blogId);  // Check if blog exists before deleting
+  try {
+    const blog = await Blog.findById(blogId);
     if (!blog) {
       console.log('Blog not found');
       return res.status(404).send('Blog not found');
     }
 
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);  // Perform the delete operation
+    console.log('Blog found:', blog);
+    
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
     if (!deletedBlog) {
-      console.log('Delete failed, blog not found.');
+      console.log('Delete failed, blog could not be deleted');
       return res.status(404).send('Blog not found');
     }
 
-    console.log('Blog deleted successfully:', deletedBlog);  // Log deleted blog details
-    res.redirect('/explore');  // Redirect to another page after deletion
+    console.log('Blog deleted successfully:', deletedBlog);
+    res.redirect('/explore'); // Redirect after deletion
   } catch (err) {
     console.error('Error deleting blog:', err.message);
     res.status(500).send('Error deleting the blog');
