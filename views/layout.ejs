@@ -7,10 +7,36 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <%- include('partials/header') %>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <a href="/">
+          <img src="https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/DALLE2024-12-1316.28.03-AnexquisiteandcreativelogoforTasteTrailsafoodandtravelblog.Thedesignintegratesacircularglobeinsoftpasteltonessymbolizingtra-ezgif.com-webp-to-jpg-converter.jpg?v=1734125364737" alt="TasteTrails Logo">
+        </a>
+        <a href="/" class="logo">TasteTrails</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/explore">Explore</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup" class="btn-signup">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Content -->
   <main>
     <%- body %>
   </main>
-  <%- include('partials/footer') %>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 TasteTrails. Crafted with love for food and travel enthusiasts.</p>
+    <ul class="social-links">
+      <li><a href="#">Facebook</a></li>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Twitter</a></li>
+    </ul>
+  </footer>
 </body>
 </html>

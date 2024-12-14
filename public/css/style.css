@@ -1,25 +1,15 @@
-/* General Body Styling */
+/* General Styles */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #333;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Main Content */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
 }
 
 /* Navbar */
@@ -33,6 +23,7 @@ main {
   width: 100%;
   top: 0;
   z-index: 1000;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo-container {
@@ -41,16 +32,17 @@ main {
 }
 
 .logo-container img {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   margin-right: 10px;
   border-radius: 50%;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 22px;
   color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .nav-links {
@@ -58,14 +50,16 @@ main {
   display: flex;
   gap: 20px;
   margin: 0;
+  align-items: center;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
   font-size: 16px;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .nav-links a:hover {
@@ -75,8 +69,10 @@ main {
 .btn-signup {
   background-color: #4CAF50;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px;
   font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-signup:hover {
@@ -84,47 +80,60 @@ main {
 }
 
 /* Hero Section */
-.header {
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 150px 20px 50px;
-  color: #fff;
+  padding: 150px 20px 60px;
 }
 
-.header h1,
-.header p {
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-  display: inline-block; /* Wrap the background tightly around the text */
+.hero h1 {
+  display: inline-block;
+  font-size: 48px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
-.hero-buttons {
-  margin-top: 20px;
+.hero p {
+  display: inline-block;
+  font-size: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
-.hero-buttons a {
+.hero .hero-buttons a {
   text-decoration: none;
   padding: 10px 20px;
-  margin: 10px;
+  margin: 5px;
   font-size: 18px;
   border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.hero .btn-primary {
+  background-color: #4CAF50;
   color: white;
 }
 
-.hero-buttons .btn-primary {
-  background-color: #4CAF50;
-}
-
-.hero-buttons .btn-primary:hover {
+.hero .btn-primary:hover {
   background-color: #45a049;
 }
 
-.hero-buttons .btn-secondary {
-  background-color: #333;
+.hero .btn-secondary {
+  background-color: #555;
+  color: white;
 }
 
-.hero-buttons .btn-secondary:hover {
-  background-color: #555;
+.hero .btn-secondary:hover {
+  background-color: #333;
 }
 
 /* Footer */
@@ -133,24 +142,23 @@ footer {
   color: white;
   text-align: center;
   padding: 15px;
-  margin-top: auto; /* Push the footer to the bottom */
+  margin-top: auto;
 }
 
 footer ul {
   list-style: none;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin: 10px 0;
   padding: 0;
+  gap: 20px;
 }
 
-footer ul a {
+footer ul li a {
   color: white;
   text-decoration: none;
   font-size: 16px;
 }
 
-footer ul a:hover {
+footer ul li a:hover {
   text-decoration: underline;
 }
