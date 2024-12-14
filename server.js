@@ -114,6 +114,56 @@ app.get('/blogs/:id', async (req, res) => {
   }
 });
 
+
+// Route to render the edit form
+app.get('/blogs/:id/edit', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
+
+    res.render('edit', { blog }); // Render the 'edit.ejs' page with blog details
+  } catch (err) {
+    console.error('Error fetching blog for edit:', err.message);
+    res.status(500).send('Error loading edit page');
+  }
+});
+
+// Route to handle blog update
+app.post('/blogs/:id/edit', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const { title, content, destination, imageUrl } = req.body;
+
+    // Validate required fields
+    if (!title || !content || !destination) {
+      return res.status(400).send('Title, content, and destination are required');
+    }
+
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      blogId,
+      { title, content, destination, imageUrl },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedBlog) {
+      return res.status(404).send('Blog not found');
+    }
+
+    res.redirect(`/blogs/${blogId}`); // Redirect to the blog's detail page
+  } catch (err) {
+    console.error('Error updating blog:', err.message);
+    res.status(500).send('Error updating blog');
+  }
+});
+
+
+
+
+
 app.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/auth/login'); // Redirect to login if not logged in

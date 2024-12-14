@@ -36,7 +36,9 @@
             <section class="saved-blogs">
                 <h2>Saved Blogs</h2>
                 <ul id="blog-list">
-                    <!-- Blog items will be populated dynamically -->
+                    <% user.savedBlogs.forEach(blog => { %>
+                        <li><%= blog.title %></li>
+                    <% }) %>
                 </ul>
             </section>
         </main>
@@ -45,71 +47,55 @@
     <!-- Edit Profile Modal -->
     <div id="edit-profile-modal" class="modal hidden">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
             <h2>Edit Profile</h2>
             <form id="edit-profile-form">
                 <div class="form-group">
-                    <label for="edit-name">Name:</label>
-                    <input type="text" id="edit-name" name="name" required>
+                    <label for="edit-name">Name</label>
+                    <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
                 </div>
                 <div class="form-group">
-                    <label for="edit-email">Email:</label>
-                    <input type="email" id="edit-email" name="email" required>
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
                 </div>
-                <button type="submit" class="btn">Save Changes</button>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn">Save Changes</button>
+                    <button type="button" class="btn cancel-btn">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
         $(document).ready(() => {
-            // Fetch and display user data
-            $.get('/api/user/profile', (data) => {
-                $('#username').text(data.username);
-                $('#name').text(data.name);
-                $('#email').text(data.email);
+            const $editProfileModal = $('#edit-profile-modal');
+            const $editProfileBtn = $('#edit-profile-btn');
+            const $cancelBtn = $('.cancel-btn');
 
-                // Populate saved blogs
-                const blogList = data.savedBlogs.map(blog => `<li><a href="/blogs/${blog.id}">${blog.title}</a></li>`).join('');
-                $('#blog-list').html(blogList || '<li>No blogs saved yet.</li>');
-            }).fail((error) => {
-                alert('Error fetching profile data.');
+            // Open the modal
+            $editProfileBtn.on('click', () => {
+                $editProfileModal.removeClass('hidden');
             });
 
-            // Open modal for editing profile
-            $('#edit-profile-btn').on('click', () => {
-                $('#edit-name').val($('#name').text());
-                $('#edit-email').val($('#email').text());
-                $('#edit-profile-modal').removeClass('hidden');
+            // Close the modal
+            $cancelBtn.on('click', () => {
+                $editProfileModal.addClass('hidden');
             });
 
-            // Close modal
-            $('.close-btn').on('click', () => {
-                $('#edit-profile-modal').addClass('hidden');
-            });
-
-            // Submit edited profile details
+            // Handle profile update
             $('#edit-profile-form').on('submit', function (e) {
-                e.preventDefault();
-
-                const formData = {
-                    name: $('#edit-name').val(),
-                    email: $('#edit-email').val()
-                };
+                e.preventDefault(); // Prevent page reload
+                const formData = $(this).serialize();
 
                 $.ajax({
-                    url: '/api/user/profile',
+                    url: '/profile',
                     method: 'PUT',
                     data: formData,
-                    success: () => {
-                        alert('Profile updated successfully!');
-                        $('#edit-profile-modal').addClass('hidden');
-                        // Refresh user data
-                        $('#name').text(formData.name);
-                        $('#email').text(formData.email);
+                    success: (response) => {
+                        alert(response.message);
+                        location.reload(); // Reload the page to show updated data
                     },
                     error: (error) => {
-                        alert('Error updating profile.');
+                        alert(`Error: ${error.responseJSON.message}`);
                     }
                 });
             });
