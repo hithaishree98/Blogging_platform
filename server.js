@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
 const cookieParser = require('cookie-parser');
+const profileRoutes = require('./routes/profile');
 dotenv.config();
 
 const app = express();
@@ -38,7 +39,7 @@ app.get('/admin', adminController.dashboard); // Use the dashboard function from
 
 // Routes for authentication
 app.use('/auth', authRoutes);
-
+app.use(profileRoutes);
 
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies

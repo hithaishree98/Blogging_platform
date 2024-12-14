@@ -185,8 +185,9 @@ footer .social-links a {
 }
 
 .search-filter input[type="text"] {
-  padding: 10px;
-  width: 70%;
+  padding: 12px;
+  width: 400px; /* Increased width for more typing space */
+  max-width: 100%; /* Ensures responsiveness */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
