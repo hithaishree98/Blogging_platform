@@ -17,7 +17,7 @@
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="/">Profile</a>
+                <a href="javascript:void(0);" id="edit-profile-link">Profile</a>
                 <a href="/Explore">Explore</a>
                 <a href="/auth/logout">Logout</a>
             </nav>
@@ -26,11 +26,6 @@
         <main>
             <section class="profile-details">
                 <h1>Welcome, <span id="username"><%= user.username %></span>!</h1>
-                <div class="profile-info">
-                    <p><strong>Name:</strong> <span id="name"><%= user.name %></span></p>
-                    <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
-                    <button id="edit-profile-btn" class="btn">Edit Profile</button>
-                </div>
             </section>
 
             <section class="saved-blogs">

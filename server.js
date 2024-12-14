@@ -173,6 +173,14 @@ app.get('/profile', (req, res) => {
 
 // Admin dashboard route
 app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController
+app.get('/auth/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Error logging out');
+    }
+    res.redirect('/'); // Redirect to homepage after logout
+  });
+});
 
 // Routes for authentication
 app.use('/auth', authRoutes);
