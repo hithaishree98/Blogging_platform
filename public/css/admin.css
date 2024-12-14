@@ -1,4 +1,10 @@
 /* Dashboard Layout */
+body {
+  background-color: #f4f4f9; /* Light grayish background color */
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
 .dashboard-container {
     display: flex;
     height: 100vh;

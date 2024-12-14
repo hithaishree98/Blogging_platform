@@ -18,19 +18,20 @@ body {
     width: 100%;
     max-width: 400px;
     height: 300px; /* Same height as login form container */
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     background-color: white; /* Optional background for logo container */
     border: 1px solid #ccc; /* Optional border */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding-top: 40px;
+    position: relative;
 }
 
 .logo-container img {
-    max-width: 90%; /* Scale the image within the container */
-    max-height: 80%;
+    max-width: 80%; /* Scale the image within the container */
+    max-height: 90%;
     border-radius: 50%; /* Ensure the logo image is circular */
+    margin-top: 55px;
 }
 
 .logo-container a.logo {
@@ -43,7 +44,7 @@ body {
 
 .form-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     padding: 20px; /* Added padding for right and left sides */
     background-color: white;
     border: 1px solid #ccc;
