@@ -9,23 +9,19 @@
         <button class="btn-primary" type="submit">Search</button>
       </form>
     </section>
+
     <section class="content-grid">
-      <% if (blogs && blogs.length) { %>
-        <% blogs.forEach(blog => { %>
-          <div class="content-item">
-            <img src="https://via.placeholder.com/300x200" alt="<%= blog.title %>">
-            <h3><%= blog.title %></h3>
-            <p><%= blog.content.substring(0, 100) %>...</p>
-            <p><strong>Destination:</strong> <%= blog.destination %></p>
-            <p><strong>Rating:</strong> <%= blog.rating %></p>
-            <p><strong>Likes:</strong> <%= blog.likes %></p>
-            <a href="/blogs/<%= blog._id %>" class="btn-secondary">Read More</a>
-          </div>
-        <% }) %>
-      <% } %>
+      ${blogs.map(blog => `
+        <div class="content-item">
+          <img src="https://via.placeholder.com/300x200" alt="${blog.title}">
+          <h3>${blog.title}</h3>
+          <p>${blog.content.substring(0, 100)}...</p>
+          <p><strong>Destination:</strong> ${blog.destination}</p>
+          <p><strong>Rating:</strong> ${blog.rating}</p>
+          <p><strong>Likes:</strong> ${blog.likes}</p>
+          <a href="/blogs/${blog._id}" class="btn-secondary">Read More</a>
+        </div>
+      `).join('')}
     </section>
-    <% if (!blogs || blogs.length === 0) { %>
-      <p class="no-blogs">No blogs found. Check back later!</p>
-    <% } %>
   `
 }) %>

@@ -16,7 +16,7 @@ exports.dashboard = async (req, res) => {
     const topDestinations = await Blog.aggregate([
       { $group: { _id: "$destination", count: { $sum: 1 } } }, // Group by destination and count occurrences
       { $sort: { count: -1 } }, // Sort by the count in descending order
-      { $limit: 3 } // Get the top 3 destinations
+      { $limit: 2 } // Get the top 3 destinations
     ]);
     console.log("Top Destinations:", topDestinations);
     res.render('admin', { blogCount, userCount, avgRating, topDestinations });
