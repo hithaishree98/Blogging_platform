@@ -61,22 +61,3 @@ exports.editBlog = async (req, res) => {
   }
 };
 
-// // Manage Users
-// exports.viewUsers = async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.render("adminUsers", { users });
-//   } catch (err) {
-//     res.status(500).send("Server Error");
-//   }
-// };
-
-// exports.deleteUser = async (req, res) => {
-//   try {
-//     await User.findByIdAndDelete(req.params.id);
-//     res.redirect("/admin/users"); // Redirect back to user management page
-//   } catch (err) {
-//     res.status(500).send("Server Error");
-//   }
-// };
-
