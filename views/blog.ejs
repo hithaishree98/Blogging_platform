@@ -13,6 +13,7 @@
       <p><small>Published on: ${new Date(blog.createdAt).toDateString()}</small></p>
       <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
       <a href="/explore" class="btn-primary">Back to Explore</a>
+      <a href="/blogs/${blog._id}/delete" class="btn-danger">Delete</a>
     </section>
   `
 }) %>
