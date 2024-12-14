@@ -17,8 +17,8 @@
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="/">Home</a>
-                <a href="/blogs">Blogs</a>
+                <a href="/">Profile</a>
+                <a href="/Explore">Explore</a>
                 <a href="/auth/logout">Logout</a>
             </nav>
         </header>
@@ -42,6 +42,19 @@
                         <% }) %>
                     <% } else { %>
                         <li>No saved blogs</li>
+                    <% } %>
+                </ul>
+            </section>
+                          
+            <section class="my-blogs">
+                <h2>My Blogs</h2>
+                <ul id="my-blog-list">
+                    <% if (user.myBlogs && user.myBlogs.length > 0) { %>
+                        <% user.myBlogs.forEach(blog => { %>
+                            <li><%= blog.title %></li>
+                        <% }) %>
+                    <% } else { %>
+                        <li>No blogs written</li>
                     <% } %>
                 </ul>
             </section>
