@@ -1,3 +1,4 @@
+<!-- views/profile.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
         <header class="header">
             <div class="logo-container">
                 <a href="/">
-                    <img src="/path-to-logo/logo.png" alt="TasteTrails Logo" class="logo">
+                    <img src="/path-to-logo/logo.png" alt="Logo" class="logo">
                 </a>
             </div>
             <nav class="nav-links">
@@ -24,10 +25,10 @@
 
         <main>
             <section class="profile-details">
-                <h1>Welcome, <span id="username">User</span>!</h1>
+                <h1>Welcome, <span id="username"><%= user.username %></span>!</h1>
                 <div class="profile-info">
-                    <p><strong>Name:</strong> <span id="name"></span></p>
-                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Name:</strong> <span id="name"><%= user.name %></span></p>
+                    <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
                     <button id="edit-profile-btn" class="btn">Edit Profile</button>
                 </div>
             </section>

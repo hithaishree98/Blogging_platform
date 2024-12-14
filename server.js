@@ -55,6 +55,41 @@ app.get('/explore', async (req, res) => {
   }
 });
 
+// Route to display the blog creation form
+app.get('/blogs/create', (req, res) => {
+  try {
+    res.render('create'); // Ensure the 'create.ejs' file exists in the views directory
+  } catch (err) {
+    console.error('Error rendering create page:', err.message);
+    res.status(500).send('Error rendering create page');
+  }
+});
+
+// Route to handle blog creation
+app.post('/blogs/create', async (req, res) => {
+  try {
+    const { title, content, destination, imageUrl } = req.body;
+
+    // Validate required fields
+    if (!title || !content || !destination) {
+      return res.status(400).send('Title, content, and destination are required');
+    }
+
+    const newBlog = new Blog({
+      title,
+      content,
+      destination,
+      imageUrl,
+    });
+
+    await newBlog.save(); // Save the new blog to the database
+    res.redirect('/explore'); // Redirect to the explore page after successful creation
+  } catch (err) {
+    console.error('Error creating blog:', err.message);
+    res.status(500).send('Error creating the blog');
+  }
+});
+
 // Route to display a specific blog based on ID
 app.get('/blogs/:id', async (req, res) => {
   try {
@@ -72,44 +107,11 @@ app.get('/blogs/:id', async (req, res) => {
   }
 });
 
-// Route to render the blog creation form
-app.get('/blogs/create', (req, res) => {
-  res.render('create'); // Render the create blog form
-});
-
 app.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/auth/login'); // Redirect to login if not logged in
   }
   res.render('profile', { user: req.session.user }); // Render profile page and pass user data
-});
-
-// Route to handle blog creation form submission
-app.post('/blogs/create', async (req, res) => {
-  try {
-    const { title, content, destination, imageUrl } = req.body;
-
-    // Validate required fields
-    if (!title || !content || !destination) {
-      return res.status(400).send('Title, content, and destination are required.');
-    }
-
-    // Create a new blog in the database
-    const newBlog = new Blog({
-      title,
-      content,
-      destination,
-      imageUrl,
-    });
-
-    await newBlog.save();
-
-    // Redirect to the explore page after successful creation
-    res.redirect('/explore');
-  } catch (error) {
-    console.error('Error creating blog:', error);
-    res.status(500).send('Internal Server Error');
-  }
 });
 
 // Admin dashboard route

@@ -69,13 +69,13 @@ body {
 }
 
 .main-content {
+    background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
     flex-grow: 1;
     padding: 20px;
     background-color: white;
 }
 
 .header {
-  background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,12 +183,14 @@ display: flex;
 justify-content: space-between;
 gap: 20px;
 margin-top: 20px;
+background-color: #E5DAF7;
 }
 
 .graph-section {
 flex: 1;
 max-width: 48%;
 text-align: center;
+background-color: #E5DAF7;
 }
 
 canvas {
