@@ -177,7 +177,7 @@ app.delete('/blogs/:id', async (req, res) => {
   try {
     const blogId = req.params.id;
     
-    // Check if the user is an admin before proceeding
+    // Ensure that the user is an admin before allowing deletion
     if (!req.session.user || req.session.user.role !== 'admin') {
       return res.status(403).send('You do not have permission to delete this blog');
     }
@@ -195,6 +195,7 @@ app.delete('/blogs/:id', async (req, res) => {
     res.status(500).send('Error deleting the blog');
   }
 });
+
 
 
 
