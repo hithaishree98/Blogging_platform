@@ -30,6 +30,13 @@ app.use(session({
   cookie: { secure: false }  // Set to true if you're using HTTPS
 }));
 
+app.get('/profile', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/auth/login'); // Redirect to login if user is not authenticated
+    }
+    res.render('profile', { user: req.session.user }); // Pass user data to the profile view
+});
+
 // Connect to MongoDB
 connectToDatabase();
 
