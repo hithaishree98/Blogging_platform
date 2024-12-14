@@ -1,6 +1,6 @@
 /* Dashboard Layout */
 body {
-  background-color: #F7E7CE; /* Light grayish background color */
+  background-color: #F7E7CE;
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
@@ -70,7 +70,7 @@ body {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    background-color: #DDD6F3;
+    background-color: white;
 }
 
 .header {
@@ -121,7 +121,7 @@ body {
 
 .stat-card {
     flex: 1;
-    background: white;
+    background: #FFD1DC;
     border-radius: 8px;
     padding: 20px;
     text-align: center;
