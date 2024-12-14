@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/css/signup.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="logo-container">
@@ -12,7 +13,7 @@
     </div>
     <div class="form-container">
         <h2>Login</h2>
-        <form id="login-form" action="/auth/login" method="POST">
+        <form id="login-form">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
@@ -25,16 +26,15 @@
         </form>
         <p class="redirect">Don't have an account? <a href="/auth/signup">Signup</a></p>
     </div>
+
     <script>
         $(document).ready(() => {
             $('#login-form').on('submit', function (e) {
-                e.preventDefault(); // Prevent form from reloading
-                const formData = $(this).serialize(); // Serialize form data
+                e.preventDefault(); // Prevent page reload
+                const formData = $(this).serialize();
 
                 $.post('/auth/login', formData, (response) => {
-                    $('.form-container').html(`
-                        <p>${response}</p>
-                    `);
+                    $('.form-container').html(`<p>${response}</p>`);
                     setTimeout(() => {
                         window.location.href = '/admin';
                     }, 2000); // Redirect to /admin after 2 seconds

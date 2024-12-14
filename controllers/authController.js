@@ -2,7 +2,7 @@ const authController = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
-            // Add authentication logic (e.g., checking credentials)
+            // Authentication logic (e.g., check user credentials in DB)
             res.json('Login successful! Redirecting...');
         } catch (error) {
             res.status(401).json({ message: 'Invalid email or password.' });
@@ -12,8 +12,8 @@ const authController = {
     signup: async (req, res) => {
         try {
             const { name, username, email, password } = req.body;
-            // Add user creation logic (e.g., hashing password, saving to DB)
-            res.json(`Signup successful for username: ${username}`);
+            // Signup logic (e.g., save user in DB)
+            res.json('Signup successful! You can now log in.');
         } catch (error) {
             res.status(400).json({ message: 'Signup failed. Try again.' });
         }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <link rel="stylesheet" href="/css/signup.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="logo-container">
@@ -12,7 +13,7 @@
     </div>
     <div class="form-container">
         <h2>Signup</h2>
-        <form id="signup-form" action="/auth/signup" method="POST">
+        <form id="signup-form">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
@@ -32,12 +33,13 @@
             <button type="submit" class="btn">Signup</button>
         </form>
         <p class="redirect">Already have an account? <a href="/auth/login">Login</a></p>
-    </div>  
+    </div>
+
     <script>
         $(document).ready(() => {
             $('#signup-form').on('submit', function (e) {
-                e.preventDefault(); // Prevent form from reloading
-                const formData = $(this).serialize(); // Serialize form data
+                e.preventDefault(); // Prevent page reload
+                const formData = $(this).serialize();
 
                 $.post('/auth/signup', formData, (response) => {
                     $('.form-container').html(`
