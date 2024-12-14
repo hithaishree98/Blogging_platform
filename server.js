@@ -2,19 +2,18 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectToDatabase = require('./config/database'); // Import database connection logic
 const path = require('path');
+const Blog = require('./models/Blog'); // Import Blog model
 const adminController = require('./controllers/adminController'); // Import admin controller
-const methodOverride = require("method-override");
-const bodyParser = require("body-parser");
+const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/profile');
-const blogRoutes = require('./routes/blogs'); // Import the blogs routes
 const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const app = express();
 
 // Set the view engine to EJS and configure views directory
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
@@ -31,19 +30,33 @@ app.get('/', (req, res) => {
   res.render('index'); // Render the homepage using EJS layout
 });
 
-app.use('/explore', blogRoutes); // Use blogs routes for the Explore page
+// Explore Page
+app.get('/explore', async (req, res) => {
+  try {
+    const searchQuery = req.query.search || ''; // Get search query
+    const blogs = await Blog.find({
+      $or: [
+        { title: { $regex: searchQuery, $options: 'i' } },
+        { destination: { $regex: searchQuery, $options: 'i' } }
+      ]
+    });
+    res.render('explore', { blogs }); // Pass blogs to explore.ejs
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching blogs.');
+  }
+});
 
 // Admin dashboard route
 app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController
 
 // Routes for authentication
 app.use('/auth', authRoutes);
-app.use(profileRoutes);
 
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
-app.use(methodOverride("_method")); // Enable support for PUT/DELETE in forms
+app.use(methodOverride('_method')); // Enable support for PUT/DELETE in forms
 
 // 404 Route
 app.use((req, res) => {

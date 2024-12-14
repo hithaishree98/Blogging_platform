@@ -253,7 +253,7 @@ footer .social-links a {
 
 
 
-/* Content Grid */
+/* Explore Page Specific Styles */
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -266,9 +266,7 @@ footer .social-links a {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  text-align: center;
-  padding: 15px;
+  transition: transform 0.3s;
 }
 
 .content-item:hover {
@@ -279,32 +277,63 @@ footer .social-links a {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px;
 }
 
 .content-item h3 {
   font-size: 20px;
-  margin: 10px 0;
+  margin: 15px 10px;
   color: #333;
 }
 
 .content-item p {
   font-size: 14px;
   color: #666;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
 .content-item a {
   display: inline-block;
+  margin: 15px 10px;
   text-decoration: none;
-  padding: 8px 12px;
-  color: #fff;
+  padding: 10px 15px;
   background-color: #4CAF50;
+  color: #fff;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .content-item a:hover {
   background-color: #45a049;
 }
 
+/* Search Filter */
+.search-filter {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.search-filter input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-filter button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-filter button:hover {
+  background-color: #45a049;
+}

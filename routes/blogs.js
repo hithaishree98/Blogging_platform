@@ -5,7 +5,13 @@ const Blog = require('../models/Blog'); // Import Blog model
 // GET /explore - Display all blogs on the Explore page
 router.get('/', async (req, res) => {
   try {
-    const blogs = await Blog.find(); // Fetch all blogs from the database
+    const searchQuery = req.query.search || ''; // Capture search query if provided
+    const blogs = await Blog.find({
+      $or: [
+        { title: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search by title
+        { destination: { $regex: searchQuery, $options: 'i' } } // Case-insensitive search by destination
+      ]
+    });
     res.render('explore', { blogs }); // Pass the blogs to explore.ejs
   } catch (err) {
     console.error(err);
