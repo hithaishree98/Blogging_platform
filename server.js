@@ -84,3 +84,41 @@ app.use((req, res) => {
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log(`App is listening on port ${listener.address().port}`);
 });
+
+
+
+
+// Route to render the create blog form
+app.get('/blogs/create', (req, res) => {
+  res.render('create'); // Renders the create.ejs file
+});
+
+//const Blog = require('./models/blog'); // Import the Blog model
+
+// Route to handle blog submission
+app.post('/blogs/create', async (req, res) => {
+  try {
+    const { title, content, destination, imageUrl } = req.body;
+    
+    // Validate required fields (basic validation)
+    if (!title || !content || !destination) {
+      return res.status(400).send('All fields except image URL are required!');
+    }
+
+    // Create a new blog entry in the database
+    const newBlog = new Blog({
+      title,
+      content,
+      destination,
+      imageUrl,
+    });
+
+    await newBlog.save(); // Save to database
+
+    // Redirect to the explore page after successful creation
+    res.redirect('/explore');
+  } catch (error) {
+    console.error('Error creating blog:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});

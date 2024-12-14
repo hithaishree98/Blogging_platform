@@ -416,3 +416,70 @@ footer .social-links a {
 .not-found .btn-primary:hover {
   background-color: #45a049;
 }
+
+
+
+
+
+
+
+
+/* Form Styles */
+.form-container {
+  max-width: 600px;
+  margin: 100px auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.form-container h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.blog-form .form-group {
+  margin-bottom: 15px;
+}
+
+.blog-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.blog-form input,
+.blog-form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.blog-form textarea {
+  resize: vertical;
+}
+
+.blog-form button {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.blog-form button:hover {
+  background-color: #45a049;
+}
