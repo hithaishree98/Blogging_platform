@@ -6,8 +6,9 @@ const adminController = require('./controllers/adminController'); // Import admi
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const authRoutes = require('./routes/auth');
-const cookieParser = require('cookie-parser');
 const profileRoutes = require('./routes/profile');
+const blogRoutes = require('./routes/blogs'); // Import the blogs routes
+const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const app = express();
@@ -30,9 +31,7 @@ app.get('/', (req, res) => {
   res.render('index'); // Render the homepage using EJS layout
 });
 
-app.get('/explore', (req, res) => {
-  res.render('explore'); // Render the Explore page using EJS layout
-});
+app.use('/explore', blogRoutes); // Use blogs routes for the Explore page
 
 // Admin dashboard route
 app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController

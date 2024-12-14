@@ -12,12 +12,13 @@ exports.dashboard = async (req, res) => {
             { $group: { _id: null, averageRating: { $avg: "$rating" } } }
         ]);
     const avgRating = averageRating[0] ? averageRating[0].averageRating : 0;
+    // Get the top 3 destinations based on the count of each destination
     const topDestinations = await Blog.aggregate([
-      { $group: { _id: "$destination", count: { $sum: 1 } } }, // Group by destination
-      { $sort: { count: -1 } }, // Sort by count in descending order
-      { $limit: 3 } // Limit to the top 3
+      { $group: { _id: "$destination", count: { $sum: 1 } } }, // Group by destination and count occurrences
+      { $sort: { count: -1 } }, // Sort by the count in descending order
+      { $limit: 3 } // Get the top 3 destinations
     ]);
-
+    console.log("Top Destinations:", topDestinations);
     res.render('admin', { blogCount, userCount, avgRating, topDestinations });
   } catch (err) {
     console.error("Error fetching dashboard data:", err);

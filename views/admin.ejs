@@ -102,11 +102,11 @@
                 <div class="graph-section">
                     <h2>Top 3 Destinations</h2>
                     <canvas id="destinationChart"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <script>
-                        const destinationCtx = document.getElementById('destinationChart').getContext('2d');
                         const destinationLabels = <%= JSON.stringify(topDestinations.map(dest => dest._id)) %>;
                         const destinationCounts = <%= JSON.stringify(topDestinations.map(dest => dest.count)) %>;
-
+                        const destinationCtx = document.getElementById('destinationChart').getContext('2d');
                         const destinationChart = new Chart(destinationCtx, {
                             type: 'pie',
                             data: {
