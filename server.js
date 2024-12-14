@@ -118,7 +118,7 @@ app.get('/blogs/:id', async (req, res) => {
       return res.status(404).send('Blog not found');
     }
 
-    res.render('blog', { blog }); // Render the 'blog.ejs' page with the blog data
+    res.render('blog', { blog, user: req.session.user }); // Render the 'blog.ejs' page with the blog data
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
