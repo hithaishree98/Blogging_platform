@@ -15,10 +15,25 @@
     gap: 20px;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
+.logo-circle {
+  width: 80px;               /* Adjust the size */
+  height: 80px;              /* Adjust the size */
+  border-radius: 50%;        /* Make it circular */
+  object-fit: cover;         /* Ensure the image fits well inside the circle */
+  border: 2px solid #5A4FCF; /* Add an optional border for aesthetics */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
 }
+
+/* Positioning for the top-right corner */
+.logo-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 20px; /* Adjust if needed for spacing */
+  right: 20px; /* Adjust if needed for spacing */
+}
+
+
 
 .menu {
     list-style: none;
