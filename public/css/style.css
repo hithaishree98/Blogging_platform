@@ -175,3 +175,71 @@ footer .social-links a {
   text-decoration: none;
   font-size: 18px;
 }
+
+/* Explore Page Header */
+.search-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-filter input[type="text"] {
+  padding: 10px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-filter .btn-primary {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-filter .btn-primary:hover {
+  background-color: #45a049;
+}
+
+/* Explore Page Content Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.content-item {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.content-item:hover {
+  transform: scale(1.05);
+}
+
+.content-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.content-item h3 {
+  font-size: 20px;
+  margin: 15px 10px 10px;
+  color: #333;
+}
+
+.content-item p {
+  font-size: 16px;
+  margin: 0 10px 15px;
+  color: #666;
+}

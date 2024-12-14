@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="profile-container">
+        <header class="header">
+            <div class="logo-container">
+                <a href="/">
+                    <img src="/path-to-logo/logo.png" alt="TasteTrails Logo" class="logo">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/blogs">Blogs</a>
+                <a href="/auth/logout">Logout</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="profile-details">
+                <h1>Welcome, <span id="username">User</span>!</h1>
+                <div class="profile-info">
+                    <p><strong>Name:</strong> <span id="name"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <button id="edit-profile-btn" class="btn">Edit Profile</button>
+                </div>
+            </section>
+
+            <section class="saved-blogs">
+                <h2>Saved Blogs</h2>
+                <ul id="blog-list">
+                    <!-- Blog items will be populated dynamically -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label for="edit-name">Name:</label>
+                    <input type="text" id="edit-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email:</label>
+                    <input type="email" id="edit-email" name="email" required>
+                </div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(() => {
+            // Fetch and display user data
+            $.get('/api/user/profile', (data) => {
+                $('#username').text(data.username);
+                $('#name').text(data.name);
+                $('#email').text(data.email);
+
+                // Populate saved blogs
+                const blogList = data.savedBlogs.map(blog => `<li><a href="/blogs/${blog.id}">${blog.title}</a></li>`).join('');
+                $('#blog-list').html(blogList || '<li>No blogs saved yet.</li>');
+            }).fail((error) => {
+                alert('Error fetching profile data.');
+            });
+
+            // Open modal for editing profile
+            $('#edit-profile-btn').on('click', () => {
+                $('#edit-name').val($('#name').text());
+                $('#edit-email').val($('#email').text());
+                $('#edit-profile-modal').removeClass('hidden');
+            });
+
+            // Close modal
+            $('.close-btn').on('click', () => {
+                $('#edit-profile-modal').addClass('hidden');
+            });
+
+            // Submit edited profile details
+            $('#edit-profile-form').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    name: $('#edit-name').val(),
+                    email: $('#edit-email').val()
+                };
+
+                $.ajax({
+                    url: '/api/user/profile',
+                    method: 'PUT',
+                    data: formData,
+                    success: () => {
+                        alert('Profile updated successfully!');
+                        $('#edit-profile-modal').addClass('hidden');
+                        // Refresh user data
+                        $('#name').text(formData.name);
+                        $('#email').text(formData.email);
+                    },
+                    error: (error) => {
+                        alert('Error updating profile.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

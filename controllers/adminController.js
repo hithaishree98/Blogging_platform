@@ -12,9 +12,15 @@ exports.dashboard = async (req, res) => {
             { $group: { _id: null, averageRating: { $avg: "$rating" } } }
         ]);
     const avgRating = averageRating[0] ? averageRating[0].averageRating : 0;
-    res.render('admin', { blogCount, userCount, avgRating });
+    const topDestinations = await Blog.aggregate([
+      { $group: { _id: "$destination", count: { $sum: 1 } } }, // Group by destination
+      { $sort: { count: -1 } }, // Sort by count in descending order
+      { $limit: 3 } // Limit to the top 3
+    ]);
+
+    res.render('admin', { blogCount, userCount, avgRating, topDestinations });
   } catch (err) {
-    console.error("Error fetching blog or user counts:", err);
+    console.error("Error fetching dashboard data:", err);
     res.status(500).send("Server Error");
   }
 };
@@ -49,33 +55,22 @@ exports.editBlog = async (req, res) => {
   }
 };
 
-// Manage Users
-exports.viewUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.render("adminUsers", { users });
-  } catch (err) {
-    res.status(500).send("Server Error");
-  }
-};
+// // Manage Users
+// exports.viewUsers = async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.render("adminUsers", { users });
+//   } catch (err) {
+//     res.status(500).send("Server Error");
+//   }
+// };
 
-exports.deleteUser = async (req, res) => {
-  try {
-    await User.findByIdAndDelete(req.params.id);
-    res.redirect("/admin/users"); // Redirect back to user management page
-  } catch (err) {
-    res.status(500).send("Server Error");
-  }
-};
+// exports.deleteUser = async (req, res) => {
+//   try {
+//     await User.findByIdAndDelete(req.params.id);
+//     res.redirect("/admin/users"); // Redirect back to user management page
+//   } catch (err) {
+//     res.status(500).send("Server Error");
+//   }
+// };
 
-// Blog Analytics (e.g., views, likes)
-exports.viewAnalytics = async (req, res) => {
-  try {
-    const blogStats = await Blog.aggregate([
-      { $group: { _id: null, totalLikes: { $sum: "$likes" } } }
-    ]);
-    res.render("adminAnalytics", { blogStats });
-  } catch (err) {
-    res.status(500).send("Server Error");
-  }
-};

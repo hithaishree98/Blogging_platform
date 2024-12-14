@@ -39,6 +39,7 @@ app.get('/admin', adminController.dashboard); // Use the dashboard function from
 // Routes for authentication
 app.use('/auth', authRoutes);
 
+
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(bodyParser.json()); // Parse JSON bodies
