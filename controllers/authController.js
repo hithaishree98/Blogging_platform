@@ -1,21 +1,54 @@
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
+
 const authController = {
-    login: async (req, res) => {
+    // Signup logic
+    signup: async (req, res) => {
+        const { name, username, email, password } = req.body;
+
         try {
-            const { email, password } = req.body;
-            // Authentication logic (e.g., check user credentials in DB)
-            res.json('Login successful! Redirecting...');
-        } catch (error) {
-            res.status(401).json({ message: 'Invalid email or password.' });
+            // Check if the username or email already exists
+            const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+            if (existingUser) {
+                return res.json({ success: false, message: 'Username or email already exists.' });
+            }
+
+            // Hash the password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Assign role based on username
+            const role = username === 'admin' ? 'admin' : 'user';
+
+            // Create and save the user
+            const user = new User({ name, username, email, password: hashedPassword, role });
+            await user.save();
+
+            res.json({ success: true, message: 'Signup successful! Please log in.' });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ success: false, message: 'Error during signup.' });
         }
     },
 
-    signup: async (req, res) => {
+    // Login logic
+    login: async (req, res) => {
+        const { email, password } = req.body;
+
         try {
-            const { name, username, email, password } = req.body;
-            // Signup logic (e.g., save user in DB)
-            res.json('Signup successful! You can now log in.');
-        } catch (error) {
-            res.status(400).json({ message: 'Signup failed. Try again.' });
+            // Check if the user exists
+            const user = await User.findOne({ email });
+            if (!user) return res.json({ success: false, message: 'Invalid email or password.' });
+
+            // Compare the password
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) return res.json({ success: false, message: 'Invalid email or password.' });
+
+            // Redirect based on role
+            const redirectUrl = user.role === 'admin' ? '/admin' : '/profile';
+            res.json({ success: true, message: 'Login successful!', redirect: redirectUrl });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ success: false, message: 'Error during login.' });
         }
     },
 };

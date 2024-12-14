@@ -2,12 +2,8 @@
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   background-image: url('https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/background.png?v=1734116300983');
   background-size: cover;
-  background-position: center;
   background-attachment: fixed;
   color: #333;
 }
@@ -15,7 +11,7 @@ body {
 /* Navbar */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Ensures proper spacing */
   align-items: center;
   padding: 10px 20px;
   background-color: rgba(0, 0, 0, 0.9);
@@ -46,11 +42,16 @@ body {
 }
 
 .nav-links {
-  list-style: none;
   display: flex;
-  gap: 20px;
-  margin: 0;
   align-items: center;
+  list-style: none;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline-block;
 }
 
 .nav-links a {
@@ -79,37 +80,34 @@ body {
   background-color: #45a049;
 }
 
-/* Hero Section */
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+/* Header Section */
+.header {
+  position: relative;
   text-align: center;
-  padding: 150px 20px 60px;
+  padding: 120px 20px 60px;
+  color: #fff;
 }
 
-.hero h1 {
-  display: inline-block;
-  font-size: 48px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 10px 20px;
-  border-radius: 5px;
+.header h1 {
+  font-size: 50px;
+  font-weight: bold;
   margin-bottom: 15px;
-}
-
-.hero p {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 10px 20px;
   display: inline-block;
-  font-size: 20px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 8px 15px;
   border-radius: 5px;
-  margin-bottom: 20px;
 }
 
-.hero .hero-buttons a {
+.header p {
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 8px 15px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+/* Hero Buttons */
+.hero-buttons a {
   text-decoration: none;
   padding: 10px 20px;
   margin: 5px;
@@ -118,47 +116,95 @@ body {
   transition: all 0.3s;
 }
 
-.hero .btn-primary {
-  background-color: #4CAF50;
-  color: white;
+.btn-primary {
+  background-color: #4d4d4d;
+  color: #fff;
 }
 
-.hero .btn-primary:hover {
-  background-color: #45a049;
-}
-
-.hero .btn-secondary {
-  background-color: #555;
-  color: white;
-}
-
-.hero .btn-secondary:hover {
+.btn-primary:hover {
   background-color: #333;
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.btn-secondary:hover {
+  background-color: #ccc;
+  color: #000;
 }
 
 /* Footer */
 footer {
   background-color: rgba(0, 0, 0, 0.9);
-  color: white;
   text-align: center;
   padding: 15px;
-  margin-top: auto;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-footer ul {
+footer .social-links {
   list-style: none;
   display: flex;
   justify-content: center;
   padding: 0;
   gap: 20px;
+  margin: 10px 0;
 }
 
-footer ul li a {
-  color: white;
+footer .social-links a {
+  color: #fff;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
 }
 
-footer ul li a:hover {
-  text-decoration: underline;
+/* Content Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.content-item {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.content-item:hover {
+  transform: translateY(-5px);
+}
+
+.content-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.content-item .content-info {
+  padding: 15px;
+}
+
+.content-item h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.content-item p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.content-item a {
+  text-decoration: none;
+  color: #4CAF50;
+  font-weight: bold;
 }

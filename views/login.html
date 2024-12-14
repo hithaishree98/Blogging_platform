@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="logo-container">
-        <img src="/images/logo.jpg" alt="Logo" class="logo">
+        <a href="/">
+          <img src="https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/DALLE2024-12-1316.28.03-AnexquisiteandcreativelogoforTasteTrailsafoodandtravelblog.Thedesignintegratesacircularglobeinsoftpasteltonessymbolizingtra-ezgif.com-webp-to-jpg-converter.jpg?v=1734125364737" alt="TasteTrails Logo">
+        </a>
+        <a href="/" class="logo">TasteTrails</a>
     </div>
     <div class="form-container">
         <h2>Login</h2>
@@ -28,21 +31,22 @@
     </div>
 
     <script>
-        $(document).ready(() => {
-            $('#login-form').on('submit', function (e) {
-                e.preventDefault(); // Prevent page reload
-                const formData = $(this).serialize();
+      $(document).ready(() => {
+          $('#login-form').on('submit', function (e) {
+              e.preventDefault(); // Prevent page reload
+              const formData = $(this).serialize();
 
-                $.post('/auth/login', formData, (response) => {
-                    $('.form-container').html(`<p>${response}</p>`);
-                    setTimeout(() => {
-                        window.location.href = '/admin';
-                    }, 2000); // Redirect to /admin after 2 seconds
-                }).fail((error) => {
-                    alert(`Error: ${error.responseJSON.message}`);
-                });
-            });
-        });
+              $.post('/auth/login', formData, (response) => {
+                  if (response.username === 'admin') {
+                      window.location.href = '/admin'; // Redirect to admin dashboard
+                  } else {
+                      window.location.href = '/profile'; // Redirect to user profile
+                  }
+              }).fail((error) => {
+                  alert(`Error: ${error.responseJSON.message}`);
+              });
+          });
+      });
     </script>
 </body>
 </html>
