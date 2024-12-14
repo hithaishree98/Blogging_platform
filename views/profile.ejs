@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label for="edit-profile-photo">Profile Photo</label>
                         <!-- Display current profile picture -->
-                        <img id="profile-picture-preview" src="<%= user.profilePhoto || '/default-profile.png' %>" alt="Profile Picture">
+                        <img id="profile-picture-preview" src="<%= user.profilePhoto || '/images/default-profile.jpg' %>" alt="Profile Picture">
                         <input type="file" id="edit-profile-photo" name="profilePhoto">
                     </div>
                     <div class="form-group">
@@ -118,6 +118,17 @@
                 $savedBlogs.removeClass('hidden'); // Show saved blogs
                 $myBlogs.removeClass('hidden'); // Show my blogs
             });
+          
+            $('#edit-profile-photo').on('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        $('#profile-picture-preview').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
 
             // Handle profile update
             $('#edit-profile-form').on('submit', function (e) {
@@ -139,6 +150,7 @@
                     }
                 });
             });
+  
         });
     </script>
 

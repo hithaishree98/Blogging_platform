@@ -210,7 +210,6 @@ app.get('/auth/logout', (req, res) => {
     }
     res.redirect('/'); // Redirect to homepage after logout
   });
-});
 
 // Routes for authentication
 app.use('/auth', authRoutes);

@@ -569,6 +569,59 @@ footer .social-links a {
   width: 100%;
 }
 
+/* Style for the Edit Profile Form */
+.edit-profile-section {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.edit-profile-section .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.edit-profile-section .form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-profile-section .form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.edit-profile-section .form-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.edit-profile-section .btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.edit-profile-section .btn.cancel-btn {
+  background-color: #dc3545;
+}
+
+.edit-profile-section img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
 
 
 .hidden {
