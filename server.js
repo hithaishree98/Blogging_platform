@@ -176,25 +176,28 @@ app.post('/blogs/:id/edit', async (req, res) => {
 app.delete('/blogs/:id', async (req, res) => {
   try {
     const blogId = req.params.id;
-    
-    // Ensure that the user is an admin before allowing deletion
-    if (!req.session.user || req.session.user.role !== 'admin') {
-      return res.status(403).send('You do not have permission to delete this blog');
-    }
-    
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);
+    console.log('Attempting to delete blog with ID:', blogId);  // Log the ID being deleted
 
-    if (!deletedBlog) {
+    const blog = await Blog.findById(blogId);  // Check if blog exists before deleting
+    if (!blog) {
+      console.log('Blog not found');
       return res.status(404).send('Blog not found');
     }
 
-    // Redirect to explore page after successful deletion
-    res.redirect('/explore');
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);  // Perform the delete operation
+    if (!deletedBlog) {
+      console.log('Delete failed, blog not found.');
+      return res.status(404).send('Blog not found');
+    }
+
+    console.log('Blog deleted successfully:', deletedBlog);  // Log deleted blog details
+    res.redirect('/explore');  // Redirect to another page after deletion
   } catch (err) {
     console.error('Error deleting blog:', err.message);
     res.status(500).send('Error deleting the blog');
   }
 });
+
 
 
 
