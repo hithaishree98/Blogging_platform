@@ -36,10 +36,10 @@
               const formData = $(this).serialize();
 
               $.post('/auth/login', formData, (response) => {
-                  if (response.username === 'admin') {
-                      window.location.href = '/admin'; // Redirect to admin dashboard
+                  if (response.success) {
+                      window.location.href = response.redirect; // Use server-provided redirect URL
                   } else {
-                      window.location.href = '/profile'; // Redirect to user profile
+                      alert(response.message); // Show error message
                   }
               }).fail((error) => {
                   alert(`Error: ${error.responseJSON.message}`);

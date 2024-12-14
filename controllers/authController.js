@@ -16,17 +16,14 @@ const authController = {
             // Hash the password
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Normalize username and assign role
-            
+            // Assign role based on username (case-insensitive)
+            const role = username.toLowerCase() === 'admin' ? 'admin' : 'user';
 
             // Create and save the user
             const user = new User({ name, username, email, password: hashedPassword, role });
             await user.save();
 
-            const adminUser = await User.findOne({ username: 'admin' });
-            const role = username.toLowerCase() === 'admin' ? 'admin' : 'user';
-            console.log('Admin user role:', adminUser?.role); // Should log 'admin' if correctly assigned
-
+            console.log(`User '${username}' created with role: ${role}`);
             res.json({ success: true, message: 'Signup successful! Please log in.' });
         } catch (err) {
             console.error(err);
@@ -47,14 +44,14 @@ const authController = {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) return res.json({ success: false, message: 'Invalid email or password.' });
 
-            // Redirect based on role
+            // Send role-based redirect information
             const redirectUrl = user.role === 'admin' ? '/admin' : '/profile';
-            res.json({ success: true, message: 'Login successful!', redirect: redirectUrl });
+            res.json({ success: true, message: 'Login successful!', redirect: redirectUrl, role: user.role });
         } catch (err) {
             console.error(err);
             res.status(500).json({ success: false, message: 'Error during login.' });
         }
-    },
+    }
 };
 
 module.exports = authController;

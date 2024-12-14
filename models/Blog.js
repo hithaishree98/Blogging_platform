@@ -15,9 +15,9 @@ const BlogSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  likes: {
-    type: Number,
-    default: 0
+  destination: {
+    type: String,
+    default: true
   },
   createdAt: {
     type: Date,
