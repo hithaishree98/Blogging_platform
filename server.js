@@ -30,15 +30,15 @@ app.use(session({
   cookie: { secure: false }  // Set to true if you're using HTTPS
 }));
 
-// Admin check middleware
-const isAdmin = (req, res, next) => {
-  console.log("Session in isAdmin middleware:", req.session);
-  if (req.session.user && req.session.user.role === 'admin') {
-    return next(); // Proceed to the next middleware or route handler
-  } else {
-    return res.status(403).send('You do not have permission to perform this action'); // Deny if not an admin
-  }
-};
+// // Admin check middleware
+// const isAdmin = (req, res, next) => {
+//   console.log("Session in isAdmin middleware:", req.session);
+//   if (req.session.user && req.session.user.role === 'admin') {
+//     return next(); // Proceed to the next middleware or route handler
+//   } else {
+//     return res.status(403).send('You do not have permission to perform this action'); // Deny if not an admin
+//   }
+// };
 
 
 app.get('/profile', (req, res) => {
@@ -109,6 +109,22 @@ app.post('/blogs/create', async (req, res) => {
 });
 
 // Route to display a specific blog based on ID
+// app.get('/blogs/:id', async (req, res) => {
+//   try {
+//     const blogId = req.params.id; // Extract blog ID from the URL
+//     const blog = await Blog.findById(blogId); // Fetch blog details from the database
+
+//     if (!blog) {
+//       return res.status(404).send('Blog not found');
+//     }
+
+//     res.render('blog', { blog }); // Render the 'blog.ejs' page with the blog data
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
+
 app.get('/blogs/:id', async (req, res) => {
   try {
     const blogId = req.params.id; // Extract blog ID from the URL
@@ -118,7 +134,33 @@ app.get('/blogs/:id', async (req, res) => {
       return res.status(404).send('Blog not found');
     }
 
-    res.render('blog', { blog }); // Render the 'blog.ejs' page with the blog data
+    const isAdmin = req.session.user && req.session.user.role === 'admin'; // Check if user is an admin
+
+    res.render('blog', {
+      blog,
+      isAdmin,
+      customScripts: `
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            if (${isAdmin}) {
+              const blogDetails = document.querySelector('.blog-details');
+              const deleteForm = document.createElement('form');
+              deleteForm.setAttribute('action', '/blogs/${blogId}?_method=DELETE');
+              deleteForm.setAttribute('method', 'POST');
+              deleteForm.style.display = 'inline';
+
+              const deleteButton = document.createElement('button');
+              deleteButton.type = 'submit';
+              deleteButton.className = 'btn-danger';
+              deleteButton.textContent = 'Delete Blog';
+
+              deleteForm.appendChild(deleteButton);
+              blogDetails.appendChild(deleteForm);
+            }
+          });
+        </script>
+      `,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
@@ -174,23 +216,6 @@ app.post('/blogs/:id/edit', async (req, res) => {
 
 
 // Route to handle blog deletion (protected by isAdmin middleware)
-app.delete('/blogs/:id', isAdmin, async (req, res) => {
-  try {
-    const blogId = req.params.id; // Extract the blog ID from the URL
-
-    // Attempt to find and delete the blog by ID
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);
-
-    if (!deletedBlog) {
-      return res.status(404).send('Blog not found'); // Return error if the blog doesn't exist
-    }
-
-    res.redirect('/admin/blogs'); // Redirect to the admin blog management page after successful deletion
-  } catch (err) {
-    console.error('Error deleting blog:', err.message);
-    res.status(500).send('Error deleting blog');
-  }
-});
 
 
 
