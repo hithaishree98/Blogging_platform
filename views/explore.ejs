@@ -13,7 +13,7 @@
     <section class="content-grid">
       ${blogs.map(blog => `
         <div class="content-item">
-          <img src="https://via.placeholder.com/300x200" alt="${blog.title}">
+          <img src="${blog.imageUrl || 'https://via.placeholder.com/300x200'}" alt="${blog.title}">
           <h3>${blog.title}</h3>
           <p>${blog.content.substring(0, 100)}...</p>
           <p><strong>Destination:</strong> ${blog.destination}</p>

@@ -8,9 +8,7 @@ const blogSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   rating: { type: Number, default: 0 },
   destination: { type: String, required: true },
-  imageUrl: {type: String, // URL to the image (string type)
-    required: false // This can be optional, depending on your requirements
-  }
+  imageUrl: {type: String, required: false }
 });
 
 module.exports = mongoose.model('Blog', blogSchema);

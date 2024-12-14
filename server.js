@@ -47,6 +47,23 @@ app.get('/explore', async (req, res) => {
   }
 });
 
+// Route to display a specific blog based on ID
+app.get('/blogs/:id', async (req, res) => {
+  try {
+    const blogId = req.params.id; // Extract blog ID from the URL
+    const blog = await Blog.findById(blogId); // Fetch blog details from the database
+
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
+
+    res.render('blog', { blog }); // Render the 'blog.ejs' page with the blog data
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 // Admin dashboard route
 app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController
 
