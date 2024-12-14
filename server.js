@@ -172,6 +172,24 @@ app.post('/blogs/:id/edit', async (req, res) => {
   }
 });
 
+// Route to handle blog deletion (protected by isAdmin middleware)
+app.get('/blogs/:id/delete', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
+
+    res.render('delete', { blog }); // Render the delete confirmation page
+  } catch (err) {
+    console.error('Error loading delete page:', err.message);
+    res.status(500).send('Error loading delete page');
+  }
+});
+
+
 // Route to handle blog deletion (only accessible by admin)
 app.delete('/blogs/:id', async (req, res) => {
   const blogId = req.params.id;
@@ -199,28 +217,6 @@ app.delete('/blogs/:id', async (req, res) => {
     res.status(500).send('Error deleting the blog');
   }
 });
-
-
-
-
-
-// Route to handle blog deletion (protected by isAdmin middleware)
-app.get('/blogs/:id/delete', async (req, res) => {
-  try {
-    const blogId = req.params.id;
-    const blog = await Blog.findById(blogId);
-
-    if (!blog) {
-      return res.status(404).send('Blog not found');
-    }
-
-    res.render('delete', { blog }); // Render the delete confirmation page
-  } catch (err) {
-    console.error('Error loading delete page:', err.message);
-    res.status(500).send('Error loading delete page');
-  }
-});
-
 
 
 
