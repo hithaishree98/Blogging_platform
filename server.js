@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const cookieParser = require('cookie-parser');
+const session = require('express-session'); 
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the "public" folder
+
+app.use(session({
+  secret: 'user_id',  // You should replace this with a more secure key
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }  // Set to true if you're using HTTPS
+}));
 
 // Connect to MongoDB
 connectToDatabase();
@@ -64,6 +72,46 @@ app.get('/blogs/:id', async (req, res) => {
   }
 });
 
+// Route to render the blog creation form
+app.get('/blogs/create', (req, res) => {
+  res.render('create'); // Render the create blog form
+});
+
+app.get('/profile', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/auth/login'); // Redirect to login if not logged in
+  }
+  res.render('profile', { user: req.session.user }); // Render profile page and pass user data
+});
+
+// Route to handle blog creation form submission
+app.post('/blogs/create', async (req, res) => {
+  try {
+    const { title, content, destination, imageUrl } = req.body;
+
+    // Validate required fields
+    if (!title || !content || !destination) {
+      return res.status(400).send('Title, content, and destination are required.');
+    }
+
+    // Create a new blog in the database
+    const newBlog = new Blog({
+      title,
+      content,
+      destination,
+      imageUrl,
+    });
+
+    await newBlog.save();
+
+    // Redirect to the explore page after successful creation
+    res.redirect('/explore');
+  } catch (error) {
+    console.error('Error creating blog:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // Admin dashboard route
 app.get('/admin', adminController.dashboard); // Use the dashboard function from adminController
 
@@ -83,42 +131,4 @@ app.use((req, res) => {
 // Start server
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log(`App is listening on port ${listener.address().port}`);
-});
-
-
-
-
-// Route to render the create blog form
-app.get('/blogs/create', (req, res) => {
-  res.render('create'); // Renders the create.ejs file
-});
-
-//const Blog = require('./models/blog'); // Import the Blog model
-
-// Route to handle blog submission
-app.post('/blogs/create', async (req, res) => {
-  try {
-    const { title, content, destination, imageUrl } = req.body;
-    
-    // Validate required fields (basic validation)
-    if (!title || !content || !destination) {
-      return res.status(400).send('All fields except image URL are required!');
-    }
-
-    // Create a new blog entry in the database
-    const newBlog = new Blog({
-      title,
-      content,
-      destination,
-      imageUrl,
-    });
-
-    await newBlog.save(); // Save to database
-
-    // Redirect to the explore page after successful creation
-    res.redirect('/explore');
-  } catch (error) {
-    console.error('Error creating blog:', error);
-    res.status(500).send('Internal Server Error');
-  }
 });
