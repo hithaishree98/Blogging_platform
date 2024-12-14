@@ -24,8 +24,9 @@
         </header>
 
         <main>
-            <section class="profile-details">
+            <section class="profile-details" id="profile-details">
                 <h1>Welcome, <span id="username"><%= user.username %></span>!</h1>
+                <!-- The button to toggle Edit Profile form -->
             </section>
 
             <section class="saved-blogs">
@@ -53,45 +54,50 @@
                     <% } %>
                 </ul>
             </section>
+                       
+            <section class="edit-profile-section hidden" id="edit-profile-section">
+                <h2>Edit Profile</h2>
+                <form id="edit-profile-form" action="/profile" method="POST">
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email</label>
+                        <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn">Save Changes</button>
+                        <a href="javascript:void(0);" class="btn cancel-btn" id="cancel-edit-btn">Cancel</a>
+                    </div>
+                </form>
+            </section>              
+                          
         </main>
     </div>
 
-    <!-- Edit Profile Modal -->
-    <div id="edit-profile-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Edit Profile</h2>
-            <form id="edit-profile-form">
-                <div class="form-group">
-                    <label for="edit-name">Name</label>
-                    <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
-                </div>
-                <div class="form-group">
-                    <label for="edit-email">Email</label>
-                    <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
-                </div>
-                <div class="modal-buttons">
-                    <button type="submit" class="btn">Save Changes</button>
-                    <button type="button" class="btn cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    
 
     <script>
         $(document).ready(() => {
-            const $editProfileModal = $('#edit-profile-modal');
-            const $editProfileBtn = $('#edit-profile-btn');
-            const $cancelBtn = $('.cancel-btn');
+            const $editProfileLink = $('#edit-profile-link');
+            const $editProfileSection = $('#edit-profile-section');
+            const $profileDetails = $('#profile-details');
+            const $cancelEditBtn = $('#cancel-edit-btn');
+            const $editProfileForm = $('#edit-profile-form');
 
             // Open the modal
-            $editProfileBtn.on('click', () => {
-                $editProfileModal.removeClass('hidden');
+            $editProfileLink.on('click', () => {
+                $editProfileSection.removeClass('hidden');  // Show the edit form
+                $profileDetails.addClass('hidden');  // Hide the profile details section
             });
 
             // Close the modal
-            $cancelBtn.on('click', () => {
-                $editProfileModal.addClass('hidden');
+            $cancelEditBtn.on('click', () => {
+                $editProfileSection.addClass('hidden');  // Hide the edit form
+                $profileDetails.removeClass('hidden');  // Show the profile details section
             });
+
 
             // Handle profile update
             $('#edit-profile-form').on('submit', function (e) {

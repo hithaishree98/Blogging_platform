@@ -30,6 +30,16 @@ app.use(session({
   cookie: { secure: false }  // Set to true if you're using HTTPS
 }));
 
+// Admin check middleware
+const isAdmin = (req, res, next) => {
+  if (req.session.user && req.session.user.role === 'admin') {
+    return next(); // Proceed to the next middleware or route handler
+  } else {
+    return res.status(403).send('You do not have permission to perform this action'); // Deny if not an admin
+  }
+};
+
+
 app.get('/profile', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/auth/login'); // Redirect to login if user is not authenticated
@@ -55,6 +65,8 @@ app.get('/explore', async (req, res) => {
         { destination: { $regex: searchQuery, $options: 'i' } }
       ]
     });
+    const user = req.user;
+    console.log('User:', user);
     res.render('explore', { blogs }); // Pass blogs to the template
   } catch (error) {
     console.error('Error fetching blogs:', error);
@@ -162,6 +174,24 @@ app.post('/blogs/:id/edit', async (req, res) => {
 
 
 
+// Route to handle blog deletion (protected by isAdmin middleware)
+app.delete('/blogs/:id', isAdmin, async (req, res) => {
+  try {
+    const blogId = req.params.id; // Extract the blog ID from the URL
+
+    // Attempt to find and delete the blog by ID
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
+
+    if (!deletedBlog) {
+      return res.status(404).send('Blog not found'); // Return error if the blog doesn't exist
+    }
+
+    res.redirect('/explore'); // Redirect to the explore page after successful deletion
+  } catch (err) {
+    console.error('Error deleting blog:', err.message);
+    res.status(500).send('Error deleting blog');
+  }
+});
 
 
 app.get('/profile', (req, res) => {
