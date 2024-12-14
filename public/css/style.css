@@ -75,11 +75,11 @@ main {
 .btn-signup {
   background-color: #4CAF50;
   color: white;
-  padding: 8px 20px; /* Proper padding */
+  padding: 10px 20px; /* Proper padding */
   font-weight: bold;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  margin-left: auto; /* Aligns it to the far-right */
+  margin-right: 50px; /* Aligns it to the far-right */
 }
 
 .btn-signup:hover {

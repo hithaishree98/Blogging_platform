@@ -16,12 +16,16 @@ const authController = {
             // Hash the password
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Assign role based on username
-            const role = username === 'admin' ? 'admin' : 'user';
+            // Normalize username and assign role
+            
 
             // Create and save the user
             const user = new User({ name, username, email, password: hashedPassword, role });
             await user.save();
+
+            const adminUser = await User.findOne({ username: 'admin' });
+            const role = username.toLowerCase() === 'admin' ? 'admin' : 'user';
+            console.log('Admin user role:', adminUser?.role); // Should log 'admin' if correctly assigned
 
             res.json({ success: true, message: 'Signup successful! Please log in.' });
         } catch (err) {

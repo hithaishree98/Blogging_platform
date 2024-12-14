@@ -1,6 +1,6 @@
 /* Dashboard Layout */
 body {
-  background-color: #f4f4f9; /* Light grayish background color */
+  background-color: #F7E7CE; /* Light grayish background color */
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
@@ -70,7 +70,7 @@ body {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    background-color: #F8F9FB;
+    background-color: #DDD6F3;
 }
 
 .header {
