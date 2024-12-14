@@ -51,7 +51,7 @@ const authController = {
                 email: user.email,
                 role: user.role
             };
-          
+            req.session.isAdmin = user.role === 'admin';
             // Send role-based redirect information
             const redirectUrl = user.role === 'admin' ? '/admin' : '/profile';
             res.json({ success: true, message: 'Login successful!', redirect: redirectUrl, role: user.role });
