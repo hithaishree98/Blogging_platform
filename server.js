@@ -24,10 +24,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the "public" folder
 
 app.use(session({
-  secret: 'user_id',  // You should replace this with a more secure key
+  secret: '1234',  // You should replace this with a more secure key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }  // Set to true if you're using HTTPS
+  cookie: { secure: true }  // Set to true if you're using HTTPS
 }));
 
 // // Admin check middleware
