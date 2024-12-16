@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const cookieParser = require('cookie-parser');
 const session = require('express-session'); 
+const User = require('./models/User'); 
 dotenv.config();
 
 const app = express();
@@ -29,6 +30,12 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }  
 }));
+
+// Middleware to make user data available in all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null; // Assign the session user to a global variable
+  next();
+});
 
 // // Admin check middleware
 // const isAdmin = (req, res, next) => {
@@ -86,26 +93,36 @@ app.get('/blogs/create', (req, res) => {
 // Route to handle blog creation
 app.post('/blogs/create', async (req, res) => {
   try {
-    const { title, content, destination, imageUrl } = req.body;
+        if (!req.session.user) {
+            return res.status(401).send('Unauthorized'); // Ensure user is logged in
+        }
 
-    // Validate required fields
-    if (!title || !content || !destination) {
-      return res.status(400).send('Title, content, and destination are required');
+        const { title, content, destination, imageUrl } = req.body;
+
+        if (!title || !content || !destination) {
+            return res.status(400).send('Title, content, and destination are required');
+        }
+
+        const newBlog = new Blog({
+            title,
+            content,
+            destination,
+            imageUrl,
+            author: req.session.user.id, // Add author reference
+        });
+
+        await newBlog.save();
+
+        // Add the blog to the user's "myBlogs"
+        await User.findByIdAndUpdate(req.session.user.id, {
+            $push: { myBlogs: newBlog._id },
+        });
+
+        res.redirect('/explore');
+    } catch (err) {
+        console.error('Error creating blog:', err.message);
+        res.status(500).send('Error creating the blog');
     }
-
-    const newBlog = new Blog({
-      title,
-      content,
-      destination,
-      imageUrl,
-    });
-
-    await newBlog.save(); // Save the new blog to the database
-    res.redirect('/explore'); // Redirect to the explore page after successful creation
-  } catch (err) {
-    console.error('Error creating blog:', err.message);
-    res.status(500).send('Error creating the blog');
-  }
 });
 
 
@@ -172,6 +189,28 @@ app.post('/blogs/:id/edit', async (req, res) => {
   }
 });
 
+// Add route in server.js
+app.post('/blogs/:id/save', async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.status(401).send('Unauthorized'); // Ensure user is logged in
+        }
+
+        const blogId = req.params.id;
+
+        // Add blog to user's savedBlogs if not already saved
+        await User.findByIdAndUpdate(req.session.user.id, {
+            $addToSet: { savedBlogs: blogId }, // Avoid duplicates
+        });
+
+        res.redirect(`/blogs/${blogId}`);
+    } catch (err) {
+        console.error('Error saving blog:', err.message);
+        res.status(500).send('Error saving the blog');
+    }
+});
+
+
 // Route to handle blog deletion (protected by isAdmin middleware)
 app.get('/blogs/:id/delete', async (req, res) => {
   try {
@@ -222,9 +261,19 @@ app.delete('/blogs/:id', async (req, res) => {
 
 app.get('/profile', (req, res) => {
   if (!req.session.user) {
-    return res.redirect('/auth/login'); // Redirect to login if not logged in
-  }
-  res.render('profile', { user: req.session.user }); // Render profile page and pass user data
+        return res.redirect('/auth/login');
+    }
+
+    try {
+        const user =  User.findById(req.session.user.id)
+            .populate('savedBlogs') // Populate saved blogs
+            .populate('myBlogs');   // Populate created blogs
+
+        res.render('profile', { user: req.session.user });
+    } catch (err) {
+        console.error('Error fetching profile data:', err.message);
+        res.status(500).send('Error loading profile');
+    }
 });
 
 // Admin dashboard route
