@@ -66,8 +66,9 @@
                 const formData = $(this).serialize();
 
                 $.post('/auth/signup', formData, (response) => {
+                    const message = typeof response === 'object' && response.message ? response.message : response;
                     $('.form-container').html(`
-                        <p>${response}</p>
+                        <p>${message}</p>
                         <a href="/auth/login">Click here to login</a>
                     `);
                 }).fail((error) => {
