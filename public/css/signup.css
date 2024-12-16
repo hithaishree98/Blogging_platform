@@ -11,7 +11,12 @@ body {
 }
 
 main {
-  flex: 1; /* Pushes footer to the bottom */
+  flex: 1; /* Allows content to take remaining space */
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  padding: 20px; /* Optional padding */
+  box-sizing: border-box; /* Prevent content overflow */
 }
 
 /* Navbar */
@@ -90,11 +95,12 @@ main {
     width: 100%;
     max-width: 350px;
     padding: 20px; /* Added padding for right and left sides */
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
+    margin: 100px auto; /* Center if needed */
 }
 
 h2 {
