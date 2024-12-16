@@ -28,7 +28,7 @@ app.use(session({
   secret: process.env.SECRET,  // You should replace this with a more secure key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }  
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 }  
 }));
 
 // Middleware to make user data available in all views
@@ -211,51 +211,6 @@ app.post('/blogs/:id/save', async (req, res) => {
 });
 
 
-// Route to handle blog deletion (protected by isAdmin middleware)
-app.get('/blogs/:id/delete', async (req, res) => {
-  try {
-    const blogId = req.params.id;
-    const blog = await Blog.findById(blogId);
-
-    if (!blog) {
-      return res.status(404).send('Blog not found');
-    }
-
-    res.render('delete', { blog }); // Render the delete confirmation page
-  } catch (err) {
-    console.error('Error loading delete page:', err.message);
-    res.status(500).send('Error loading delete page');
-  }
-});
-
-
-// Route to handle blog deletion (only accessible by admin)
-app.delete('/blogs/:id', async (req, res) => {
-  const blogId = req.params.id;
-  console.log('Delete request received for blog ID:', blogId);
-
-  try {
-    const blog = await Blog.findById(blogId);
-    if (!blog) {
-      console.log('Blog not found');
-      return res.status(404).send('Blog not found');
-    }
-
-    console.log('Blog found:', blog);
-    
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);
-    if (!deletedBlog) {
-      console.log('Delete failed, blog could not be deleted');
-      return res.status(404).send('Blog not found');
-    }
-
-    console.log('Blog deleted successfully:', deletedBlog);
-    res.redirect('/explore'); // Redirect after deletion
-  } catch (err) {
-    console.error('Error deleting blog:', err.message);
-    res.status(500).send('Error deleting the blog');
-  }
-});
 
 
 

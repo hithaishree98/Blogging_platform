@@ -2,18 +2,21 @@
   title: blog.title,
   body: `
     <section class="blog-details">
-      <h1>${blog.title}</h1>
-      <img src="${blog.imageUrl || 'https://via.placeholder.com/800x400'}" alt="${blog.title}" class="blog-image">
+      <h1><%= blog.title %></h1>
+      <img src="<%= blog.imageUrl || 'https://via.placeholder.com/800x400' %>" alt="<%= blog.title %>" class="blog-image">
       <p class="blog-meta">
-        <strong>Destination:</strong> ${blog.destination} |
-        <strong>Rating:</strong> ${blog.rating} |
-        <strong>Likes:</strong> ${blog.likes}
+        <strong>Destination:</strong> <%= blog.destination %> |
+        <strong>Rating:</strong> <%= blog.rating %> |
+        <strong>Likes:</strong> <%= blog.likes %>
       </p>
-      <p>${blog.content}</p>
-      <p><small>Published on: ${new Date(blog.createdAt).toDateString()}</small></p>
-      <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
+      <p><%= blog.content %></p>
+      <p><small>Published on: <%= new Date(blog.createdAt).toDateString() %></small></p>
+      <form action="/blogs/<%= blog._id %>/save" method="POST">
+        <button type="submit">Save Blog</button>
+      </form>
+      <a href="/blogs/<%= blog._id %>/edit" class="btn-primary">Edit</a>
       <a href="/explore" class="btn-primary">Back to Explore</a>
-      <a href="/blogs/${blog._id}/delete" class="btn-danger">Delete</a>
+      <a href="/blogs/<%= blog._id %>/delete" class="btn-danger">Delete</a>
     </section>
   `
 }) %>

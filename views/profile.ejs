@@ -38,7 +38,7 @@
                 <ul id="blog-list">
                     <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
                         <% user.savedBlogs.forEach(blog => { %>
-                            <li><%= blog.title %></li>
+                            <li><a href="/blogs/<%= blog._id %>"><%= blog.title %></a></li>
                         <% }) %>
                     <% } else { %>
                         <li>No saved blogs</li>
@@ -51,7 +51,7 @@
                 <ul id="my-blog-list">
                     <% if (user.myBlogs && user.myBlogs.length > 0) { %>
                         <% user.myBlogs.forEach(blog => { %>
-                            <li><%= blog.title %></li>
+                            <li><a href="/blogs/<%= blog._id %>"><%= blog.title %></a></li>
                         <% }) %>
                     <% } else { %>
                         <li>No blogs written</li>
