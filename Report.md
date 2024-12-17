@@ -44,9 +44,12 @@ The primary objectives of this project were:
    - Created and styled the Explore section for seamless blog browsing and searching.
    
 - **Hithaishree Shankar**  
-   - Contribution1
-   - Contribution2
-   - Contribution3
+   - Implemented user authentication features, including login, signup, and logout functionality, ensuring secure access for users.
+   - Developed the user profile section with options to update user details and display saved blogs, created blogs, and profile edits.
+   - Added the capability for users to save blogs and view them later in the "Saved Blogs" section.
+   - Created a "My Blogs" section where users can view and manage the blogs they have authored.
+   - Integrated backend logic to manage user sessions and authentication using express-session and cookie-parser.
+
    
 - **Radhika Purohit**  
    - Designed the Admin Dashboard with analytics and visualizations (user and blog statistics).
