@@ -35,28 +35,44 @@
 
             <section class="saved-blogs" id="saved-blogs">
                 <h2>Saved Blogs</h2>
-                <ul id="blog-list">
+                <div class="blog-list">
                     <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
                         <% user.savedBlogs.forEach(blog => { %>
-                            <li><a href="/blogs/<%= blog._id %>"><%= blog.title %></a></li>
+                            <div class="blog-card">
+                                <a href="/blogs/<%= blog._id %>">
+                                    <img src="<%= blog.thumbnail || '/images/default-thumbnail.jpg' %>" alt="Blog Thumbnail" class="blog-thumbnail">
+                                    <div class="blog-info">
+                                        <h3><%= blog.title %></h3>
+                                        <p class="destination"><%= blog.destination %></p>
+                                    </div>
+                                </a>
+                            </div>
                         <% }) %>
                     <% } else { %>
-                        <li>You haven't saved any blogs yet.</li>
+                        <p>You haven't saved any blogs yet.</p>
                     <% } %>
-                </ul>
+                </div>
             </section>
                           
             <section class="my-blogs" id="my-blogs">
                 <h2>My Blogs</h2>
-                <ul id="my-blog-list">
+                <div class="blog-list">
                     <% if (user.myBlogs && user.myBlogs.length > 0) { %>
                         <% user.myBlogs.forEach(blog => { %>
-                            <li><a href="/blogs/<%= blog._id %>"><%= blog.title %></a></li>
+                            <div class="blog-card">
+                                <a href="/blogs/<%= blog._id %>">
+                                    <img src="<%= blog.thumbnail || '/images/default-thumbnail.jpg' %>" alt="Blog Thumbnail" class="blog-thumbnail">
+                                    <div class="blog-info">
+                                        <h3><%= blog.title %></h3>
+                                        <p class="destination"><%= blog.destination %></p>
+                                    </div>
+                                </a>
+                            </div>
                         <% }) %>
                     <% } else { %>
-                        <li>You haven't created any blogs yet.</li>
+                        <p>You haven't created any blogs yet.</p>
                     <% } %>
-                </ul>
+                </div>
             </section>
                        
             <!-- Hidden Edit Profile Form -->
