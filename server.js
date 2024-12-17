@@ -133,18 +133,14 @@ app.post('/blogs/create', async (req, res) => {
 
 
 app.get('/blogs/:id', async (req, res) => {
+  const blogId = req.params.id;
   try {
-    const blogId = req.params.id; // Extract blog ID from the URL
-    const blog = await Blog.findById(blogId); // Fetch blog details from the database
-
-    if (!blog) {
-      return res.status(404).send('Blog not found');
-    }
-
-    res.render('blog', { blog, user: req.session.user }); // Render the 'blog.ejs' page with the blog data
+    const blog = await Blog.findById(blogId);
+    if (!blog) return res.status(404).send('Blog not found');
+    res.render('blog', { blog });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server error');
+    res.status(500).send('Server Error');
   }
 });
 
