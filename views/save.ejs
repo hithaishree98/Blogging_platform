@@ -1,0 +1,7 @@
+<% if (user) { %> <!-- Check if the user is logged in -->
+    <form action="/blogs/<%= blog._id %>/save" method="POST">
+        <button type="submit" class="btn-save">Save this blog</button>
+    </form>
+<% } else { %>
+    <p>You must be logged in to save this blog.</p>
+<% } %>

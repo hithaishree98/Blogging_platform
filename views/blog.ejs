@@ -14,11 +14,6 @@
       <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
       <a href="/explore" class="btn-primary">Back to Explore</a>
       <a href="/blogs/${blog._id}/delete" class="btn-danger">Delete</a>
-      <% if (user) { %>
-        <form action="/blogs/<%= blog._id %>/save" method="POST">
-          <button type="submit" class="btn-primary">Save Blog</button>
-        </form>
-      <% } %>
     </section>
   `
 }) %>
