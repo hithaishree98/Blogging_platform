@@ -116,12 +116,9 @@ If given more time, we would like to enhance Taste Trails by adding the followin
    - Add dynamic filters to sort blogs by tags, ratings, and popularity.  
 
 3. **Image Uploads for Blogs**:  
-   - Integrate **Cloudinary** or **AWS S3** for blog image uploads.  
+   - Integrate **Cloudinary** or **AWS S3** for blog image uploads.   
 
-4. **User Engagement Analytics**:  
-   - Provide blog owners with insights into views, likes, and shares.  
-
-5. **OAuth Authentication**:  
+4. **OAuth Authentication**:  
    - Allow users to log in using third-party services like Google, Facebook, or GitHub.  
 
 ---
