@@ -211,47 +211,29 @@ app.get('/blogs/:id/delete', async (req, res) => {
 
 
 // Route to handle blog deletion
-// app.post('/blogs/:id/delete', async (req, res) => {
-//   try {
-//     const blogId = req.params.id;
-
-//     // Delete the blog by its ID
-//     const result = await Blog.deleteOne({ _id: blogId });
-
-//     if (result.deletedCount === 0) {
-//       return res.status(404).send('Blog not found');
-//     }
-
-//     // Redirect to the blog list or homepage after deletion
-//     res.redirect('/blogs');
-//   } catch (err) {
-//     console.error('Error deleting blog:', err.message);
-//     res.status(500).send('Error deleting blog');
-//   }
-// });
-// Route to delete the user's account
-app.get('/blogs/:id/delete', isAuthenticated, async (req, res) => {
+app.post('/blogs/:id/delete', async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id);
-    if (!blog) {
+    const blogId = req.params.id;
+
+    // Delete the blog by its ID
+    const result = await Blog.deleteOne({ _id: blogId });
+
+    if (result.deletedCount === 0) {
       return res.status(404).send('Blog not found');
     }
 
-    // Pass user and blog data to the template
-    res.render('delete', {
-      blog: blog,
-      user: req.session.user  // Assuming the user's session contains 'user' data
-    });
+    // Redirect to the blog list or homepage after deletion
+    res.redirect('/blogs');
   } catch (err) {
-    console.error('Error fetching blog:', err);
-    res.status(500).send('Error fetching blog');
+    console.error('Error deleting blog:', err.message);
+    res.status(500).send('Error deleting blog');
   }
 });
 
 
 
 // Add route in server.js
-app.post('/blogs/:id/save', (req, res) => {
+app.post('/blogs/:id/save',isAuthenticated, (req, res) => {
   const blogId = req.params.id;
   
   // Find the blog by ID and update its "saved" status or flag
@@ -275,7 +257,7 @@ app.post('/blogs/:id/save', (req, res) => {
 });
 
 
-app.get('/profile', async (req, res) => {
+app.get('/profile',isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id)
       .populate('savedBlogs')  // Populate saved blogs
