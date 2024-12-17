@@ -210,7 +210,51 @@ app.post('/blogs/:id/save', async (req, res) => {
     }
 });
 
+// Route to render the delete confirmation page
+app.get('/blogs/:id/delete', async (req, res) => {
+  try {
+    const blogId = req.params.id; // Extract blog ID from the URL
+    const blog = await Blog.findById(blogId); // Fetch the blog from the database
 
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
+
+    res.render('delete', { blog }); // Render the 'delete.ejs' page with blog details
+  } catch (err) {
+    console.error('Error loading delete page:', err.message);
+    res.status(500).send('Error loading delete page');
+  }
+});
+
+// Route to handle blog deletion (DELETE method)
+app.delete('/blogs/:id', async (req, res) => {
+  const blogId = req.params.id;
+  console.log('Delete request received for blog ID:', blogId);
+
+  try {
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      console.log('Blog not found');
+      return res.status(404).send('Blog not found');
+    }
+
+    console.log('Blog found:', blog);
+
+    // Delete the blog
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
+    if (!deletedBlog) {
+      console.log('Delete failed, blog could not be deleted');
+      return res.status(404).send('Blog not found');
+    }
+
+    console.log('Blog deleted successfully:', deletedBlog);
+    res.redirect('/explore'); // Redirect to explore page after deletion
+  } catch (err) {
+    console.error('Error deleting blog:', err.message);
+    res.status(500).send('Error deleting the blog');
+  }
+});
 
 
 

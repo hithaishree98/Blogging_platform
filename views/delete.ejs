@@ -1,13 +1,13 @@
 <%- include('layout', {
-  title: 'Delete Blog | TasteTrails',
+  title: `Delete Blog - ${blog.title}`,
   body: `
     <section class="form-container">
       <h1>Delete Blog</h1>
       <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
-      <form action="/blogs/${blog._id}?_method=DELETE" method="POST" class="delete-form">
+      <form method="POST" action="/blogs/${blog._id}?_method=DELETE" class="delete-form">
         <button type="submit" class="btn-danger">Yes, Delete</button>
-        <a href="/blogs/${blog._id}" class="btn-primary">Cancel</a>
       </form>
+      <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
     </section>
   `
 }) %>
