@@ -25,44 +25,39 @@
     </nav>
   </header>
 
-  <!-- Edit Profile Form -->
+  <!-- Page Content -->
   <main class="edit-profile-main">
+    <h1 class="edit-profile-title">Edit Your Profile</h1> <!-- Title outside container -->
     <section class="edit-profile-section">
-      <h1 class="highlight-title">Edit Your Profile</h1>
       <form method="POST" action="/profile/edit" enctype="multipart/form-data">
-        <!-- Profile Photo -->
-        <div class="form-group">
-          <label for="edit-profile-photo">Profile Photo</label>
-          <img src="<%= user.profilePhoto || 'https://i.sstatic.net/l60Hf.png' %>" 
-               alt="Profile Picture" class="profile-image-preview">
-          <input type="file" id="edit-profile-photo" name="profilePhoto">
+        <!-- Profile Picture Preview -->
+        <div class="form-group profile-photo-group">
+          <label for="profile-photo">Profile Photo</label>
+          <div class="profile-photo-preview">
+            <img src="<%= user.profilePhoto || 'https://i.sstatic.net/l60Hf.png' %>" alt="Profile Picture" id="profile-preview">
+          </div>
+          <input type="file" name="profilePhoto" id="profile-photo" onchange="previewImage(event)">
         </div>
         
-        <!-- Username -->
+        <!-- Other Profile Fields -->
         <div class="form-group">
-          <label for="edit-username">Username</label>
-          <input type="text" id="edit-username" name="username" value="<%= user.username %>" required>
+          <label for="username">Username</label>
+          <input type="text" name="username" value="<%= user.username %>" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" name="name" value="<%= user.name %>" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" value="<%= user.email %>" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" placeholder="New Password">
         </div>
 
-        <!-- Name -->
-        <div class="form-group">
-          <label for="edit-name">Name</label>
-          <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
-        </div>
-
-        <!-- Email -->
-        <div class="form-group">
-          <label for="edit-email">Email</label>
-          <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
-        </div>
-
-        <!-- Password -->
-        <div class="form-group">
-          <label for="edit-password">Password</label>
-          <input type="password" id="edit-password" name="password" placeholder="New Password">
-        </div>
-
-        <!-- Buttons -->
+        <!-- Form Buttons -->
         <div class="form-buttons">
           <button type="submit" class="btn-primary">Save Changes</button>
           <a href="/profile" class="btn-cancel">Cancel</a>
@@ -80,5 +75,17 @@
       <li><a href="#">Twitter</a></li>
     </ul>
   </footer>
+
+  <!-- Script for Image Preview -->
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const output = document.getElementById('profile-preview');
+        output.src = reader.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
 </body>
 </html>

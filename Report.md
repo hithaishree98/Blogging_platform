@@ -47,7 +47,7 @@ The primary objective of the Taste Trails project was to build a web application
 ## Challenges
 
 Some of the challenges faced during development were:
-- **User Authentication**: Implementing Passport.js for handling user sign-ups and logins was initially challenging due to the complexity of session management. However, with extensive research and testing, we successfully integrated the authentication system.
+- **User Authentication**: Our project features session-based authentication using express-session, where user login status and profile data are stored server-side. Middleware ensures protected routes like creating or editing blogs are accessible only to authenticated users, while admin-specific actions (e.g., blog deletion) are restricted to users with the "admin" role. Sessions are securely managed with cookieParser for persistent authentication across requests.
 - **MongoDB Integration**: Integrating MongoDB and ensuring proper data validation for user inputs was tricky at times.
 
 ## Future Work
