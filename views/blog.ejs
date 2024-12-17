@@ -1,9 +1,11 @@
 <%- include('layout', {
-  title: blog.title,
+  title: `${blog.title}`,
   body: `
     <section class="blog-details">
       <h1>${blog.title}</h1>
       <img src="${blog.imageUrl || 'https://via.placeholder.com/800x400'}" alt="${blog.title}" class="blog-image">
+
+      <!-- Blog Meta Info -->
       <p class="blog-meta">
         <strong>Destination:</strong> ${blog.destination} |
         <strong>Rating:</strong> ${blog.rating} |
@@ -11,11 +13,69 @@
       </p>
       <p>${blog.content}</p>
       <p><small>Published on: ${new Date(blog.createdAt).toDateString()}</small></p>
-      <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
-      <a href="/explore" class="btn-primary">Back to Explore</a>
-      <a href="/blogs/${blog._id}/delete" class="btn-primary">Delete</a>
-      <a href="/blogs/${blog._id}/save" class="btn-primary">Save</a>
+
+      <!-- Buttons -->
+      <div class="blog-actions">
+        <form method="POST" action="/blogs/${blog._id}/like" style="display:inline;">
+          <button type="submit" class="btn-primary">👍 Like</button>
+        </form>
+        <button class="btn-primary" onclick="showShareDialog()">Share</button>
+        <a href="/blogs/${blog._id}/save" class="btn-primary">Save</a>
+        <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
+        <a href="/blogs/${blog._id}/delete" class="btn-primary">Delete</a>
+        <a href="/explore" class="btn-primary">Back to Explore</a>
+      </div>
+
+      <!-- Share Dialog Box -->
+      <div id="share-dialog" class="share-dialog hidden">
+        <h3>Share this Blog</h3>
+        <ul>
+          <li><a href="https://twitter.com/share?url=${encodeURIComponent(`https://example.com/blogs/${blog._id}`)}&text=${encodeURIComponent(blog.title)}" target="_blank">X (Twitter)</a></li>
+          <li><a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://example.com/blogs/${blog._id}`)}" target="_blank">Facebook</a></li>
+          <li><a href="https://api.whatsapp.com/send?text=${encodeURIComponent(`${blog.title} - https://example.com/blogs/${blog._id}`)}" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:?subject=${encodeURIComponent(blog.title)}&body=${encodeURIComponent(`Check out this blog: https://example.com/blogs/${blog._id}`)}">Email</a></li>
+          <li><a href="https://www.instagram.com/" target="_blank">Instagram</a> (Copy link and share manually)</li>
+        </ul>
+        <button class="btn-cancel" onclick="closeShareDialog()">Cancel</button>
+      </div>
+
+      <!-- Comments Section -->
+      <section class="comments-section">
+        <h2>Comments</h2>
+
+        <!-- Add Comment Form -->
+        <form method="POST" action="/blogs/${blog._id}/comment" class="comment-form">
+          <div class="form-group">
+            <label for="comment">Add a Comment:</label>
+            <textarea name="text" id="comment" rows="3" required placeholder="Write your comment here..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Post Comment</button>
+        </form>
+
+        <!-- Display Comments -->
+        <div class="comments-list">
+          ${blog.comments && blog.comments.length > 0 
+            ? blog.comments.map(comment => `
+              <div class="comment">
+                <strong>${comment.user?.username || 'Anonymous'}:</strong>
+                <p>${comment.text}</p>
+              </div>
+            `).join('') 
+            : '<p>No comments yet. Be the first to comment!</p>'
+          }
+        </div>
+      </section>
     </section>
+
+    <!-- Script for Share Dialog -->
+    <script>
+      function showShareDialog() {
+        document.getElementById('share-dialog').classList.remove('hidden');
+      }
+
+      function closeShareDialog() {
+        document.getElementById('share-dialog').classList.add('hidden');
+      }
+    </script>
   `
 }) %>
-

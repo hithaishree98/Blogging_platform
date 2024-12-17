@@ -70,7 +70,42 @@ app.get('/explore', async (req, res) => {
 });
 
 
+// Like a Blog
+app.post('/blogs/:id/like', isAuthenticated, async (req, res) => {
+    const blogId = req.params.id;
+    try {
+        const blog = await Blog.findById(blogId);
+        if (!blog) return res.status(404).send('Blog not found');
 
+        blog.likes += 1;
+        await blog.save();
+
+        res.redirect(`/blogs/${blogId}`);
+    } catch (error) {
+        console.error('Error liking blog:', error);
+        res.status(500).send('Error liking blog');
+    }
+});
+
+// Comment on a Blog
+app.post('/blogs/:id/comment', isAuthenticated, async (req, res) => {
+    const blogId = req.params.id;
+    const { text } = req.body;
+    try {
+        if (!text || text.trim() === '') return res.status(400).send('Comment cannot be empty');
+
+        const blog = await Blog.findById(blogId);
+        if (!blog) return res.status(404).send('Blog not found');
+
+        blog.comments.push({ user: req.session.user.id, text });
+        await blog.save();
+
+        res.redirect(`/blogs/${blogId}`);
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        res.status(500).send('Error adding comment');
+    }
+});
 
 
 
