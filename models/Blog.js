@@ -8,7 +8,8 @@ const blogSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   rating: { type: Number, default: 0 },
   destination: { type: String, required: true },
-  imageUrl: {type: String, required: false }
+  imageUrl: {type: String, required: false },
+  savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Users who saved this blog
 });
 
 module.exports = mongoose.model('Blog', blogSchema);

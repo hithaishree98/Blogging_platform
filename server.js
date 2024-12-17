@@ -192,7 +192,54 @@ app.post('/blogs/:id/edit', async (req, res) => {
 });
 
 // Route to render the delete confirmation form
-app.get('/blogs/:id/delete', async (req, res) => {
+// app.get('/blogs/:id/delete', async (req, res) => {
+//   try {
+//     const blogId = req.params.id;
+//     const blog = await Blog.findById(blogId);
+
+//     if (!blog) {
+//       return res.status(404).send('Blog not found');
+//     }
+
+//     res.render('delete', { blog }); // Render the 'delete.ejs' page with blog details
+//   } catch (err) {
+//     console.error('Error fetching blog for delete:', err.message);
+//     res.status(500).send('Error loading delete page');
+//   }
+// });
+
+
+
+// // Route to handle blog deletion
+// app.post('/blogs/:id/delete', async (req, res) => {
+//   try {
+//     const blogId = req.params.id;
+
+//     // Delete the blog by its ID
+//     const result = await Blog.deleteOne({ _id: blogId });
+
+//     if (result.deletedCount === 0) {
+//       return res.status(404).send('Blog not found');
+//     }
+
+//     // Redirect to the blog list or homepage after deletion
+//     res.redirect('/blogs');
+//   } catch (err) {
+//     console.error('Error deleting blog:', err.message);
+//     res.status(500).send('Error deleting blog');
+//   }
+// });
+// Admin check middleware
+const isAdmin = (req, res, next) => {
+  if (req.session.user && req.session.user.role === 'admin') {
+    return next(); // Proceed to the next middleware or route handler
+  } else {
+    return res.status(403).send('You do not have permission to perform this action');
+  }
+};
+
+// Route to render the delete confirmation form (ensure only admins can access it)
+app.get('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const blogId = req.params.id;
     const blog = await Blog.findById(blogId);
@@ -208,10 +255,8 @@ app.get('/blogs/:id/delete', async (req, res) => {
   }
 });
 
-
-
-// Route to handle blog deletion
-app.post('/blogs/:id/delete', async (req, res) => {
+// Route to handle blog deletion (ensure only admins can delete)
+app.post('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
   try {
     const blogId = req.params.id;
 
@@ -233,27 +278,34 @@ app.post('/blogs/:id/delete', async (req, res) => {
 
 
 // Add route in server.js
-app.post('/blogs/:id/save',isAuthenticated, (req, res) => {
+app.post('/blogs/:id/save',isAuthenticated, async(req, res) => {
   const blogId = req.params.id;
   
   // Find the blog by ID and update its "saved" status or flag
-  Blog.findById(blogId)
-    .then(blog => {
-      if (!blog) {
-        return res.status(404).send('Blog not found');
-      }
+  try {
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
 
-      // Save the blog (or update saved flag)
-      blog.saved = true; // Assuming you have a "saved" field to mark it as saved
-      return blog.save();
-    })
-    .then(() => {
-      res.redirect(`/blogs/${blogId}`); // Redirect to the blog's detail page or wherever
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Server error');
-    });
+    // Add blog to user's savedBlogs if not already saved
+    const user = await User.findById(req.session.user.id);
+    if (!user.savedBlogs.includes(blog._id)) {
+      user.savedBlogs.push(blog._id);
+      await user.save();
+    }
+
+    // Add user to blog's savedBy list
+    if (!blog.savedBy.includes(user._id)) {
+      blog.savedBy.push(user._id);
+      await blog.save();
+    }
+
+    res.redirect(`/blogs/${blogId}`); // Redirect to the blog detail page
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
 });
 
 
@@ -267,7 +319,7 @@ app.get('/profile',isAuthenticated, async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.render('profile', { user: req.session.user }); // Pass the populated user object to the view
+    res.render('profile', { user }); // Pass the populated user object to the view
   } catch (err) {
     console.error('Error fetching profile data:', err.message);
     res.status(500).send('Error loading profile');
