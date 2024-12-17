@@ -12,3 +12,5 @@ const blogSchema = new mongoose.Schema({
   saved: { type: Boolean, default: false },
   savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Users who saved this blog
 });
+
+module.exports = mongoose.model('Blog', blogSchema);

@@ -1,78 +1,166 @@
-# Project Report - Taste Trails
+# **Project Report - Taste Trails**
 
-## Introduction
+## **Introduction**
 
-**Team Members:**
-- Aishwarya Bhargava (Pitt_ID: [your Pitt ID])
-- Hithaishree Shankar (Pitt_ID: HIS52@pitt.edu)
-- Radhika Purohit (Pitt_ID: RAP276@pitt.edu)
+**Team Members:**  
+- **Aishwarya Bhargava** (Pitt_ID: AIB79@pitt.edu)  
+- **Hithaishree Shankar** (Pitt_ID: HIS52@pitt.edu)  
+- **Radhika Purohit** (Pitt_ID: RAP276@pitt.edu)  
 
-**Project Overview:**
-Taste Trails is a food blogging and Travel exploration platform that allows users to browse, create, and manage food and Travel related blog posts. The application features a clean, responsive design, enabling users to search for blogs based on filters like location and cuisine. Users can also sign up, log in, and create or edit their blog posts, while administrators can manage the platform's content. The project employs modern web technologies and follows the MVC (Model-View-Controller) architecture to maintain a clean and scalable codebase.
+### **Project Overview**  
+Taste Trails is a dynamic food blogging and travel exploration platform that enables users to browse, create, save, like, comment, and share blogs related to food and travel. It is designed to provide a seamless user experience through an interactive interface and well-structured functionalities. Users can explore blogs based on destinations and cuisines, interact with blog posts, and manage their profiles. Administrators can moderate blogs, manage users, and analyze platform statistics through an admin dashboard.
 
-## Objective
+The application is built using modern **web technologies** and follows the **MVC (Model-View-Controller)** architecture, ensuring scalability and maintainability.
 
-The primary objective of the Taste Trails project was to build a web application that allows users to explore, create, and interact with food-related content. The goals included:
-- Implementing a fully functional CRUD system for blog posts, allowing users to create, read, update their blogs.
-- Learning and applying RESTful API practices to manage user authentication and blog creation.
-- Building a responsive, user-friendly interface that adjusts across different devices.
-- Enhancing the project by implementing user authentication and an admin dashboard to manage and delete blogs.
-- Admin has a seperate dashboard with visualizations and summary on total registered users and blogs.
-- Learning how to integrate MongoDB for database storage and for user authentication.
+---
 
-## Team Member Contributions
+## **Objective**
 
-- Aishwarya Bhargava (Pitt_ID: [your Pitt ID])
+The primary objectives of this project were:  
+- Build a **responsive and interactive blogging platform** for food and travel enthusiasts.  
+- Implement a full **CRUD (Create, Read, Update, Delete)** system for blogs.  
+- Enable **user authentication** for secure access and personalized experiences.  
+- Add interactive features like **comments, likes, saved blogs**, and **social media sharing**.  
+- Provide an **admin dashboard** to manage blogs and visualize user activity through analytics.  
+- Learn and apply RESTful API principles for structured data flow.  
+- Ensure responsive design and consistent UI across devices.  
 
-- Hithaishree Shankar (Pitt_ID: HIS52@pitt.edu)
+### **Additional Features Implemented**
+1. **Dynamic Comment Section**: Users can add and view comments dynamically under blog posts.  
+2. **Like and Save Blogs**: Users can like blogs to increase engagement and save them for later viewing.  
+3. **Social Media Sharing**: Share blog posts on platforms like Twitter, Facebook, and Email.  
+4. **Admin Dashboard**: Provides admin users with statistics on the total number of blogs, users, and interactive visualizations for insights.  
 
-- Radhika Purohit (Pitt_ID: RAP276@pitt.edu)
-  
+---
 
-## Technical Architecture
+## **Team Member Contributions**
 
-### Libraries, Frameworks, and Technologies Used:
-- **Express.js**: Used to handle the backend routing and serve static files.
-- **MongoDB**: A NoSQL database used for storing user information, blog posts, and comments.
-- **HTML5/CSS3**: Used to structure and style the frontend.
-- **JavaScript**: For implementing interactive frontend elements and API calls.
-- **Mongoose**: ODM (Object Data Modeling) library to interact with MongoDB.
-- **EJS (Embedded JavaScript)**: For templating in views.
+- **Aishwarya Bhargava**  
+   - Contribution1
+   - Contribution2
+   - Contribution3
+   
+- **Hithaishree Shankar**  
+   - Contribution1
+   - Contribution2
+   - Contribution3
+   
+- **Radhika Purohit**  
+   - Contribution1
+   - Contribution2
+   - Contribution3
+   
+---
 
-### MVC Architecture:
-- **Model**: Represents the application's data, such as `User.js` and `Blog.js` models. These define the structure of data stored in MongoDB.
-- **View**: The user-facing pages such as `login.html` and `signup.html`. These files render the frontend elements.
-- **Controller**: Handles the logic behind routes and actions, such as `userController.js`, `blogController.js`, and `adminController.js`. The controllers handle tasks like retrieving blog posts, user authentication, and blog creation.
+## **Technical Architecture**
 
-## Challenges
+### **Technologies Used**
+- **Backend**: Node.js, Express.js  
+- **Frontend**: EJS (Embedded JavaScript), HTML5, CSS3, JavaScript  
+- **Database**: MongoDB with Mongoose ODM  
+- **Authentication**: Express-session, cookie-parser  
+- **Additional Libraries**:  
+   - `mongoose` for database schema and querying.  
+   - `method-override` for supporting PUT and DELETE methods in forms.  
+   - `express-session` for secure session management.  
 
-Some of the challenges faced during development were:
-- **User Authentication**: Our project features session-based authentication using express-session, where user login status and profile data are stored server-side. Middleware ensures protected routes like creating or editing blogs are accessible only to authenticated users, while admin-specific actions (e.g., blog deletion) are restricted to users with the "admin" role. Sessions are securely managed with cookieParser for persistent authentication across requests.
-- **MongoDB Integration**: Integrating MongoDB and ensuring proper data validation for user inputs was tricky at times.
+### **MVC Architecture**  
+The project adheres to the MVC design pattern:  
+1. **Model**:  
+   - **Blog.js**: Defines the blog schema with fields for title, content, likes, comments, and saved data.  
+   - **User.js**: Defines user schema with fields for username, email, password, profile photo, and saved blogs.  
+2. **View**:  
+   - **EJS Templates**:  
+     - `index.ejs`: Home page  
+     - `explore.ejs`: Blog exploration page with filters  
+     - `blog.ejs`: Individual blog details page (includes like, comment, and share buttons)  
+     - `profile.ejs`: User profile page displaying saved and created blogs  
+     - `edit-profile.ejs`: Profile editing form  
+3. **Controller**:  
+   - Routes handle tasks like creating blogs, liking, commenting, saving blogs, and user authentication.  
+   - Example: `/blogs/:id/comment` to add comments dynamically.  
 
-## Future Work
+---
 
-Given more time, we would add the following features:
-- **Social Media Sharing**: Add social media sharing options to enable users to share blogs on platforms like Facebook and Twitter.
-- **Tagging System**: Implement a more complex tagging system to categorize blogs by themes (e.g., vegan, street food, etc.).
+## **Challenges**
 
-We would also like to explore more advanced technologies, such as using GraphQL for efficient data fetching or integrating a real-time chat system for user interactions.
+During the project, we faced the following challenges:  
+1. **MongoDB Validation**:  
+   - MongoDB Atlas' free tier restricted us from modifying validation rules via UI. We addressed this by defining strict validation rules in the **Mongoose Schema**.  
 
-## Conclusion
+2. **Dynamic Comments and Likes**:  
+   - Implementing interactive features required careful management of database updates and frontend rendering.  
 
-Throughout this project, we learned a lot about web development technologies, particularly how to design and implement a full-stack application using Express.js, MongoDB, and  for user authentication. The project helped us understand the importance of creating a responsive design and integrating back-end functionality to build a feature-rich application. The skills we acquired will definitely be valuable in future development tasks and provide a solid foundation for more advanced web projects.
+3. **Social Media Integration**:  
+   - Creating dynamic sharing links with query parameters for platforms like Facebook and Twitter required additional formatting logic.  
 
-## Resources
+4. **User Authentication**:  
+   - Implementing session-based authentication and restricting access to specific routes was initially tricky but resolved with **middleware** and secure session management.  
 
-Here are the resources we used to complete this project:
-- [Express.js Documentation](https://expressjs.com/)
-- [MongoDB Atlas Setup Guide](https://www.mongodb.com/cloud/atlas)
-- [Passport.js Authentication Guide](http://www.passportjs.org/docs/)
-- [MongoDB Mongoose Documentation](https://mongoosejs.com/)
-- [W3Schools Responsive Design Tutorial](https://www.w3schools.com/css/css_rwd_mediaqueries.asp)
+---
 
-For testing the application, you can:
-1. Start the server by running `node server.js`.
-2. Open the application in your browser at `https://taste-trails.glitch.me/`.
-3. Signup and Login as a user to see the services offered and functionalities.
-4. For Admin Access, Login with **User**: admin123@gmail.com and **Password:** admin123
+## **Future Work**
+
+If given more time, we would like to enhance Taste Trails by adding the following features:  
+1. **Real-Time Updates**:  
+   - Implement real-time likes and comments using WebSockets or a similar technology.  
+
+2. **Advanced Search and Filters**:  
+   - Add dynamic filters to sort blogs by tags, ratings, and popularity.  
+
+3. **Image Uploads for Blogs**:  
+   - Integrate **Cloudinary** or **AWS S3** for blog image uploads.  
+
+4. **User Engagement Analytics**:  
+   - Provide blog owners with insights into views, likes, and shares.  
+
+5. **OAuth Authentication**:  
+   - Allow users to log in using third-party services like Google, Facebook, or GitHub.  
+
+---
+
+## **Conclusion**
+
+The development of Taste Trails allowed us to gain hands-on experience in **full-stack web development**. Through the project, we learned to:  
+- Build and manage RESTful APIs using Node.js and Express.js.  
+- Work with MongoDB to store and retrieve data effectively.  
+- Implement **user authentication** and role-based access (admin and regular users).  
+- Create a dynamic and responsive frontend with **EJS, HTML, and CSS**.  
+- Add engaging features like likes, comments, saves, and sharing to increase user interactivity.  
+
+This project has equipped us with the necessary skills to develop scalable web applications and will serve as a strong foundation for future advanced projects.
+
+---
+
+## **Resources**
+
+- [Node.js Documentation](https://nodejs.org/)  
+- [Express.js Guide](https://expressjs.com/)  
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)  
+- [Mongoose ODM Documentation](https://mongoosejs.com/)  
+- [MDN Web Docs (HTML, CSS, JavaScript)](https://developer.mozilla.org/)  
+- [W3Schools Responsive Design](https://www.w3schools.com/css/css_rwd_mediaqueries.asp)  
+- [Stack Overflow](https://stackoverflow.com/)  
+
+---
+
+## **Testing Instructions**
+
+1. **Run the Application**:  
+   - Start the server using: `node server.js`.  
+   - Open your browser and navigate to `http://localhost:3000`.  
+
+2. **User Testing**:  
+   - **Sign Up/Login**: Create a user account and log in.  
+   - **Explore Blogs**: Visit the Explore page to browse existing blogs.  
+   - **Create Blog**: Use `/blogs/create` to create a new blog.  
+   - **Interact with Blogs**:  
+     - **Like**: Click the "Like" button to add likes.  
+     - **Comment**: Add comments dynamically under blogs.  
+     - **Save**: Save blogs to view later under your profile.  
+     - **Share**: Use sharing buttons to post blogs to social media.  
+   - **Edit Profile**: Access `/profile/edit` to update your details and upload a profile picture.  
+
+3. **Admin Testing**:  
+   - Log in as Admin (**Email**: `admin123@gmail.com`, **Password**: `admin123`).  
+   - Access the admin dashboard to view blog statistics, manage blogs, and analyze user activity.  
