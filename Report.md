@@ -36,9 +36,10 @@ The primary objectives of this project were:
 ## **Team Member Contributions**
 
 - **Aishwarya Bhargava**  
-   - Contribution1
-   - Contribution2
-   - Contribution3
+   - Designed and implemented the Blog Schema with interactive features (likes, comments, and edit functionality).
+   - Designed and implemented the home page and create blog page.
+   - Ensured consistent and responsive EJS templates for blog pages.
+   - Ensured proper authentication for every altering step of the website.
    
 - **Hithaishree Shankar**  
    - Contribution1
@@ -46,7 +47,7 @@ The primary objectives of this project were:
    - Contribution3
    
 - **Radhika Purohit**  
-   - Contribution1
+   - Designed the Admin Dashboard with analytics and visualizations (user and blog statistics).
    - Contribution2
    - Contribution3
    

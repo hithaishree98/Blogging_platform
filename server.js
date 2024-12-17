@@ -69,6 +69,11 @@ app.get('/explore', async (req, res) => {
   }
 });
 
+
+
+
+
+
 // Route to display the blog creation form
 app.get('/blogs/create',isAuthenticated, (req, res) => {
   try {
