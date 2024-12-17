@@ -191,52 +191,27 @@ app.post('/blogs/:id/edit', async (req, res) => {
   }
 });
 
-// Route to render the delete confirmation form
-// app.get('/blogs/:id/delete', async (req, res) => {
-//   try {
-//     const blogId = req.params.id;
-//     const blog = await Blog.findById(blogId);
-
-//     if (!blog) {
-//       return res.status(404).send('Blog not found');
-//     }
-
-//     res.render('delete', { blog }); // Render the 'delete.ejs' page with blog details
-//   } catch (err) {
-//     console.error('Error fetching blog for delete:', err.message);
-//     res.status(500).send('Error loading delete page');
-//   }
-// });
-
-
-
-// // Route to handle blog deletion
-// app.post('/blogs/:id/delete', async (req, res) => {
-//   try {
-//     const blogId = req.params.id;
-
-//     // Delete the blog by its ID
-//     const result = await Blog.deleteOne({ _id: blogId });
-
-//     if (result.deletedCount === 0) {
-//       return res.status(404).send('Blog not found');
-//     }
-
-//     // Redirect to the blog list or homepage after deletion
-//     res.redirect('/blogs');
-//   } catch (err) {
-//     console.error('Error deleting blog:', err.message);
-//     res.status(500).send('Error deleting blog');
-//   }
-// });
 // Admin check middleware
+// const isAdmin = (req, res, next) => {
+//   if (req.session.user && req.session.user.role === 'admin') {
+//     return next(); // Proceed to the next middleware or route handler
+//   } else {
+//     return res.status(403).send('You do not have permission to perform this action');
+//   }
+// };
+
 const isAdmin = (req, res, next) => {
   if (req.session.user && req.session.user.role === 'admin') {
-    return next(); // Proceed to the next middleware or route handler
+    return next(); // Proceed if the user is an admin
   } else {
-    return res.status(403).send('You do not have permission to perform this action');
+    // Render the delete page with a "permission denied" message
+    return res.status(403).render('delete', { 
+      blog: null, 
+      error: 'You do not have permission to perform this action.' 
+    });
   }
 };
+
 
 // Route to render the delete confirmation form (ensure only admins can access it)
 app.get('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
@@ -275,45 +250,90 @@ app.post('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
   }
 });
 
-
-
-// Add route in server.js
-app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
-  const blogId = req.params.id;
-  const userId = req.session.user.id;
-
+app.get('/blogs/:id/save', async (req, res) => {
+  console.log(`GET request to /blogs/${req.params.id}/save`); // Log the request
   try {
-    // Find the blog by its ID
-    const blog = await Blog.findById(blogId);
-    if (!blog) {
-      return res.status(404).send('Blog not found');
-    }
-
-    // Find the user and add the blog to their savedBlogs list
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-
-    // Check if the blog is already saved by the user
-    if (user.savedBlogs.includes(blogId)) {
-      return res.status(400).send('Blog is already saved');
-    }
-
-    // Save the blog for the user
-    user.savedBlogs.push(blogId);
-    await user.save();
-
-    // Add the user to the blog's savedBy list
-    blog.savedBy.push(userId);
-    await blog.save();
-
-    res.redirect(`/blogs/${blogId}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
+    const blog = await Blog.findById(req.params.id);
+    res.render('save', { blog });
+  } catch (error) {
+    console.error(error);
+    res.status(404).send('Blog not found');
   }
 });
+
+// Route to save the blog (POST request)
+app.post('/blogs/:id/save', async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    
+    // Check if the user is already in the savedBy array
+    if (!blog.savedBy.includes(req.user.id)) {
+      // Add the user to the savedBy array
+      blog.savedBy.push(req.user.id);
+      // Set the saved field to true
+      blog.saved = true;
+
+      // Save the blog
+      await blog.save();
+    }
+
+    // Redirect to the saved blogs page
+    res.redirect(`/profile/${req.user.id}/saved`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error saving the blog');
+  }
+});
+
+app.get('/profile/:userId/saved', async (req, res) => {
+  try {
+    const savedBlogs = await Blog.find({ savedBy: req.params.userId });
+    
+    // Render the profile page with the saved blogs
+    res.render('profile', { savedBlogs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error loading saved blogs');
+  }
+});
+
+// Add route in server.js
+// app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
+//   const blogId = req.params.id;
+//   const userId = req.session.user.id;
+
+//   try {
+//     // Find the blog by its ID
+//     const blog = await Blog.findById(blogId);
+//     if (!blog) {
+//       return res.status(404).send('Blog not found');
+//     }
+
+//     // Find the user and add the blog to their savedBlogs list
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).send('User not found');
+//     }
+
+//     // Check if the blog is already saved by the user
+//     if (user.savedBlogs.includes(blogId)) {
+//       return res.status(400).send('Blog is already saved');
+//     }
+
+//     // Save the blog for the user
+//     user.savedBlogs.push(blogId);
+//     await user.save();
+
+//     // Add the user to the blog's savedBy list
+//     blog.savedBy.push(userId);
+//     await blog.save();
+
+//     res.redirect(`/blogs/${blogId}`);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 app.get('/profile', isAuthenticated, async (req, res) => {
   try {

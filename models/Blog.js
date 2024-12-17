@@ -9,6 +9,7 @@ const blogSchema = new mongoose.Schema({
   rating: { type: Number, default: 0 },
   destination: { type: String, required: true },
   imageUrl: {type: String, required: false },
+  saved: { type: Boolean, default: false },
   savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Users who saved this blog
 });
 

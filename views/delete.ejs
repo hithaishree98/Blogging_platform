@@ -1,15 +1,21 @@
 <%- include('layout', {
-  title: `Delete Blog - ${blog.title}`,
+  title: error ? 'Access Denied' : `Delete Blog - ${blog ? blog.title : ''}`,
   body: `
     <section class="form-container">
-      <h1>Delete Blog</h1>
-      <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
-      <form method="POST" action="/blogs/${blog._id}/delete" class="delete-form">
-        <button type="submit" class="btn-secondary">Yes, Delete</button>
-        <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
-      </form>
-      <!-- Adding space between the Delete and Cancel buttons -->
+      ${
+        error 
+          ? `<h1>Access Denied</h1>
+             <p>${error}</p>
+             <a href="/blogs" class="btn-secondary">Go Back</a>`
+          : `
+            <h1>Delete Blog</h1>
+            <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
+            <form method="POST" action="/blogs/${blog._id}/delete" class="delete-form">
+              <button type="submit" class="btn-secondary">Yes, Delete</button>
+              <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
+            </form>
+          `
+      }
     </section>
   `
 }) %>
-
