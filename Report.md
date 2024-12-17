@@ -109,14 +109,14 @@ During the project, we faced the following challenges:
 ## **Future Work**
 
 If given more time, we would like to enhance Taste Trails by adding the following features:  
-1. **Real-Time Updates**:  
-   - Implement real-time likes and comments using WebSockets or a similar technology.  
+1. **Rich Media Support**:  
+   - Integrate video uploads for immersive blog experiences.  
 
-2. **Advanced Search and Filters**:  
-   - Add dynamic filters to sort blogs by tags, ratings, and popularity.  
+2. **SEO Optimization**:  
+   - Improve visibility on search engines to attract a larger audience.​.  
 
-3. **Image Uploads for Blogs**:  
-   - Integrate **Cloudinary** or **AWS S3** for blog image uploads.   
+3. **Mobile App Integration**:  
+   - Build an Android/iOS app for on-the-go blogging.   
 
 4. **OAuth Authentication**:  
    - Allow users to log in using third-party services like Google, Facebook, or GitHub.  
