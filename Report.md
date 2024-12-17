@@ -118,8 +118,8 @@ If given more time, we would like to enhance Taste Trails by adding the followin
 3. **Mobile App Integration**:  
    - Build an Android/iOS app for on-the-go blogging.   
 
-4. **OAuth Authentication**:  
-   - Allow users to log in using third-party services like Google, Facebook, or GitHub.  
+4. **AI-Based Recommendations**:  
+   - Suggest blogs based on user interests and activity.  
 
 ---
 
