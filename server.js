@@ -127,7 +127,26 @@ app.get('/blogs/:id', async (req, res) => {
   }
 });
 
+// app.get('/blogs/:id', async (req, res) => {
+//   const blogId = req.params.id;
+//   try {
+//     const blog = await Blog.findById(blogId).populate('likes');
+//     if (!blog) return res.status(404).send('Blog not found');
 
+//     // Calculate average rating
+//     const totalRatings = blog.ratings.reduce((sum, r) => sum + r.score, 0);
+//     const averageRating = blog.ratings.length ? (totalRatings / blog.ratings.length).toFixed(1) : 'No ratings yet';
+
+//     res.render('blog', { 
+//       blog,
+//       averageRating,
+//       likeCount: blog.likes.length
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server Error');
+//   }
+// });
 
 // Route to render the edit form
 app.get('/blogs/:id/edit', isAuthenticated, async (req, res) => {
@@ -384,6 +403,54 @@ app.get('/profile', isAuthenticated, async (req, res) => {
   } catch (err) {
     console.error('Error fetching profile data:', err.message);
     res.status(500).send('Error loading profile');
+  }
+});
+
+app.post('/blogs/:id/like', isAuthenticated, async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const userId = req.session.user.id;
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) return res.status(404).send('Blog not found');
+
+    if (blog.likes.includes(userId)) {
+      // Remove like if already liked (toggle feature)
+      blog.likes = blog.likes.filter((id) => id.toString() !== userId);
+    } else {
+      blog.likes.push(userId);
+    }
+
+    await blog.save();
+    res.redirect(`/blogs/${blogId}`);
+  } catch (error) {
+    console.error('Error liking blog:', error);
+    res.status(500).send('Error processing like');
+  }
+});
+
+app.post('/blogs/:id/rate', isAuthenticated, async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const userId = req.session.user.id;
+    const { score } = req.body; // Rating value from 1 to 5
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) return res.status(404).send('Blog not found');
+
+    // Check if user already rated and update their rating
+    const existingRating = blog.ratings.find((r) => r.user.toString() === userId);
+    if (existingRating) {
+      existingRating.score = score; // Update score
+    } else {
+      blog.ratings.push({ user: userId, score });
+    }
+
+    await blog.save();
+    res.redirect(`/blogs/${blogId}`);
+  } catch (error) {
+    console.error('Error submitting rating:', error);
+    res.status(500).send('Error processing rating');
   }
 });
 
