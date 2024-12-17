@@ -270,6 +270,12 @@ app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
       blog.savedBy.push(req.session.user.id);  // Add user to the savedBy list
       await blog.save();
     }
+    
+    const user = await User.findById(req.session.user.id);
+    if (!user.savedBlogs.includes(blog._id)) {
+      user.savedBlogs.push(blog._id); // Add blog to user's savedBlogs
+      await user.save();
+    }
 
     // Redirect to the profile page with saved blogs
     res.redirect(`/profile`);

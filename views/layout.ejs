@@ -22,7 +22,10 @@
 
     <% if (user) { %>
       <!-- If user is logged in -->
-      <li><a href="/profile">Welcome, <%= user.username %></a></li>
+      <% if (user.role === 'admin') { %>
+                    <li><a href="/admin">Admin Dashboard</a></li>
+      <% } %>
+      <li><a href="/profile">My Profile</a></li>
       <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
     <% } else { %>
       <!-- If user is not logged in -->
