@@ -56,6 +56,11 @@
                 <h2 class="graph-title">Top Destinations</h2>
                 <canvas id="destinationChart"></canvas>
             </div>
+          
+            <div class="graph-section">
+                <h2 class="graph-title">Blog Creation Trend (Last 7 Days)</h2>
+                <canvas id="trendChart"></canvas>
+            </div>
         </section>
     </main>
 
@@ -131,6 +136,44 @@
                             color: '#FFF',
                             font: { weight: 'bold' }
                         }
+                    }
+                }
+            }
+        });
+      
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        const trendDates = <%- JSON.stringify(trendData.dates) %>;
+        const trendCounts = <%- JSON.stringify(trendData.counts) %>;
+
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: trendDates,
+                datasets: [{
+                    label: 'Blogs Created',
+                    data: trendCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#FFF',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#FFF', font: { weight: 'bold' } }
+                    },
+                    y: {
+                        ticks: { color: '#FFF', font: { weight: 'bold' } }
                     }
                 }
             }
