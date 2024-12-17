@@ -13,7 +13,7 @@
     <nav class="navbar">
       <div class="logo-container">
         <a href="/">
-          <img src="https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/DALLE2024-12-1316.28.03-AnexquisiteandcreativelogoforTasteTrailsafoodandtravelblog.Thedesignintegratesacircularglobeinsoftpasteltonessymbolizingtra-ezgif.com-webp-to-jpg-converter.jpg?v=1734125364737" alt="TasteTrails Logo">
+          <img src="https://cdn.glitch.global/logo.jpg" alt="TasteTrails Logo">
         </a>
         <a href="/" class="logo">TasteTrails</a>
       </div>
@@ -21,21 +21,21 @@
         <li><a href="/explore">Explore</a></li>
         <li><a href="/blogs/create">Create Blog</a></li>
         <li><a href="/profile">My Profile</a></li>
-        <li><a href="javascript:void(0);" id="edit-profile-link">Edit Profile</a></li>
+        <li><a href="#" id="edit-profile-btn">Edit Profile</a></li>
         <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Page Content -->
-  <main class="profile-page">
-    <!-- Welcome Message -->
-    <section class="profile-details" id="profile-details">
+  <!-- Profile Content -->
+  <main>
+    <!-- Welcome Section -->
+    <section class="profile-details">
       <h1>Welcome, <span class="highlight"><%= user.username %></span>!</h1>
     </section>
 
     <!-- Saved Blogs -->
-    <section class="content-grid" id="saved-blogs">
+    <section class="content-grid">
       <h2>Saved Blogs</h2>
       <div class="blog-list">
         <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
@@ -48,13 +48,13 @@
             </div>
           <% }) %>
         <% } else { %>
-          <p>No saved blogs yet.</p>
+          <p>You haven't saved any blogs yet.</p>
         <% } %>
       </div>
     </section>
 
     <!-- My Blogs -->
-    <section class="content-grid" id="my-blogs">
+    <section class="content-grid">
       <h2>My Blogs</h2>
       <div class="blog-list">
         <% if (user.myBlogs && user.myBlogs.length > 0) { %>
@@ -67,13 +67,13 @@
             </div>
           <% }) %>
         <% } else { %>
-          <p>No blogs created yet.</p>
+          <p>You haven't created any blogs yet.</p>
         <% } %>
       </div>
     </section>
 
     <!-- Edit Profile Form -->
-    <section id="edit-profile" class="hidden">
+    <section class="edit-profile-section hidden" id="edit-profile-section">
       <h2>Edit Profile</h2>
       <form method="POST" action="/profile" enctype="multipart/form-data">
         <div class="form-group">
@@ -85,16 +85,12 @@
           <input type="text" name="username" value="<%= user.username %>" required>
         </div>
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" name="name" value="<%= user.name %>" required>
-        </div>
-        <div class="form-group">
           <label for="email">Email</label>
           <input type="email" name="email" value="<%= user.email %>" required>
         </div>
         <div class="form-buttons">
           <button type="submit" class="btn-primary">Save Changes</button>
-          <a href="javascript:void(0);" class="btn-cancel" id="cancel-edit">Cancel</a>
+          <a href="#" class="btn-cancel" id="cancel-edit-btn">Cancel</a>
         </div>
       </form>
     </section>
@@ -110,28 +106,16 @@
     </ul>
   </footer>
 
-  <!-- JavaScript -->
+  <!-- Script for toggling Edit Profile Section -->
   <script>
     $(document).ready(() => {
-      const $editProfileSection = $('#edit-profile');
-      const $profileDetails = $('#profile-details');
-      const $savedBlogs = $('#saved-blogs');
-      const $myBlogs = $('#my-blogs');
-
-      // Show Edit Profile Section
-      $('#edit-profile-link').on('click', () => {
-        $editProfileSection.removeClass('hidden');
-        $profileDetails.addClass('hidden');
-        $savedBlogs.addClass('hidden');
-        $myBlogs.addClass('hidden');
+      $("#edit-profile-btn").on("click", () => {
+        $("#edit-profile-section").slideDown();
       });
 
-      // Cancel Edit Profile
-      $('#cancel-edit').on('click', () => {
-        $editProfileSection.addClass('hidden');
-        $profileDetails.removeClass('hidden');
-        $savedBlogs.removeClass('hidden');
-        $myBlogs.removeClass('hidden');
+      $("#cancel-edit-btn").on("click", (e) => {
+        e.preventDefault();
+        $("#edit-profile-section").slideUp();
       });
     });
   </script>
