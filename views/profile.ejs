@@ -34,13 +34,12 @@
                 <!-- The button to toggle Edit Profile form -->
             </section>
 
-            <section class="saved-blogs" id="saved-blogs">
+            <section class="content-grid" id="saved-blogs">
                 <h2>Saved Blogs</h2>
-                <div class="content-grid">
-                  <div class="content-item">
+                <div class="blog-list">
                     <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
                         <% user.savedBlogs.forEach(blog => { %>
-                          
+                            <div class="content-item">
                                 <a href="/blogs/<%= blog._id %>">
                                     <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
                                     <h3><%= blog.title %></h3>
@@ -56,14 +55,15 @@
                         <p>You haven't saved any blogs yet.</p>
                     <% } %>
                 </div>
+              
             </section>
                           
-            <section class="content-grid">
+            <section class="content-grid" id="my-blogs">
                 <h2>My Blogs</h2>
+                <div class="blog-list">
                     <% if (user.myBlogs && user.myBlogs.length > 0) { %>
                         <% user.myBlogs.forEach(blog => { %>
-                            <div class="content-grid">
-                              <div class="content-item">
+                            <div class="content-item">
                                 <a href="/blogs/<%= blog._id %>">
                                     <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
                                     <h3><%= blog.title %></h3>
@@ -79,6 +79,7 @@
                         <p>You haven't created any blogs yet.</p>
                     <% } %>
                 </div>
+              
             </section>
                        
             <!-- Hidden Edit Profile Form -->
