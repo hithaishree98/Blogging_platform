@@ -211,44 +211,71 @@ app.get('/blogs/:id/delete', async (req, res) => {
 
 
 // Route to handle blog deletion
-app.post('/blogs/:id/delete', async (req, res) => {
+// app.post('/blogs/:id/delete', async (req, res) => {
+//   try {
+//     const blogId = req.params.id;
+
+//     // Delete the blog by its ID
+//     const result = await Blog.deleteOne({ _id: blogId });
+
+//     if (result.deletedCount === 0) {
+//       return res.status(404).send('Blog not found');
+//     }
+
+//     // Redirect to the blog list or homepage after deletion
+//     res.redirect('/blogs');
+//   } catch (err) {
+//     console.error('Error deleting blog:', err.message);
+//     res.status(500).send('Error deleting blog');
+//   }
+// });
+// Route to delete the user's account
+app.get('/blogs/:id/delete', isAuthenticated, async (req, res) => {
   try {
-    const blogId = req.params.id;
-
-    // Delete the blog by its ID
-    const result = await Blog.deleteOne({ _id: blogId });
-
-    if (result.deletedCount === 0) {
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) {
       return res.status(404).send('Blog not found');
     }
 
-    // Redirect to the blog list or homepage after deletion
-    res.redirect('/blogs');
+    // Pass user and blog data to the template
+    res.render('delete', {
+      blog: blog,
+      user: req.session.user  // Assuming the user's session contains 'user' data
+    });
   } catch (err) {
-    console.error('Error deleting blog:', err.message);
-    res.status(500).send('Error deleting blog');
+    console.error('Error fetching blog:', err);
+    res.status(500).send('Error fetching blog');
   }
 });
+
 
 
 // Add route in server.js
-app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
-  try {
-    const blogId = req.params.id;
+app.post('/blogs/:id/save', (req, res) => {
+  const blogId = req.params.id;
+  
+  // Find the blog by ID and update its "saved" status or flag
+  Blog.findById(blogId)
+    .then(blog => {
+      if (!blog) {
+        return res.status(404).send('Blog not found');
+      }
 
-    await User.findByIdAndUpdate(req.session.user.id, {
-      $addToSet: { savedBlogs: blogId }  // Avoid duplicates
+      // Save the blog (or update saved flag)
+      blog.saved = true; // Assuming you have a "saved" field to mark it as saved
+      return blog.save();
+    })
+    .then(() => {
+      res.redirect(`/blogs/${blogId}`); // Redirect to the blog's detail page or wherever
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Server error');
     });
-
-    res.redirect(`/blogs/${blogId}`);
-  } catch (err) {
-    console.error('Error saving blog:', err.message);
-    res.status(500).send('Error saving the blog');
-  }
 });
 
 
-app.get('/profile', isAuthenticated, async (req, res) => {
+app.get('/profile', async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id)
       .populate('savedBlogs')  // Populate saved blogs
