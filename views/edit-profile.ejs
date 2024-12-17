@@ -34,44 +34,6 @@
       <h1 class="highlight-title">Welcome, <span class="username"><%= user.username %></span>!</h1>
     </section>
 
-    <!-- Saved Blogs -->
-    <section class="content-grid">
-      <h2 class="highlight-title">Saved Blogs</h2>
-      <div class="blog-list">
-        <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
-          <% user.savedBlogs.forEach(blog => { %>
-            <div class="blog-card">
-              <img src="<%= blog.imageUrl || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
-              <h3><%= blog.title %></h3>
-              <p><%= blog.content.substring(0, 100) %>...</p>
-              <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
-            </div>
-          <% }) %>
-        <% } else { %>
-          <p>You haven't saved any blogs yet.</p>
-        <% } %>
-      </div>
-    </section>
-
-    <!-- My Blogs -->
-    <section class="content-grid">
-      <h2 class="highlight-title">My Blogs</h2>
-      <div class="blog-list">
-        <% if (user.myBlogs && user.myBlogs.length > 0) { %>
-          <% user.myBlogs.forEach(blog => { %>
-            <div class="blog-card">
-              <img src="<%= blog.imageUrl || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
-              <h3><%= blog.title %></h3>
-              <p><%= blog.content.substring(0, 100) %>...</p>
-              <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
-            </div>
-          <% }) %>
-        <% } else { %>
-          <p>You haven't created any blogs yet.</p>
-        <% } %>
-      </div>
-    </section>
-
     <!-- Edit Profile Form -->
     <section class="edit-profile-section hidden" id="edit-profile-section">
       <h2>Edit Profile</h2>
