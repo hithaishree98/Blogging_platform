@@ -698,6 +698,13 @@ footer .social-links a {
   color: #fff;
 }
 
+#delete-blog-section h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
 .delete-message, .error-message {
   font-size: 18px;
   margin-bottom: 30px;
