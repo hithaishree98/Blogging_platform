@@ -6,7 +6,7 @@
         error 
           ? `<h1>Access Denied</h1>
              <p>${error}</p>
-             <a href="/blogs" class="btn-secondary">Go Back</a>`
+             <a href="/blogs/${blog._id}" class="btn-secondary">Go Back</a>`
           : `
             <h1>Delete Blog</h1>
             <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>

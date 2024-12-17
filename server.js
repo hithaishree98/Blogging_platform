@@ -192,22 +192,15 @@ app.post('/blogs/:id/edit', async (req, res) => {
 });
 
 // Admin check middleware
-// const isAdmin = (req, res, next) => {
-//   if (req.session.user && req.session.user.role === 'admin') {
-//     return next(); // Proceed to the next middleware or route handler
-//   } else {
-//     return res.status(403).send('You do not have permission to perform this action');
-//   }
-// };
 
 const isAdmin = (req, res, next) => {
   if (req.session.user && req.session.user.role === 'admin') {
-    return next(); // Proceed if the user is an admin
+    return next(); // Proceed to the next middleware or route handler
   } else {
-    // Render the delete page with a "permission denied" message
-    return res.status(403).render('delete', { 
-      blog: null, 
-      error: 'You do not have permission to perform this action.' 
+    const blogId = req.params.id; // Extract blog ID
+    return res.status(403).render('delete', {
+      blog: { _id: blogId }, // Provide the blog ID so the "Go Back" link works
+      error: 'You do not have permission to perform this action',
     });
   }
 };
@@ -223,7 +216,7 @@ app.get('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
       return res.status(404).send('Blog not found');
     }
 
-    res.render('delete', { blog }); // Render the 'delete.ejs' page with blog details
+    res.render('delete', { blog, error:null }); // Render the 'delete.ejs' page with blog details
   } catch (err) {
     console.error('Error fetching blog for delete:', err.message);
     res.status(500).send('Error loading delete page');

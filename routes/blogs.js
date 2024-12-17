@@ -23,7 +23,11 @@ router.get('/', async (req, res) => {
 router.post('/:id/save', async (req, res) => {
     try {
         const blogId = req.params.id;
-        const userId = req.session.user.id;
+        const userId = req.session.user ? req.session.user.id : null;  // Check if user is authenticated
+
+        if (!userId) {
+            return res.status(401).json({ success: false, message: 'Not authenticated' });
+        }
 
         // Find the blog by ID
         const blog = await Blog.findById(blogId);
