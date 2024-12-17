@@ -206,6 +206,56 @@ form .cancel-btn:hover {
     color: #ff7043;
 }
 
+/* Blog List Grid Layout */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+  padding: 0;
+}
+
+/* Blog Card Design */
+.blog-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Blog Thumbnail Image */
+.blog-card img.blog-thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Blog Information */
+.blog-info {
+  padding: 15px;
+  color: #333;
+}
+
+.blog-info h3 {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #000;
+}
+
+.blog-info .destination {
+  font-size: 0.9em;
+  color: #777;
+}
+
+
 /* Responsive styling */
 @media (max-width: 768px) {
     .header-content {
