@@ -51,10 +51,11 @@ The primary objectives of this project were:
    - Integrated backend logic to manage user sessions and authentication using express-session and cookie-parser.
 
    
-- **Radhika Purohit**  
-   - Designed the Admin Dashboard with analytics and visualizations (user and blog statistics).
-   - Contribution2
-   - Contribution3
+- **Radhika Purohit** 
+  - Set up and configured a secure MongoDB connection for the project hosted on Glitch.
+  - Created Collections and Defined Related Schemas in MongoDB
+  - Created Admin Dashboard with analytics and visualizations, including real-time user and blog statistics from the database.
+  - Implemented functionality to restrict delete rights exclusively to Admin users.
    
 ---
 
