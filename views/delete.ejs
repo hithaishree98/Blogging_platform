@@ -1,13 +1,8 @@
-<%- include('layout', {
-  title: `Delete Blog - ${blog.title}`,
-  body: `
-    <section class="form-container">
-      <h1>Delete Blog</h1>
-      <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
-      <form method="POST" action="/blogs/${blog._id}?_method=DELETE" class="delete-form">
-        <button type="submit" class="btn-danger">Yes, Delete</button>
-      </form>
-      <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
-    </section>
-  `
-}) %>
+<h1>Are you sure you want to delete this blog?</h1>
+<p>Title: <%= blog.title %></p>
+<p>Content: <%= blog.content %></p>
+
+<form action="/blogs/<%= blog._id %>/delete" method="POST">
+  <button type="submit">Delete</button>
+  <a href="/blogs/<%= blog._id %>">Cancel</a>
+</form>
