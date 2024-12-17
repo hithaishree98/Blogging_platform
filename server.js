@@ -54,12 +54,12 @@ app.use((req, res, next) => {
 // };
 
 
-app.get('/profile', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/auth/login'); // Redirect to login if user is not authenticated
-    }
-    res.render('profile', { user: req.session.user }); // Pass user data to the profile view
-});
+// app.get('/profile', (req, res) => {
+//     if (!req.session.user) {
+//         return res.redirect('/auth/login'); // Redirect to login if user is not authenticated
+//     }
+//     res.render('profile', { user: req.session.user }); // Pass user data to the profile view
+// });
 
 // Connect to MongoDB
 connectToDatabase();
@@ -258,7 +258,7 @@ app.get('/profile', isAuthenticated, async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.render('profile', { user }); // Pass the populated user object to the view
+    res.render('profile', { user: req.session.user }); // Pass the populated user object to the view
   } catch (err) {
     console.error('Error fetching profile data:', err.message);
     res.status(500).send('Error loading profile');
