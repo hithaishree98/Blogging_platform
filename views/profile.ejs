@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -18,165 +18,87 @@
         <a href="/" class="logo">TasteTrails</a>
       </div>
       <ul class="nav-links">
-        <li><a href="/Explore">Explore</a></li>
+        <li><a href="/explore">Explore</a></li>
         <li><a href="/blogs/create">Create Blog</a></li>
-        <li><a href="/profile">My Profile</a></li>
-        <li><a href="javascript:void(0);" id="profile-nav-link">Edit Profile</a></li>
+        <li><a href="/profile" class="active">My Profile</a></li>
+        <li><a href="javascript:void(0);" id="edit-profile-link">Edit Profile</a></li>
         <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Page Content -->
+  <!-- Main Content -->
   <main>
-            <section class="profile-details" id="profile-details">
-                <h1>Welcome, <span id="username"><%= user.username %></span>!</h1>
-                <!-- The button to toggle Edit Profile form -->
-            </section>
+    <section class="profile-container">
+      <h1>Welcome, <span class="highlight"><%= user.username %></span>!</h1>
+      
+      <!-- Saved Blogs Section -->
+      <section id="saved-blogs">
+        <h2>Saved Blogs</h2>
+        <div class="content-grid">
+          <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
+            <% user.savedBlogs.forEach(blog => { %>
+              <div class="content-card">
+                <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="Blog Thumbnail">
+                
+                <h3><%= blog.title %></h3>
+                <p><%= blog.content.substring(0, 100) %>...</p>
+                <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>No saved blogs yet.</p>
+          <% } %>
+        </div>
+      </section>
 
-            <section class="content-grid" id="saved-blogs">
-                <h2>Saved Blogs</h2>
-                <div class="blog-list">
-                    <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
-                        <% user.savedBlogs.forEach(blog => { %>
-                            <div class="content-item">
-                                <a href="/blogs/<%= blog._id %>">
-                                    <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
-                                    <h3><%= blog.title %></h3>
-                                    <p><%= blog.content ? blog.content.substring(0, 100) : '' %>...</p>
-                                    <p><strong>Destination:</strong> <%= blog.destination || 'N/A' %></p>
-                                    <p><strong>Rating:</strong> <%= blog.rating || 'Not Rated' %></p>
-                                    <p><strong>Likes:</strong> <%= blog.likes || 0 %></p>
-                                    <a href="/blogs/<%= blog._id %>" class="btn-secondary">Read More</a>
-                                </a>
-                            </div>
-                        <% }) %>
-                    <% } else { %>
-                        <p>You haven't saved any blogs yet.</p>
-                    <% } %>
-                </div>
-              
-            </section>
-                          
-            <section class="content-grid" id="my-blogs">
-                <h2>My Blogs</h2>
-                <div class="blog-list">
-                    <% if (user.myBlogs && user.myBlogs.length > 0) { %>
-                        <% user.myBlogs.forEach(blog => { %>
-                            <div class="content-item">
-                                <a href="/blogs/<%= blog._id %>">
-                                    <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
-                                    <h3><%= blog.title %></h3>
-                                    <p><%= blog.content ? blog.content.substring(0, 100) : '' %>...</p>
-                                    <p><strong>Destination:</strong> <%= blog.destination || 'N/A' %></p>
-                                    <p><strong>Rating:</strong> <%= blog.rating || 'Not Rated' %></p>
-                                    <p><strong>Likes:</strong> <%= blog.likes || 0 %></p>
-                                    <a href="/blogs/<%= blog._id %>" class="btn-secondary">Read More</a>
-                                </a>
-                            </div>
-                        <% }) %>
-                    <% } else { %>
-                        <p>You haven't created any blogs yet.</p>
-                    <% } %>
-                </div>
-              
-            </section>
-                       
-            <!-- Hidden Edit Profile Form -->
-            <section class="edit-profile-section hidden" id="edit-profile-section">
-                <h2>Edit Profile</h2>
-                <form id="edit-profile-form" action="/profile" method="POST">
-                    <div class="form-group">
-                        <label for="edit-profile-photo">Profile Photo</label>
-                        <!-- Display current profile picture -->
-                        <img src="${user.profilePhoto || 'https://i.sstatic.net/l60Hf.png'}" alt="Profile Picture" class="blog-image">
-                        <input type="file" id="edit-profile-photo" name="profilePhoto">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-username">Username</label>
-                        <input type="text" id="edit-username" name="username" value="<%= user.username %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-name">Name</label>
-                        <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-email">Email</label>
-                        <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-password">Password</label>
-                        <input type="password" id="edit-password" name="password" placeholder="New Password">
-                    </div>
-                    <div class="form-buttons">
-                        <button type="submit" class="btn">Save Changes</button>
-                        <a href="javascript:void(0);" class="btn cancel-btn" id="cancel-edit-btn">Cancel</a>
-                    </div>
-                </form>
-            </section>              
-                          
-        </main>
-                              
-        <script>
-        $(document).ready(() => {
-            const $profileNavLink = $('#profile-nav-link');
-            const $editProfileSection = $('#edit-profile-section');
-            const $profileDetails = $('#profile-details');
-            const $savedBlogs = $('#saved-blogs');
-            const $myBlogs = $('#my-blogs');
-            const $cancelEditBtn = $('#cancel-edit-btn');
-            const $editProfileForm = $('#edit-profile-form');
+      <!-- My Blogs Section -->
+      <section id="my-blogs">
+        <h2>My Blogs</h2>
+        <div class="content-grid">
+          <% if (user.myBlogs && user.myBlogs.length > 0) { %>
+            <% user.myBlogs.forEach(blog => { %>
+              <div class="content-card">
+                <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="Blog Thumbnail">
+                <h3><%= blog.title %></h3>
+                <p><%= blog.content.substring(0, 100) %>...</p>
+                <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>You haven't created any blogs yet.</p>
+          <% } %>
+        </div>
+      </section>
 
-            // Click event for Profile link to show Edit Profile form
-            $profileNavLink.on('click', () => {
-                $profileDetails.addClass('hidden'); // Hide the welcome message
-                $savedBlogs.addClass('hidden'); // Hide saved blogs
-                $myBlogs.addClass('hidden'); // Hide my blogs
-                $editProfileSection.removeClass('hidden'); // Show edit profile form
-            });
-
-    // Click event for Cancel button to return to Profile view
-            $cancelEditBtn.on('click', () => {
-                $editProfileSection.addClass('hidden'); // Hide edit profile form
-                $profileDetails.removeClass('hidden'); // Show welcome message
-                $savedBlogs.removeClass('hidden'); // Show saved blogs
-                $myBlogs.removeClass('hidden'); // Show my blogs
-            });
-          
-            $('#edit-profile-photo').on('change', function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        $('#profile-picture-preview').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // Handle profile update
-            $('#edit-profile-form').on('submit', function (e) {
-                e.preventDefault(); // Prevent page reload
-                const formData = new FormData(this); // Use FormData to handle file uploads
-
-                $.ajax({
-                    url: '/profile',
-                    method: 'PUT',
-                    data: formData,
-                    processData: false,  // Let jQuery handle the data format
-                    contentType: false,  // Let jQuery handle the content type
-                    success: (response) => {
-                        alert(response.message);
-                        location.reload(); // Reload the page to show updated data
-                    },
-                    error: (error) => {
-                        alert(`Error: ${error.responseJSON.message}`);
-                    }
-                });
-            });
-  
-        });
-    </script>
+      <!-- Edit Profile Form -->
+      <section id="edit-profile" class="hidden">
+        <h2>Edit Profile</h2>
+        <form method="POST" action="/profile" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="profile-photo">Profile Photo</label>
+            <input type="file" name="profilePhoto" id="profile-photo">
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" value="<%= user.username %>" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" value="<%= user.name %>" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" value="<%= user.email %>" required>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn-primary">Save Changes</button>
+            <a href="javascript:void(0);" class="btn-cancel" id="cancel-edit">Cancel</a>
+          </div>
+        </form>
+      </section>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -187,5 +109,18 @@
       <li><a href="#">Twitter</a></li>
     </ul>
   </footer>
+
+  <script>
+    // Toggle Edit Profile Section
+    $('#edit-profile-link').click(() => {
+      $('#saved-blogs, #my-blogs').addClass('hidden');
+      $('#edit-profile').removeClass('hidden');
+    });
+
+    $('#cancel-edit').click(() => {
+      $('#edit-profile').addClass('hidden');
+      $('#saved-blogs, #my-blogs').removeClass('hidden');
+    });
+  </script>
 </body>
 </html>
