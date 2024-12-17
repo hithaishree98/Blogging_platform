@@ -43,23 +43,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// // Admin check middleware
-// const isAdmin = (req, res, next) => {
-//   console.log("Session in isAdmin middleware:", req.session);
-//   if (req.session.user && req.session.user.role === 'admin') {
-//     return next(); // Proceed to the next middleware or route handler
-//   } else {
-//     return res.status(403).send('You do not have permission to perform this action'); // Deny if not an admin
-//   }
-// };
-
-
-// app.get('/profile', (req, res) => {
-//     if (!req.session.user) {
-//         return res.redirect('/auth/login'); // Redirect to login if user is not authenticated
-//     }
-//     res.render('profile', { user: req.session.user }); // Pass user data to the profile view
-// });
 
 // Connect to MongoDB
 connectToDatabase();

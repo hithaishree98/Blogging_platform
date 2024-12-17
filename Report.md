@@ -36,7 +36,6 @@ The primary objective of the Taste Trails project was to build a web application
 - **MongoDB**: A NoSQL database used for storing user information, blog posts, and comments.
 - **HTML5/CSS3**: Used to structure and style the frontend.
 - **JavaScript**: For implementing interactive frontend elements and API calls.
-- **CSS**: Media queries in `responsive.css` to adjust the layout for different devices.
 - **Mongoose**: ODM (Object Data Modeling) library to interact with MongoDB.
 - **EJS (Embedded JavaScript)**: For templating in views.
 
@@ -61,7 +60,7 @@ We would also like to explore more advanced technologies, such as using GraphQL 
 
 ## Conclusion
 
-Throughout this project, we learned a lot about web development technologies, particularly how to design and implement a full-stack application using Express.js, MongoDB, and Passport.js for user authentication. The project helped us understand the importance of creating a responsive design and integrating back-end functionality to build a feature-rich application. The skills we acquired will definitely be valuable in future development tasks and provide a solid foundation for more advanced web projects.
+Throughout this project, we learned a lot about web development technologies, particularly how to design and implement a full-stack application using Express.js, MongoDB, and  for user authentication. The project helped us understand the importance of creating a responsive design and integrating back-end functionality to build a feature-rich application. The skills we acquired will definitely be valuable in future development tasks and provide a solid foundation for more advanced web projects.
 
 ## Resources
 
@@ -76,3 +75,4 @@ For testing the application, you can:
 1. Start the server by running `node server.js`.
 2. Open the application in your browser at `https://taste-trails.glitch.me/`.
 3. Signup and Login as a user to see the services offered and functionalities.
+4. For Admin Access, Login with **User**: admin123@gmail.com and **Password:** admin123
