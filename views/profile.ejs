@@ -20,83 +20,83 @@
       <ul class="nav-links">
         <li><a href="/explore">Explore</a></li>
         <li><a href="/blogs/create">Create Blog</a></li>
-        <li><a href="/profile" class="active">My Profile</a></li>
+        <li><a href="/profile">My Profile</a></li>
         <li><a href="javascript:void(0);" id="edit-profile-link">Edit Profile</a></li>
         <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Main Content -->
-  <main>
-    <section class="profile-container">
+  <!-- Page Content -->
+  <main class="profile-page">
+    <!-- Welcome Message -->
+    <section class="profile-details" id="profile-details">
       <h1>Welcome, <span class="highlight"><%= user.username %></span>!</h1>
-      
-      <!-- Saved Blogs Section -->
-      <section id="saved-blogs">
-        <h2>Saved Blogs</h2>
-        <div class="content-grid">
-          <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
-            <% user.savedBlogs.forEach(blog => { %>
-              <div class="content-card">
-                <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="Blog Thumbnail">
-                
-                <h3><%= blog.title %></h3>
-                <p><%= blog.content.substring(0, 100) %>...</p>
-                <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p>No saved blogs yet.</p>
-          <% } %>
-        </div>
-      </section>
+    </section>
 
-      <!-- My Blogs Section -->
-      <section id="my-blogs">
-        <h2>My Blogs</h2>
-        <div class="content-grid">
-          <% if (user.myBlogs && user.myBlogs.length > 0) { %>
-            <% user.myBlogs.forEach(blog => { %>
-              <div class="content-card">
-                <img src="<%= blog.thumbnail || 'https://via.placeholder.com/300x200' %>" alt="Blog Thumbnail">
-                <h3><%= blog.title %></h3>
-                <p><%= blog.content.substring(0, 100) %>...</p>
-                <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p>You haven't created any blogs yet.</p>
-          <% } %>
-        </div>
-      </section>
+    <!-- Saved Blogs -->
+    <section class="content-grid" id="saved-blogs">
+      <h2>Saved Blogs</h2>
+      <div class="blog-list">
+        <% if (user.savedBlogs && user.savedBlogs.length > 0) { %>
+          <% user.savedBlogs.forEach(blog => { %>
+            <div class="blog-card">
+              <img src="<%= blog.imageUrl || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
+              <h3><%= blog.title %></h3>
+              <p><%= blog.content.substring(0, 100) %>...</p>
+              <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No saved blogs yet.</p>
+        <% } %>
+      </div>
+    </section>
 
-      <!-- Edit Profile Form -->
-      <section id="edit-profile" class="hidden">
-        <h2>Edit Profile</h2>
-        <form method="POST" action="/profile" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="profile-photo">Profile Photo</label>
-            <input type="file" name="profilePhoto" id="profile-photo">
-          </div>
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" value="<%= user.username %>" required>
-          </div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" value="<%= user.name %>" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" value="<%= user.email %>" required>
-          </div>
-          <div class="form-buttons">
-            <button type="submit" class="btn-primary">Save Changes</button>
-            <a href="javascript:void(0);" class="btn-cancel" id="cancel-edit">Cancel</a>
-          </div>
-        </form>
-      </section>
+    <!-- My Blogs -->
+    <section class="content-grid" id="my-blogs">
+      <h2>My Blogs</h2>
+      <div class="blog-list">
+        <% if (user.myBlogs && user.myBlogs.length > 0) { %>
+          <% user.myBlogs.forEach(blog => { %>
+            <div class="blog-card">
+              <img src="<%= blog.imageUrl || 'https://via.placeholder.com/300x200' %>" alt="<%= blog.title %>">
+              <h3><%= blog.title %></h3>
+              <p><%= blog.content.substring(0, 100) %>...</p>
+              <a href="/blogs/<%= blog._id %>" class="btn-primary">Read More</a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No blogs created yet.</p>
+        <% } %>
+      </div>
+    </section>
+
+    <!-- Edit Profile Form -->
+    <section id="edit-profile" class="hidden">
+      <h2>Edit Profile</h2>
+      <form method="POST" action="/profile" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="profile-photo">Profile Photo</label>
+          <input type="file" name="profilePhoto" id="profile-photo">
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" value="<%= user.username %>" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" name="name" value="<%= user.name %>" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" value="<%= user.email %>" required>
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn-primary">Save Changes</button>
+          <a href="javascript:void(0);" class="btn-cancel" id="cancel-edit">Cancel</a>
+        </div>
+      </form>
     </section>
   </main>
 
@@ -110,16 +110,29 @@
     </ul>
   </footer>
 
+  <!-- JavaScript -->
   <script>
-    // Toggle Edit Profile Section
-    $('#edit-profile-link').click(() => {
-      $('#saved-blogs, #my-blogs').addClass('hidden');
-      $('#edit-profile').removeClass('hidden');
-    });
+    $(document).ready(() => {
+      const $editProfileSection = $('#edit-profile');
+      const $profileDetails = $('#profile-details');
+      const $savedBlogs = $('#saved-blogs');
+      const $myBlogs = $('#my-blogs');
 
-    $('#cancel-edit').click(() => {
-      $('#edit-profile').addClass('hidden');
-      $('#saved-blogs, #my-blogs').removeClass('hidden');
+      // Show Edit Profile Section
+      $('#edit-profile-link').on('click', () => {
+        $editProfileSection.removeClass('hidden');
+        $profileDetails.addClass('hidden');
+        $savedBlogs.addClass('hidden');
+        $myBlogs.addClass('hidden');
+      });
+
+      // Cancel Edit Profile
+      $('#cancel-edit').on('click', () => {
+        $editProfileSection.addClass('hidden');
+        $profileDetails.removeClass('hidden');
+        $savedBlogs.removeClass('hidden');
+        $myBlogs.removeClass('hidden');
+      });
     });
   </script>
 </body>
