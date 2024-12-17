@@ -6,125 +6,138 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <h2 class="logo">TasteTrails</h2>
-            <ul class="menu">
-                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/explore">Manage Blogs</a></li>
-                <li><a href="/logout">Log Out</a></li>
-            </ul>
-        </aside>
-        <main class="main-content">
-            <header class="header">
-                <nav class="navbar">
-                    <div class="logo-container">
-                        <a href="/">
-                            <img src="https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/DALLE2024-12-1316.28.03-AnexquisiteandcreativelogoforTasteTrailsafoodandtravelblog.Thedesignintegratesacircularglobeinsoftpasteltonessymbolizingtra-ezgif.com-webp-to-jpg-converter.jpg?v=1734125364737" 
-                                 alt="Logo" 
-                                 class="logo-circle">
-                        </a>
-                    </div>
-                </nav>
-                <h1>Welcome, Admin</h1>
-                <div class="profile">
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="/">
+                <img src="https://cdn.glitch.global/2679bf09-2c70-4505-a2a8-7f4966f413aa/DALLE2024-12-1316.28.03-AnexquisiteandcreativelogoforTasteTrailsafoodandtravelblog.Thedesignintegratesacircularglobeinsoftpasteltonessymbolizingtra-ezgif.com-webp-to-jpg-converter.jpg?v=1734125364737" 
+                alt="TasteTrails Logo" class="logo-circle">
+            </a>
+            <a href="/" class="logo">TasteTrails</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/explore">Explore</a></li>
+            <li><a href="/blogs/create">Create Blog</a></li>
+            <li><a href="/admin/dashboard" class="active">Admin</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h1>Welcome, Admin</h1>
+        </header>
+
+        <section class="overview">
+            <h2>Dashboard Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Blogs</h3>
+                    <p class="stat-number"><%= blogCount %></p>
                 </div>
-            </header>
-
-            <section class="overview">
-                <h2>Dashboard Overview</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Blogs</h3>
-                        <p class="stat-number"><%= blogCount %></p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Users</h3>
-                        <p class="stat-number"><%= userCount %></p>
-                    </div>
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <p class="stat-number"><%= userCount %></p>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="graphs-container">
-                <div class="graph-section">
-                    <h2>Average Blog Rating</h2>
-                    <canvas id="ratingChart"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        const ctx = document.getElementById('ratingChart').getContext('2d');
-                        const ratingChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['Average Rating'],
-                                datasets: [{
-                                    label: 'Average Rating of Blogs',
-                                    data: [ <%= avgRating %> ],
-                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    </script>
-                </div>
-                
-                <!-- Section for Top Destinations Pie Chart -->
-                <div class="graph-section">
-                    <h2>Top 2 Destinations</h2>
-                    <canvas id="destinationChart"></canvas>
-                    <script>
-                        // Ensure destination data is being passed properly
-                        const destinationLabels = <%- JSON.stringify(topDestinations.map(dest => dest._id)) %>;
-                        const destinationCounts = <%- JSON.stringify(topDestinations.map(dest => dest.count)) %>;
+        <!-- Graphs Section -->
+        <section class="graphs-container">
+            <!-- Bar Graph -->
+            <div class="graph-section">
+                <h2 class="graph-title">Average Blog Rating</h2>
+                <canvas id="ratingChart"></canvas>
+            </div>
 
-                        console.log('Destination Labels:', destinationLabels); // Check in console
-                        console.log('Destination Counts:', destinationCounts); // Check in console
+            <!-- Pie Chart -->
+            <div class="graph-section">
+                <h2 class="graph-title">Top Destinations</h2>
+                <canvas id="destinationChart"></canvas>
+            </div>
+        </section>
+    </main>
 
-                        const destinationCtx = document.getElementById('destinationChart').getContext('2d');
-                        const destinationChart = new Chart(destinationCtx, {
-                            type: 'pie', // Change type to 'pie'
-                            data: {
-                                labels: destinationLabels, // Labels for destinations
-                                datasets: [{
-                                    label: 'Top Destinations',
-                                    data: destinationCounts, // Values for each destination
-                                    backgroundColor: [
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top'
-                                    }
-                                }
-                            }
-                        });
-                    </script>
-                </div>
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 TasteTrails. Crafted with love for food and travel enthusiasts.</p>
+        <ul class="social-links">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter</a></li>
+        </ul>
+    </footer>
 
-            </section>
-        </main>
-    </div>
+    <!-- Chart Scripts -->
+    <script>
+        // Bar Chart for Average Blog Rating
+        const ctx = document.getElementById('ratingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Average Rating'],
+                datasets: [{
+                    label: 'Average Blog Rating',
+                    data: [<%= avgRating %>],
+                    backgroundColor: 'rgba(76, 175, 80, 0.7)',  // Green background
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#FFF',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#FFF', font: { weight: 'bold' } }
+                    },
+                    y: {
+                        ticks: { color: '#FFF', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+
+        // Pie Chart for Top Destinations
+        const destinationCtx = document.getElementById('destinationChart').getContext('2d');
+        const destinationLabels = <%- JSON.stringify(topDestinations.map(dest => dest._id)) %>;
+        const destinationCounts = <%- JSON.stringify(topDestinations.map(dest => dest.count)) %>;
+
+        new Chart(destinationCtx, {
+            type: 'pie',
+            data: {
+                labels: destinationLabels,
+                datasets: [{
+                    label: 'Top Destinations',
+                    data: destinationCounts,
+                    backgroundColor: ['#FFADAD', '#FFD6A5', '#9BF6FF', '#A0C4FF', '#BDB2FF'],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#FFF',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

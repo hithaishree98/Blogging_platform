@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.post('/:id/save', async (req, res) => {
     try {
         const blogId = req.params.id;
-        const userId = req.session.user ? req.session.user.id : null;  // Check if user is authenticated
+        const userId = req.session.user ? req.session.user.id : null;
 
         if (!userId) {
             return res.status(401).json({ success: false, message: 'Not authenticated' });
@@ -54,6 +54,20 @@ router.post('/:id/save', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: 'Error saving blog.' });
+    }
+});
+
+router.get('/:id/save', async (req, res) => {
+    console.log(`GET request to /blogs/${req.params.id}/save`); // Log the request
+    try {
+        const blog = await Blog.findById(req.params.id);
+        if (!blog) {
+            return res.status(404).send('Blog not found');
+        }
+        res.render('save', { blog });
+    } catch (error) {
+        console.error(error);
+        res.status(404).send('Blog not found');
     }
 });
 

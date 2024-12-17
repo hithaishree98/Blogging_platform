@@ -247,6 +247,9 @@ app.get('/blogs/:id/save', async (req, res) => {
   console.log(`GET request to /blogs/${req.params.id}/save`); // Log the request
   try {
     const blog = await Blog.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
     res.render('save', { blog });
   } catch (error) {
     console.error(error);
@@ -255,23 +258,21 @@ app.get('/blogs/:id/save', async (req, res) => {
 });
 
 // Route to save the blog (POST request)
-app.post('/blogs/:id/save', async (req, res) => {
+app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    
-    // Check if the user is already in the savedBy array
-    if (!blog.savedBy.includes(req.user.id)) {
-      // Add the user to the savedBy array
-      blog.savedBy.push(req.user.id);
-      // Set the saved field to true
-      blog.saved = true;
+    if (!blog) {
+      return res.status(404).send('Blog not found');
+    }
 
-      // Save the blog
+    // Check if the blog is already saved by the user
+    if (!blog.savedBy.includes(req.session.user.id)) {
+      blog.savedBy.push(req.session.user.id);  // Add user to the savedBy list
       await blog.save();
     }
 
-    // Redirect to the saved blogs page
-    res.redirect(`/profile/${req.user.id}/saved`);
+    // Redirect to the profile page with saved blogs
+    res.redirect(`/profile`);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error saving the blog');
@@ -280,10 +281,15 @@ app.post('/blogs/:id/save', async (req, res) => {
 
 app.get('/profile/:userId/saved', async (req, res) => {
   try {
+    const user = await User.findById(req.params.userId).populate('savedBlogs');
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Find blogs saved by the user
     const savedBlogs = await Blog.find({ savedBy: req.params.userId });
     
-    // Render the profile page with the saved blogs
-    res.render('profile', { savedBlogs });
+    res.render('profile', { savedBlogs });  // Pass the saved blogs to the profile view
   } catch (error) {
     console.error(error);
     res.status(500).send('Error loading saved blogs');
@@ -338,7 +344,7 @@ app.get('/profile', isAuthenticated, async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.render('profile', { user: user }); // Pass the populated user object to the view
+    res.render('profile', { user }); // Pass the populated user object to the view
   } catch (err) {
     console.error('Error fetching profile data:', err.message);
     res.status(500).send('Error loading profile');
