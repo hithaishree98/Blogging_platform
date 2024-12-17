@@ -236,42 +236,37 @@ app.post('/blogs/:id/delete', async (req, res) => {
 
 
 // Add route in server.js
-app.post('/blogs/:id/save', async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).send('Unauthorized'); // Ensure user is logged in
-        }
+app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
+  try {
+    const blogId = req.params.id;
 
-        const blogId = req.params.id;
+    await User.findByIdAndUpdate(req.session.user.id, {
+      $addToSet: { savedBlogs: blogId }  // Avoid duplicates
+    });
 
-        // Add blog to user's savedBlogs if not already saved
-        await User.findByIdAndUpdate(req.session.user.id, {
-            $addToSet: { savedBlogs: blogId }, // Avoid duplicates
-        });
-
-        res.redirect(`/blogs/${blogId}`);
-    } catch (err) {
-        console.error('Error saving blog:', err.message);
-        res.status(500).send('Error saving the blog');
-    }
+    res.redirect(`/blogs/${blogId}`);
+  } catch (err) {
+    console.error('Error saving blog:', err.message);
+    res.status(500).send('Error saving the blog');
+  }
 });
 
 
-app.get('/profile', isAuthenticated,(req, res) => {
-  if (!req.session.user) {
-        return res.redirect('/auth/login');
+app.get('/profile', isAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.user.id)
+      .populate('savedBlogs')  // Populate saved blogs
+      .populate('myBlogs');    // Populate created blogs
+
+    if (!user) {
+      return res.status(404).send('User not found');
     }
 
-    try {
-        const user =  User.findById(req.session.user.id)
-            .populate('savedBlogs') // Populate saved blogs
-            .populate('myBlogs');   // Populate created blogs
-
-        res.render('profile', { user: req.session.user });
-    } catch (err) {
-        console.error('Error fetching profile data:', err.message);
-        res.status(500).send('Error loading profile');
-    }
+    res.render('profile', { user }); // Pass the populated user object to the view
+  } catch (err) {
+    console.error('Error fetching profile data:', err.message);
+    res.status(500).send('Error loading profile');
+  }
 });
 
 // Admin dashboard route

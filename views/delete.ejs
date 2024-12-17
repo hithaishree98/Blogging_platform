@@ -5,8 +5,10 @@
       <h1>Delete Blog</h1>
       <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
       <form method="POST" action="/blogs/${blog._id}/delete" class="delete-form">
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <button type="submit" class="btn-primary">Yes, Delete</button>
       </form>
+      <!-- Adding space between the Delete and Cancel buttons -->
+      <a href="/blogs/${blog._id}" class="btn-primary">Cancel</a>
     </section>
   `
 }) %>

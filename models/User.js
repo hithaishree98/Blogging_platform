@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   savedBlogs: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Blog'  // Assuming you're storing references to Blog documents
+  }],
+  myBlogs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Blog'  // References to blogs created by the user
   }]
 });
 
