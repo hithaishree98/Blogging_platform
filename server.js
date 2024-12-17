@@ -340,6 +340,53 @@ app.get('/profile/:userId/saved', async (req, res) => {
 //   }
 // });
 
+
+
+// Route to render Edit Profile page
+app.get('/profile/edit', isAuthenticated, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.user.id);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.render('edit-profile', { user }); // Pass the user data to the template
+    } catch (err) {
+        console.error('Error loading Edit Profile page:', err.message);
+        res.status(500).send('Error loading Edit Profile page');
+    }
+});
+
+// Route to handle Edit Profile form submission
+app.post('/profile/edit', isAuthenticated, async (req, res) => {
+    try {
+        const { username, name, email } = req.body;
+
+        // Update user details in the database
+        const updatedUser = await User.findByIdAndUpdate(req.session.user.id, {
+            username,
+            name,
+            email
+        }, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).send('User not found');
+        }
+
+        // Update session data to reflect changes
+        req.session.user.username = updatedUser.username;
+        req.session.user.name = updatedUser.name;
+        req.session.user.email = updatedUser.email;
+
+        res.redirect('/profile'); // Redirect back to the profile page
+    } catch (err) {
+        console.error('Error updating profile:', err.message);
+        res.status(500).send('Error updating profile');
+    }
+});
+
+
+
+
 app.get('/profile', isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id)

@@ -8,7 +8,7 @@
 - Radhika Purohit (Pitt_ID: RAP276@pitt.edu)
 
 **Project Overview:**
-Taste Trails is a food blogging and exploration platform that allows users to browse, create, and manage food-related blog posts. The application features a clean, responsive design, enabling users to search for blogs based on filters like location, cuisine, and budget. Users can also sign up, log in, and create or edit their blog posts, while administrators can manage the platform's content and user accounts. The project employs modern web technologies and follows the MVC (Model-View-Controller) architecture to maintain a clean and scalable codebase.
+Taste Trails is a food blogging and Travel exploration platform that allows users to browse, create, and manage food and Travel related blog posts. The application features a clean, responsive design, enabling users to search for blogs based on filters like location and cuisine. Users can also sign up, log in, and create or edit their blog posts, while administrators can manage the platform's content. The project employs modern web technologies and follows the MVC (Model-View-Controller) architecture to maintain a clean and scalable codebase.
 
 ## Objective
 
@@ -16,9 +16,9 @@ The primary objective of the Taste Trails project was to build a web application
 - Implementing a fully functional CRUD system for blog posts, allowing users to create, read, update their blogs.
 - Learning and applying RESTful API practices to manage user authentication and blog creation.
 - Building a responsive, user-friendly interface that adjusts across different devices.
-- Enhancing the project beyond the assignment requirements by implementing user authentication and an admin dashboard to manage and delete blogs.
+- Enhancing the project by implementing user authentication and an admin dashboard to manage and delete blogs.
 - Admin has a seperate dashboard with visualizations and summary on total registered users and blogs.
-- Learning how to integrate MongoDB for database storage and using Passport.js for user authentication.
+- Learning how to integrate MongoDB for database storage and for user authentication.
 
 ## Team Member Contributions
 
@@ -34,7 +34,6 @@ The primary objective of the Taste Trails project was to build a web application
 ### Libraries, Frameworks, and Technologies Used:
 - **Express.js**: Used to handle the backend routing and serve static files.
 - **MongoDB**: A NoSQL database used for storing user information, blog posts, and comments.
-- **Passport.js**: Implemented for user authentication (sign-up, log-in).
 - **HTML5/CSS3**: Used to structure and style the frontend.
 - **JavaScript**: For implementing interactive frontend elements and API calls.
 - **CSS**: Media queries in `responsive.css` to adjust the layout for different devices.

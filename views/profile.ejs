@@ -21,7 +21,7 @@
         <li><a href="/explore">Explore</a></li>
         <li><a href="/blogs/create">Create Blog</a></li>
         <li><a href="/profile">My Profile</a></li>
-        <li><a href="/edit-profile" id="edit-profile-btn">Edit Profile</a></li>
+        <li><a href="/profile/edit" id="edit-profile-btn">Edit Profile</a></li>
         <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
       </ul>
     </nav>
@@ -71,29 +71,6 @@
         <% } %>
       </div>
     </section>
-
-    <!-- Edit Profile Form -->
-    <section class="edit-profile-section hidden" id="edit-profile-section">
-      <h2>Edit Profile</h2>
-      <form method="POST" action="/profile" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="profile-photo">Profile Photo</label>
-          <input type="file" name="profilePhoto" id="profile-photo">
-        </div>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" name="username" value="<%= user.username %>" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" value="<%= user.email %>" required>
-        </div>
-        <div class="form-buttons">
-          <button type="submit" class="btn-primary">Save Changes</button>
-          <a href="#" class="btn-cancel" id="cancel-edit-btn">Cancel</a>
-        </div>
-      </form>
-    </section>
   </main>
               
   
@@ -106,19 +83,5 @@
       <li><a href="#">Twitter</a></li>
     </ul>
   </footer>
-
-  <!-- Script for toggling Edit Profile Section -->
-  <script>
-    $(document).ready(() => {
-      $("#edit-profile-btn").on("click", () => {
-        $("#edit-profile-section").slideDown();
-      });
-
-      $("#cancel-edit-btn").on("click", (e) => {
-        e.preventDefault();
-        $("#edit-profile-section").slideUp();
-      });
-    });
-  </script>
 </body>
 </html>

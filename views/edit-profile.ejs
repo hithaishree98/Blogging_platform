@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
+  <title>Edit Profile</title>
   <link rel="stylesheet" href="/css/profile.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -21,44 +20,57 @@
         <li><a href="/explore">Explore</a></li>
         <li><a href="/blogs/create">Create Blog</a></li>
         <li><a href="/profile">My Profile</a></li>
-        <li><a href="/edit-profile" id="edit-profile-btn">Edit Profile</a></li>
         <li><a href="/auth/logout" class="btn-signup">Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Profile Content -->
-  <main>
-    <!-- Welcome Section -->
-    <section class="profile-details">
-      <h1 class="highlight-title">Welcome, <span class="username"><%= user.username %></span>!</h1>
-    </section>
+  <!-- Edit Profile Form -->
+  <main class="edit-profile-main">
+    <section class="edit-profile-section">
+      <h1 class="highlight-title">Edit Your Profile</h1>
+      <form method="POST" action="/profile/edit" enctype="multipart/form-data">
+        <!-- Profile Photo -->
+        <div class="form-group">
+          <label for="edit-profile-photo">Profile Photo</label>
+          <img src="<%= user.profilePhoto || 'https://i.sstatic.net/l60Hf.png' %>" 
+               alt="Profile Picture" class="profile-image-preview">
+          <input type="file" id="edit-profile-photo" name="profilePhoto">
+        </div>
+        
+        <!-- Username -->
+        <div class="form-group">
+          <label for="edit-username">Username</label>
+          <input type="text" id="edit-username" name="username" value="<%= user.username %>" required>
+        </div>
 
-    <!-- Edit Profile Form -->
-    <section class="edit-profile-section hidden" id="edit-profile-section">
-      <h2>Edit Profile</h2>
-      <form method="POST" action="/profile" enctype="multipart/form-data">
+        <!-- Name -->
         <div class="form-group">
-          <label for="profile-photo">Profile Photo</label>
-          <input type="file" name="profilePhoto" id="profile-photo">
+          <label for="edit-name">Name</label>
+          <input type="text" id="edit-name" name="name" value="<%= user.name %>" required>
         </div>
+
+        <!-- Email -->
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" name="username" value="<%= user.username %>" required>
+          <label for="edit-email">Email</label>
+          <input type="email" id="edit-email" name="email" value="<%= user.email %>" required>
         </div>
+
+        <!-- Password -->
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" value="<%= user.email %>" required>
+          <label for="edit-password">Password</label>
+          <input type="password" id="edit-password" name="password" placeholder="New Password">
         </div>
+
+        <!-- Buttons -->
         <div class="form-buttons">
           <button type="submit" class="btn-primary">Save Changes</button>
-          <a href="#" class="btn-cancel" id="cancel-edit-btn">Cancel</a>
+          <a href="/profile" class="btn-cancel">Cancel</a>
         </div>
       </form>
     </section>
   </main>
-              
-  
+
   <!-- Footer -->
   <footer>
     <p>&copy; 2024 TasteTrails. Crafted with love for food and travel enthusiasts.</p>
@@ -68,19 +80,5 @@
       <li><a href="#">Twitter</a></li>
     </ul>
   </footer>
-
-  <!-- Script for toggling Edit Profile Section -->
-  <script>
-    $(document).ready(() => {
-      $("#edit-profile-btn").on("click", () => {
-        $("#edit-profile-section").slideDown();
-      });
-
-      $("#cancel-edit-btn").on("click", (e) => {
-        e.preventDefault();
-        $("#edit-profile-section").slideUp();
-      });
-    });
-  </script>
 </body>
 </html>
