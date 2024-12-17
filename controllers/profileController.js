@@ -7,16 +7,13 @@ const getUserProfile = async (req, res) => {
             return res.status(401).json({ success: false, message: 'Not authenticated' });
         }
 
-        // Send the user data (excluding sensitive information)
-        const user = await User.findById(req.session.user.id).select('-password');
+        // Fetch the user along with saved blogs (populate savedBlogs)
+        const user = await User.findById(req.session.user.id).populate('savedBlogs').select('-password');
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-      
-        if (!user.savedBlogs) {
-            user.savedBlogs = [];
-        }
-      
+
+        // Send user data along with saved blogs
         res.render('profile', {
             user: user
         });

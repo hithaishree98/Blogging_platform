@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Blog = require('../models/Blog'); // Import Blog model
+const User = require('../models/User');
 
 // GET /explore - Display all blogs on the Explore page
 router.get('/', async (req, res) => {
@@ -17,6 +18,39 @@ router.get('/', async (req, res) => {
     console.error(err);
     res.status(500).send('Error fetching blogs.');
   }
+});
+
+router.post('/:id/save', async (req, res) => {
+    try {
+        const blogId = req.params.id;
+        const userId = req.session.user.id;
+
+        // Find the blog by ID
+        const blog = await Blog.findById(blogId);
+        if (!blog) {
+            return res.status(404).json({ success: false, message: 'Blog not found.' });
+        }
+
+        // Find the user and add the blog to the savedBlogs array
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found.' });
+        }
+
+        // Check if the blog is already saved
+        if (user.savedBlogs.includes(blogId)) {
+            return res.json({ success: false, message: 'Blog already saved.' });
+        }
+
+        // Add the blog to the savedBlogs array
+        user.savedBlogs.push(blogId);
+        await user.save();
+
+        res.json({ success: true, message: 'Blog saved to your profile.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error saving blog.' });
+    }
 });
 
 module.exports = router;
