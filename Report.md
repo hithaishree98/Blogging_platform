@@ -54,7 +54,7 @@ The primary objectives of this project were:
 - **Radhika Purohit** 
   - Set up and configured a secure MongoDB connection for the project hosted on Glitch.
   - Designed and implemented MongoDB collections to manage data effectively.
-  - Built an Admin Dashboard to visualize user and blog statistics through charts, enhancing insights through analytics.
+  - Built an Admin Dashboard to visualize user and blog statistics through charts and line trends, enhancing insights through analytics.
   - Integrated real-time data fetching from the database to ensure up-to-date information on the dashboard.
   - Implemented middleware to restrict delete functionality exclusively to Admin users and added robust error handling for unauthorized access.
    
