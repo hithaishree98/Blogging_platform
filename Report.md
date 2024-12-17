@@ -36,10 +36,12 @@ The primary objectives of this project were:
 ## **Team Member Contributions**
 
 - **Aishwarya Bhargava**  
-   - Designed and implemented the Blog Schema with interactive features (likes, comments, and edit functionality).
-   - Designed and implemented the home page and create blog page.
-   - Ensured consistent and responsive EJS templates for blog pages.
-   - Ensured proper authentication for every altering step of the website.
+   - Designed and implemented the Blog Schema with interactive features such as likes, comments, and edit functionality.
+   - Developed the home page, create blog page, and individual blog detail pages with a clean, consistent, and responsive layout using EJS templates.
+   - Ensured proper authentication and authorization for all altering steps of the website, including blog creation, editing, and commenting.
+   - Created and integrated frontend logic for dynamic comment sections, like buttons, and social media sharing options.
+   - Developed backend routes for blog likes, comments, and sharing functionality.
+   - Created and styled the Explore section for seamless blog browsing and searching.
    
 - **Hithaishree Shankar**  
    - Contribution1
