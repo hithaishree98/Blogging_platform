@@ -1,7 +1,14 @@
-<% if (user) { %> <!-- Check if the user is logged in -->
-    <form action="/blogs/${blog._id}/save" method="POST">
-        <button type="submit" class="btn-save">Save this blog</button>
-    </form>
-<% } else { %>
-    <p>You must be logged in to save this blog.</p>
-<% } %>
+<%- include('layout', {
+  title: `Saved Blog - ${blog.title}`,
+  body: `
+    <section class="form-container">
+      <h1>Saved Blog</h1>
+      <p>Are you sure you want to save the blog titled "<strong>${blog.title}</strong>"?</p>
+      <form method="POST" action="/blogs/${blog._id}/save" class="save-form">
+        <button type="submit" class="btn-primary">Yes, Delete</button>
+      </form>
+      <!-- Adding space between the Delete and Cancel buttons -->
+      <a href="/blogs/${blog._id}" class="btn-primary">Cancel</a>
+    </section>
+  `
+}) %>
