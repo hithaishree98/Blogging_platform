@@ -147,7 +147,7 @@ app.get('/blogs/:id', async (req, res) => {
 
 
 // Route to render the edit form
-app.get('/blogs/:id/edit', async (req, res) => {
+app.get('/blogs/:id/edit', isAuthenticated, async (req, res) => {
   try {
     const blogId = req.params.id;
     const blog = await Blog.findById(blogId);
@@ -164,7 +164,7 @@ app.get('/blogs/:id/edit', async (req, res) => {
 });
 
 // Route to handle blog update
-app.post('/blogs/:id/edit', async (req, res) => {
+app.post('/blogs/:id/edit', isAuthenticated, async (req, res) => {
   try {
     const blogId = req.params.id;
     const { title, content, destination, imageUrl } = req.body;
