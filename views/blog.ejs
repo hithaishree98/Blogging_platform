@@ -35,6 +35,7 @@
           <li><a href="https://api.whatsapp.com/send?text=${encodeURIComponent(`${blog.title} - https://example.com/blogs/${blog._id}`)}" target="_blank">WhatsApp</a></li>
           <li><a href="mailto:?subject=${encodeURIComponent(blog.title)}&body=${encodeURIComponent(`Check out this blog: https://example.com/blogs/${blog._id}`)}">Email</a></li>
           <li><a href="https://www.instagram.com/" target="_blank">Instagram</a> (Copy link and share manually)</li>
+          <li><button onclick="copyToClipboard()" class="copy-link-btn">Copy Link</button></li>
         </ul>
         <button class="btn-cancel" onclick="closeShareDialog()">Cancel</button>
       </div>
@@ -75,6 +76,17 @@
 
       function closeShareDialog() {
         document.getElementById('share-dialog').classList.add('hidden');
+      }
+
+      function copyToClipboard() {
+        const link = "https://example.com/blogs/${blog._id}";
+        navigator.clipboard.writeText(link)
+          .then(() => {
+            alert('Link copied to clipboard!');
+          })
+          .catch(err => {
+            console.error('Failed to copy: ', err);
+          });
       }
     </script>
   `
