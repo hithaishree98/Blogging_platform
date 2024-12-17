@@ -278,38 +278,44 @@ app.post('/blogs/:id/delete', isAuthenticated, isAdmin, async (req, res) => {
 
 
 // Add route in server.js
-app.post('/blogs/:id/save',isAuthenticated, async(req, res) => {
+app.post('/blogs/:id/save', isAuthenticated, async (req, res) => {
   const blogId = req.params.id;
-  
-  // Find the blog by ID and update its "saved" status or flag
+  const userId = req.session.user.id;
+
   try {
+    // Find the blog by its ID
     const blog = await Blog.findById(blogId);
     if (!blog) {
       return res.status(404).send('Blog not found');
     }
 
-    // Add blog to user's savedBlogs if not already saved
-    const user = await User.findById(req.session.user.id);
-    if (!user.savedBlogs.includes(blog._id)) {
-      user.savedBlogs.push(blog._id);
-      await user.save();
+    // Find the user and add the blog to their savedBlogs list
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send('User not found');
     }
 
-    // Add user to blog's savedBy list
-    if (!blog.savedBy.includes(user._id)) {
-      blog.savedBy.push(user._id);
-      await blog.save();
+    // Check if the blog is already saved by the user
+    if (user.savedBlogs.includes(blogId)) {
+      return res.status(400).send('Blog is already saved');
     }
 
-    res.redirect(`/blogs/${blogId}`); // Redirect to the blog detail page
+    // Save the blog for the user
+    user.savedBlogs.push(blogId);
+    await user.save();
+
+    // Add the user to the blog's savedBy list
+    blog.savedBy.push(userId);
+    await blog.save();
+
+    res.redirect(`/blogs/${blogId}`);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
 });
 
-
-app.get('/profile',isAuthenticated, async (req, res) => {
+app.get('/profile', isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id)
       .populate('savedBlogs')  // Populate saved blogs
@@ -319,7 +325,7 @@ app.get('/profile',isAuthenticated, async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.render('profile', { user }); // Pass the populated user object to the view
+    res.render('profile', { user: user }); // Pass the populated user object to the view
   } catch (err) {
     console.error('Error fetching profile data:', err.message);
     res.status(500).send('Error loading profile');
