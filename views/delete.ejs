@@ -1,19 +1,23 @@
 <%- include('layout', {
   title: error ? 'Access Denied' : `Delete Blog - ${blog ? blog.title : ''}`,
   body: `
-    <section class="form-container">
+    <section class="form-container" id="delete-blog-section">
       ${
         error 
-          ? `<h1>Access Denied</h1>
-             <p>${error}</p>
-             <a href="/blogs/${blog._id}" class="btn-secondary">Go Back</a>`
+          ? `
+            <h1 class="error-title">Access Denied</h1>
+            <p class="error-message">${error}</p>
+            <div class="delete-buttons">
+              <a href="/blogs/${blog._id}" class="btn-cancel">Go Back</a>
+            </div>`
           : `
-            <h1>Delete Blog</h1>
-            <p>Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
-            <form method="POST" action="/blogs/${blog._id}/delete" class="delete-form">
-              <button type="submit" class="btn-secondary">Yes, Delete</button>
-              <a href="/blogs/${blog._id}" class="btn-secondary">Cancel</a>
-            </form>
+            <p class="delete-message">Are you sure you want to delete the blog titled "<strong>${blog.title}</strong>"?</p>
+            <div class="delete-buttons">
+              <form method="POST" action="/blogs/${blog._id}/delete" class="delete-form">
+                <button type="submit" class="btn-delete">Yes, Delete</button>
+              </form>
+              <a href="/blogs/${blog._id}" class="btn-cancel">Cancel</a>
+            </div>
           `
       }
     </section>

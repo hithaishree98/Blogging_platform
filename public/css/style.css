@@ -632,18 +632,12 @@ footer .social-links a {
 #save-blog-section {
   text-align: center;
   background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-  padding: 40px;
+  padding: 20px;
   border-radius: 10px;
   max-width: 600px;
-  margin: 50px auto;
+  margin: 100px auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: #fff;
-}
-
-#save-blog-section h1 {
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-weight: bold;
 }
 
 #save-blog-section p {
@@ -692,7 +686,47 @@ footer .social-links a {
   background-color: #c82333;
 }
 
+/* Delete Blog Section Styling */
+#delete-blog-section {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 100px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
 
+.delete-message, .error-message {
+  font-size: 18px;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Buttons Container */
+.delete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between buttons */
+}
+
+/* Delete Button */
+.btn-delete {
+  padding: 12px 25px;
+  background-color: #28a745; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #218838; 
+}
 
 /* Additional Responsiveness */
 @media (max-width: 768px) {
