@@ -11,9 +11,11 @@
       </p>
       <p>${blog.content}</p>
       <p><small>Published on: ${new Date(blog.createdAt).toDateString()}</small></p>
+      <%- include('save', { blog: blog, user: user }) %>
       <a href="/blogs/${blog._id}/edit" class="btn-primary">Edit</a>
       <a href="/explore" class="btn-primary">Back to Explore</a>
-      <a href="/blogs/${blog._id}/delete" class="btn-danger">Delete</a>
+      <a href="/blogs/${blog._id}/delete" class="btn-primary">Delete</a>
+      <a href="/blogs/${blog._id}/save" class="btn-primary">Save</a>
     </section>
   `
 }) %>

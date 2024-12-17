@@ -1,5 +1,5 @@
 <% if (user) { %> <!-- Check if the user is logged in -->
-    <form action="/blogs/<%= blog._id %>/save" method="POST">
+    <form action="/blogs/${blog._id}/save" method="POST">
         <button type="submit" class="btn-save">Save this blog</button>
     </form>
 <% } else { %>

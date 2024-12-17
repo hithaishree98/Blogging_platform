@@ -13,6 +13,12 @@ const User = require('./models/User');
 dotenv.config();
 
 const app = express();
+const isAuthenticated = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/auth/login');
+    }
+    next();
+};
 
 // Set the view engine to EJS and configure views directory
 app.set('view engine', 'ejs');
@@ -81,7 +87,7 @@ app.get('/explore', async (req, res) => {
 });
 
 // Route to display the blog creation form
-app.get('/blogs/create', (req, res) => {
+app.get('/blogs/create',isAuthenticated, (req, res) => {
   try {
     res.render('create'); // Ensure the 'create.ejs' file exists in the views directory
   } catch (err) {
@@ -251,7 +257,7 @@ app.post('/blogs/:id/save', async (req, res) => {
 });
 
 
-app.get('/profile', (req, res) => {
+app.get('/profile', isAuthenticated,(req, res) => {
   if (!req.session.user) {
         return res.redirect('/auth/login');
     }
