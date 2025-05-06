@@ -31,35 +31,6 @@ const authController = {
         }
     },
 
-    // Login logic
-//     login: async (req, res) => {
-//         const { email, password } = req.body;
-
-//         try {
-//             // Check if the user exists
-//             const user = await User.findOne({ email });
-//             if (!user) return res.json({ success: false, message: 'Invalid email or password.' });
-
-//             // Compare the password
-//             const isMatch = await bcrypt.compare(password, user.password);
-//             if (!isMatch) return res.json({ success: false, message: 'Invalid email or password.' });
-
-//             req.session.user = {
-//                 id: user._id,
-//                 name: user.name,
-//                 username: user.username,
-//                 email: user.email,
-//                 role: user.role
-//             };
-//             req.session.isAdmin = user.role === 'admin';
-//             // Send role-based redirect information
-//             const redirectUrl = user.role === 'admin' ? '/admin' : '/profile';
-//             res.json({ success: true, message: 'Login successful!', redirect: redirectUrl, role: user.role });
-//         } catch (err) {
-//             console.error(err);
-//             res.status(500).json({ success: false, message: 'Error during login.' });
-//         }
-//     },
   
     login: async (req, res) => {
         const { email, password } = req.body;
