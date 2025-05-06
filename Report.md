@@ -33,32 +33,6 @@ The primary objectives of this project were:
 
 ---
 
-## **Team Member Contributions**
-
-- **Aishwarya Bhargava**  
-   - Designed and implemented the Blog Schema with interactive features such as likes, comments, and edit functionality.
-   - Developed the home page, create blog page, and individual blog detail pages with a clean, consistent, and responsive layout using EJS templates.
-   - Ensured proper authentication and authorization for all altering steps of the website, including blog creation, editing, and commenting.
-   - Created and integrated frontend logic for dynamic comment sections, like buttons, and social media sharing options.
-   - Developed backend routes for blog likes, comments, and sharing functionality.
-   - Created and styled the Explore section for seamless blog browsing and searching.
-   
-- **Hithaishree Shankar**  
-   - Implemented user authentication features, including login, signup, and logout functionality, ensuring secure access for users.
-   - Developed the user profile section with options to update user details and display saved blogs, created blogs, and profile edits.
-   - Added the capability for users to save blogs and view them later in the "Saved Blogs" section.
-   - Created a "My Blogs" section where users can view and manage the blogs they have authored.
-   - Integrated backend logic to manage user sessions and authentication using express-session and cookie-parser.
-
-   
-- **Radhika Purohit** 
-  - Set up and configured a secure MongoDB connection for the project hosted on Glitch.
-  - Designed and implemented MongoDB collections to manage data effectively.
-  - Built an Admin Dashboard to visualize user and blog statistics, including a bar graph to show average blog ratings, a line chart to display blog creation trends over the last 7 days, and a pie chart for visualizing the top destinations, enhancing insights through comprehensive analytics.
-  - Integrated real-time data fetching from the database to ensure up-to-date information on the dashboard.
-  - Implemented middleware to restrict delete functionality exclusively to Admin users and added robust error handling for unauthorized access.
----
-
 ## **Technical Architecture**
 
 ### **Technologies Used**
