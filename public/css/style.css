@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Optima', sans-serif;
   background-image: url('https://cdn.glitch.global/4b76aa4c-4fcc-4ec2-acff-1ec1977befae/HD-wallpaper-sage-green-watercolor-world-map-mural-aesthetic-map.jpg?v=1746760730355');
   background-size: cover;
   background-attachment: fixed;
@@ -153,6 +153,7 @@ footer {
   background-color: rgba(0, 0, 0, 0.9);
   text-align: center;
   padding: 20px;
+  height: 100px;
   color: #fff;
   margin-top: auto;
 }
@@ -169,7 +170,7 @@ footer .social-links {
 footer .social-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .search-filter {
