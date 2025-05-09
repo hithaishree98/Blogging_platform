@@ -152,10 +152,15 @@ main {
 footer {
   background-color: rgba(0, 0, 0, 0.9);
   text-align: center;
-  padding: 20px;
-  height: 100px;
+  padding: 10px;
+  height: 50px;
   color: #fff;
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
 }
 
 footer .social-links {
