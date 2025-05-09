@@ -1,7 +1,6 @@
 const Blog = require("../models/Blog");
 const User = require("../models/User");
 
-// In controllers/adminController.js
 exports.dashboard = async (req, res) => {
   try {
     if (!req.session || !req.session.isAdmin) {
@@ -11,25 +10,22 @@ exports.dashboard = async (req, res) => {
     const blogCount = await Blog.countDocuments();
     const userCount = await User.countDocuments();
 
-    // Calculate average rating
     const averageRating = await Blog.aggregate([
       { $group: { _id: null, averageRating: { $avg: "$rating" } } }
     ]);
     const avgRating = averageRating[0] ? averageRating[0].averageRating : 0;
 
-    // Get top destinations
     const topDestinations = await Blog.aggregate([
       { $group: { _id: "$destination", count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 2 }
     ]);
 
-    // Get blogs created in the last 7 days
     const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 7); // 7 days ago
+    startDate.setDate(startDate.getDate() - 7); 
     const blogTrend = await Blog.aggregate([
       {
-        $match: { createdAt: { $gte: startDate } } // Filter blogs created in the last 7 days
+        $match: { createdAt: { $gte: startDate } } 
       },
       {
         $group: {
@@ -39,7 +35,7 @@ exports.dashboard = async (req, res) => {
           count: { $sum: 1 }
         }
       },
-      { $sort: { _id: 1 } } // Sort by date ascending
+      { $sort: { _id: 1 } } 
     ]);
 
     const trendData = {
@@ -60,9 +56,6 @@ exports.dashboard = async (req, res) => {
   }
 };
 
-
-
-// Manage Blogs
 exports.viewBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().populate("author", "name");
@@ -76,7 +69,7 @@ exports.viewBlogs = async (req, res) => {
 exports.editBlog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    res.render("editBlog", { blog }); // Render the form with existing blog data
+    res.render("editBlog", { blog }); 
   } catch (err) {
     res.status(500).send("Server Error");
   }

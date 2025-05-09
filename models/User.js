@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: 'user' },
   savedBlogs: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Blog'  // Assuming you're storing references to Blog documents
+    ref: 'Blog'  
   }],
   myBlogs: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Blog'  // References to blogs created by the user
+    ref: 'Blog' 
   }]
 });
 

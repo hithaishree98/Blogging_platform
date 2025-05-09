@@ -1,4 +1,3 @@
-/* General Styles */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -7,19 +6,18 @@ body {
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures footer stays at the bottom */
+  min-height: 100vh; 
 }
 
 main {
-  flex: 1; /* Allows content to take remaining space */
+  flex: 1; 
   display: flex;
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center */
-  padding: 20px; /* Optional padding */
-  box-sizing: border-box; /* Prevent content overflow */
+  justify-content: center; 
+  align-items: center; 
+  padding: 20px;
+  box-sizing: border-box; 
 }
 
-/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -80,11 +78,11 @@ main {
 .btn-signup {
   background-color: #4CAF50;
   color: white;
-  padding: 10px 20px; /* Proper padding */
+  padding: 10px 20px; 
   font-weight: bold;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  margin-right: 50px; /* Aligns it to the far-right */
+  margin-right: 50px; 
 }
 
 .btn-signup:hover {
@@ -94,13 +92,13 @@ main {
 .form-container {
     width: 100%;
     max-width: 350px;
-    padding: 20px; /* Added padding for right and left sides */
-    background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+    padding: 20px; 
+    background-color: rgba(255, 255, 255, 0.95);
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin: 100px auto; /* Center if needed */
+    margin: 100px auto; 
 }
 
 h2 {
@@ -126,7 +124,7 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    box-sizing: border-box; 
 }
 
 .btn {
@@ -150,7 +148,6 @@ h2 {
     font-size: 14px;
 }
 
-/* Footer */
 footer {
   background-color: rgba(0, 0, 0, 0.9);
   text-align: center;

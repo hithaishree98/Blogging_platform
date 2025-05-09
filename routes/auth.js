@@ -3,11 +3,9 @@ const path = require('path');
 const authController = require('../controllers/authController');
 
 const router = express.Router();
-
-// Middleware to redirect if the user is already logged in
 const redirectIfAuthenticated = (req, res, next) => {
     if (req.session.user) {
-        return res.redirect('/profile'); // Redirect to profile if already logged in
+        return res.redirect('/profile'); 
     }
     next();
 };
