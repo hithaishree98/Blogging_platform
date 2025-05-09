@@ -151,31 +151,35 @@ main {
 
 footer {
   background-color: rgba(0, 0, 0, 0.9);
-  text-align: center;
-  padding: 10px;
-  height: 50px;
   color: #fff;
+  height: 50px;
+  padding: 10px 20px;
   margin-top: auto;
+
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  align-items: center;
+  align-items: center;     
   text-align: center;
 }
 
-footer .social-links {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  gap: 20px;
-  margin: 10px 0;
+footer p {
+  margin: 0 0 10px; 
+  font-size: 14px;
 }
 
-footer .social-links a {
+footer ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+footer ul li a {
   color: #fff;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .search-filter {
