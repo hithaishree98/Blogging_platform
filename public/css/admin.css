@@ -118,9 +118,11 @@ body {
 
 .graphs-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 20px;
+  padding: 0 20px;
 }
 
 .graph-section {
@@ -128,7 +130,9 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  width: 45%;
+  width: 32%; 
+  min-width: 300px; 
+  box-sizing: border-box;
 }
 
 .graph-section h2 {
@@ -138,8 +142,8 @@ body {
 }
 
 canvas {
-  width: 100%;
-  height: 300px;
+  width: 100%; !important
+  height: 300px; !impo
 }
 
 footer {
