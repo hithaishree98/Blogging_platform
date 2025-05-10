@@ -120,27 +120,37 @@ body {
 .graphs-container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 15px;
   margin-top: 20px;
   padding: 0 15px;
   flex-wrap: nowrap;
-  max-width: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
 .graph-section {
   flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  min-width: 0; 
+  padding: 12px;
   border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   overflow: hidden;
 }
 
+.graph-title {
+  font-family: 'Optima', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 canvas {
   width: 100% !important;
-  height: 420px !important;
+  height: 320px !important;
 }
 
 footer {
@@ -166,7 +176,6 @@ footer .social-links a {
   font-size: 18px;
 }
 
-/* Responsive adjustment */
 @media (max-width: 1024px) {
   .graphs-container {
     flex-direction: column;
