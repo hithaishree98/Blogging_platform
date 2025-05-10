@@ -34,6 +34,7 @@ body {
 }
 
 .logo {
+  font-family: 'Apple Chancery', sans-serif;
   font-size: 22px;
   color: #fff;
   text-decoration: none;

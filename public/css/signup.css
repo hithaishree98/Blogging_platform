@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Optima', sans-serif;
-  background-image: url('https://cdn.glitch.global/4b76aa4c-4fcc-4ec2-acff-1ec1977befae/HD-wallpaper-sage-green-watercolor-world-map-mural-aesthetic-map.jpg?v=1746760730355');
+  background-image: url('https://cdn.glitch.global/4b76aa4c-4fcc-4ec2-acff-1ec1977befae/335398.jpg?v=1746903179203');
   background-size: cover;
   background-attachment: fixed;
   display: flex;
@@ -76,7 +76,7 @@ main {
 }
 
 .btn-signup {
-  background-color: #6da37c;
+  background-color: #4CAF50;
   color: white;
   padding: 10px 20px; 
   font-weight: bold;
@@ -130,7 +130,7 @@ h2 {
 .btn {
     width: 100%;
     padding: 10px;
-    background-color: #6da37c;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
