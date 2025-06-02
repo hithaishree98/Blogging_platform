@@ -1,5 +1,5 @@
 ## Project Overview
-Taste Trails is a dynamic food blogging and travel exploration platform that enables users to browse, create, save, like, comment, and share blogs related to food and travel. It is designed to provide a seamless user experience through an interactive interface and well-structured functionalities. Users can explore blogs based on destinations and cuisines, interact with blog posts, and manage their profiles. Administrators can moderate blogs, manage users, and analyze platform statistics through an admin dashboard.
+Roam and Relish is a dynamic food blogging and travel exploration platform that enables users to browse, create, save, like, comment, and share blogs related to food and travel. It is designed to provide a seamless user experience through an interactive interface and well-structured functionalities. Users can explore blogs based on destinations and cuisines, interact with blog posts, and manage their profiles. Administrators can moderate blogs, manage users, and analyze platform statistics through an admin dashboard.
 
 The application is built using modern web technologies and follows the MVC (Model-View-Controller) architecture, ensuring scalability and maintainability.
 
